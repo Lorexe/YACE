@@ -1,9 +1,3 @@
-/Yace-ejb/nbproject/
-/Yace-war/nbproject/
-/nbproject/
-/Yace-ejb/build/
-/Yace-ejb/dist/
-/Yace-war/build/
-/dist/
-/build/
-/Yace-war/dist/
+/Yace-ejb/nbproject/private/
+/Yace-war/nbproject/private/
+/nbproject/private/
