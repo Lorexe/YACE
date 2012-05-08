@@ -40,7 +40,7 @@ public class ServletLogin extends HttpServlet {
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ServletLogin</title>");  
+            out.println("<title>Servlet ServletLogin</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ServletLogin at " + request.getContextPath () + "</h1>");
