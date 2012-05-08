@@ -1,0 +1,216 @@
+.main {
+	margin: 0 auto;
+	width: auto;
+	max-width: 1000px;
+	min-width: 780px;
+}
+/**
+ * >>>>>>>>> GENERAL <<<<<<<<<
+ */
+body{
+}
+
+/**
+ * >>>>>>>>> EN TETE <<<<<<<<<
+ */
+header[role="welcome"]{
+	margin: 2em auto;
+	text-align: center;
+}
+
+	header[role="welcome"] aside{
+		font-size: 2em;
+	}
+
+	/**
+	 * Nom du site
+	 */
+	#logo-header{
+		width: 18em;
+		height: 6em;
+
+		-moz-background-size: 18em 6em; /* Firefox 3.6 */
+		background-size: 18em 6em;
+	}
+
+		#logo a{ text-decoration: none; }
+
+/**
+ * >>>>>>>>> Formulaires <<<<<<<<<
+ */
+input{
+	width: 100%;
+	font-size: 1.3em;
+}
+
+input[role="captcha"]{
+	width: 40%;
+	float: right;
+}
+
+#calcul{
+	width: 60%;
+	float: left;
+	font-size: 1.5em;
+	text-align: center;
+	margin-top: 3px;
+	overflow: hidden;
+}
+
+/**
+ * >>>>>>>>> CORPS <<<<<<<<<
+ */
+/**
+ * Visite guidée
+ */
+#tour{
+	margin: 0 auto;
+	width: auto;
+	max-width: 1000px;
+	min-width: 780px;
+	padding: 1em;
+
+	border-radius: 15px;
+	background-color: #6cf;
+	color: #fff;
+}
+
+	header[role="tour"]{
+		margin: 0 0 22px 15px;
+		font-size: 2em;
+		text-shadow: 2px 2px 2px #666;
+	}
+
+	aside[role="signin"]{
+		float: right;
+		text-align: center;
+		width: 21%;
+		text-shadow: 2px 2px 2px #666;
+	}
+
+		aside[role="signin"] form {
+			margin-bottom: 1em;
+		}
+
+		aside[role="signin"] output{
+			float: right;
+			width: 90%;
+			margin-right: 3px;
+		}
+
+	footer[role="tour"]{
+		width: 77%;
+	}
+
+	.info {
+		color: #393;
+		background-color: #cfc;
+		font-weight: bold;
+		border: #393 2px solid;
+	}
+
+	.warning {
+		color: #000;
+		background-color: #fc3;
+		font-family: 'MuliItalic', sans-serif;
+		font-style: italic;
+		border: #000 1px inset;
+	}
+
+	.fatal {
+		color: #000;
+		background-color: #f66;
+		font-weight: bold;
+		font-variant: small-caps;
+		border: #c00 2px outset;
+	}
+
+	.output {
+		padding: 0.6em;
+		text-shadow: none;
+		border-radius: 5px;
+		text-align: center;
+	}
+
+	/**
+	 * Contrôles diapo
+	 */
+	#prev{
+		background-image: url('./img/icon/prev_48.png');
+		width: 24px;
+		height: 24px;
+
+		-moz-background-size: 24px 24px; /* Firefox 3.6 */
+		background-size: 24px 24px;
+	}
+
+	#pause{
+		background-image: url('./img/icon/remove_48.png');
+		width: 24px;
+		height: 24px;
+
+		-moz-background-size: 24px 24px; /* Firefox 3.6 */
+		background-size: 24px 24px;
+	}
+
+	#play{
+		background-image: url('./img/icon/valid_48.png');
+		width: 24px;
+		height: 24px;
+
+		-moz-background-size: 24px 24px; /* Firefox 3.6 */
+		background-size: 24px 24px;
+	}
+
+	#next{
+		background-image: url('./img/icon/next_48.png');
+		width: 24px;
+		height: 24px;
+
+		-moz-background-size: 24px 24px; /* Firefox 3.6 */
+		background-size: 24px 24px;
+	}
+
+/**
+ * DIAPORAMA
+ */
+#slideshow {
+	width:75%;
+	height: 25em;
+	margin:1em;
+	margin-bottom: 2em;
+	background-color: #ffc;
+	border-radius: 10px;
+}
+
+	nav[role="slideremote"]{
+		text-align: center;
+		line-height: 24px;
+		margin-top: 12px;
+	}
+
+	#slideshow > * { position:relative; left:0; top:0; }
+
+	.slide {
+		height:14em;
+		overflow:hidden;
+		padding: 25px 60px 26px;
+		background: #fff;
+		font-size: 1.5em;
+		color: #000;
+		border-radius: 10px;
+		box-shadow: 4px 4px 4px #003;
+	}
+
+		.slide h1{
+			color: #339;
+			font-size: 2em;
+			font-variant: small-caps;
+			padding: 25px 0;
+			text-align: center;
+			text-shadow: 2px 2px 2px #99f;
+		}
+
+		.slide h1:first-letter{
+			font-size: 1.5em;
+		}

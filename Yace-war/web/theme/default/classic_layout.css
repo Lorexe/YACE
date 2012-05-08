@@ -1,0 +1,160 @@
+.header-bar {
+	height: 71px;
+	background: whiteSmoke; /* whiteSmoke = #e2e2e2 */
+	border-bottom: 1px solid #E5E5E5;
+	overflow: hidden;
+}
+/**
+ * >>>>>>>>> EN TETE <<<<<<<<<
+ */
+body>header{
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: -2;
+
+	background-color: #ccf;
+}
+
+	/**
+	 * 	Nom du site
+	 */
+	#logo{
+		float: left;
+		width: 10em;
+		height: 5em;
+
+		-moz-background-size: 10em 5em; /* Firefox 3.6 */
+		background-size: 10em 5em;
+	}
+
+		#logo a{ text-decoration: none; }
+
+		/**
+		 * 	Menu principal
+		 */
+		#menutop{
+			list-style-type: none;
+			font-family: Opificio Bold;
+		}
+
+		#menutop li{
+			float: left;
+
+			margin-right: 0.1em;
+
+			background: -moz-linear-gradient(top, #ff9 0%, #6cf 53%, #3cf 100%); /* FireFox 3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ff9), color-stop(53%, #6cf), color-stop(100%, #3cf)); /* Chrome,Safari4+ */
+			background: -o-linear-gradient(top, #ff9 0%, #6cf 53%, #3cf 100%); /* Opera11.10+ */
+			background: -ms-linear-gradient(top, #ff9 0%, #6cf 53%, #3cf 100%); /* IE10+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff9', endColorstr='#3cf', GradientType=0 ); /* IE6-9 */
+			background: linear-gradient(top, #ff9 0%, #6cf 53%, #3cf 100%); /* W3C */
+
+			opacity: 0.4;
+		}
+
+		#menutop li:hover{ opacity: 1; }
+
+		#menutop a{
+			padding: 0 1em;
+			margin: 0;
+			color: #003;
+			text-decoration: none;
+			text-align: center;
+			font-variant: small-caps;
+		}
+
+		#menutop .sel, #menutop a:hover{
+			font-weight: bold;
+			opacity: 1;
+		}
+
+		#menutop .sel:hover{
+			text-decoration: underline;
+		}
+
+/**
+ * >>>>>>>>> MASQUE <<<<<<<<<
+ */
+body>#mask{
+
+}
+
+/**
+ * >>>>>>>>> CORPS <<<<<<<<<
+ */
+body>#content{
+	top: 0;
+}
+
+	nav.#explore{
+
+	}
+
+	section.#main{
+
+	}
+
+		#main>header{
+
+		}
+
+		#main>footer{
+
+		}
+
+	aside.#guide{
+
+	}
+
+	/**
+	 * Légende
+	 */
+	#legend{
+		width: 20%;
+	}
+
+		#legend h1{
+			font-size: 1.2em;
+			font-variant: small-caps;
+		}
+
+		#legend #legendlist{
+			list-style-type: none;
+		}
+
+		#legend .squarecol{
+			list-style: square inside;
+			font-size: 1.2em;
+		}
+
+		#legend .itemtype{
+			color: black;
+			font-size: 0.8em;
+		}
+
+/**
+ * >>>>>>>>> PIED DE PAGE <<<<<<<<<
+ */
+body>footer{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+
+	background-color: #fff;
+
+	overflow: hidden;
+
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #E6F9FF), color-stop(75%, #43C8ED), color-stop(100%, #78D3ED)); /* Chrome,Safari4+ */
+}
+
+body>footer:hover{
+}
+
+#copyright{
+	float: right;
+	margin-right: 0.2em;
+	font-family: Amerika;
+	font-variant: small-caps;
+	font-size: 1.7em;
+}

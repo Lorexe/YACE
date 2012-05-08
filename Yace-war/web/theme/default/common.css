@@ -1,0 +1,150 @@
+/**
+ * Polices
+ */
+ @font-face {
+    font-family: 'MuliItalic';
+    src: url('./font/Muli/muli-italic-webfont.eot');
+    src: url('./font/Muli/muli-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('./font/Muli/muli-italic-webfont.woff') format('woff'),
+         url('./font/Muli/muli-italic-webfont.ttf') format('truetype'),
+         url('./font/Muli/muli-italic-webfont.svg#MuliItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Muli';
+    src: url('./font/Muli/muli-regular-webfont.eot');
+    src: url('./font/Muli/muli-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('./font/Muli/muli-regular-webfont.woff') format('woff'),
+         url('./font/Muli/muli-regular-webfont.ttf') format('truetype'),
+         url('./font/Muli/muli-regular-webfont.svg#MuliRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ribeye';
+    src: url('./font/Ribeye/ribeye-regular-webfont.eot');
+    src: url('./font/Ribeye/ribeye-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('./font/Ribeye/ribeye-regular-webfont.woff') format('woff'),
+         url('./font/Ribeye/ribeye-regular-webfont.ttf') format('truetype'),
+         url('./font/Ribeye/ribeye-regular-webfont.svg#RibeyeRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/**
+ * >>>>>>>>> Communs <<<<<<<<<
+ */
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+article, aside, details, figcaption, figure, footer,
+header, hgroup, menu, nav, section {
+	display: block;
+}
+
+html {
+	font: 81.25% 'Muli', sans-serif;
+  background: #fff;
+  color: #000;
+  line-height: 1;
+  direction: ltr;
+}
+
+a {
+  color: #06C;
+  text-decoration: none;
+}
+
+a:active {
+  color: #c63;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Ribeye', cursive;
+  font-size: 1.54em;
+  font-weight: normal;
+  line-height: 24px;
+  margin: 0 0 .46em;
+}
+
+p {
+  line-height: 17px;
+  margin: 0 0 1em;
+}
+
+ol, ul {
+  list-style: none;
+  line-height: 17px;
+  margin: 0 0 1em;
+}
+
+li {
+  margin: 0 0 .5em;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+em {
+	font-family: 'MuliItalic', sans-serif;
+	font-style: italic;
+}
+
+strong {
+  color: #333;
+  font-weight: bold;
+}
+
+/**
+ * >>>>>>>>> Classes <<<<<<<<<
+ */
+.yace-logo {
+	background-image: url('./img/logo.png');
+}
+
+.CE {
+	font-size: 1.2em;
+	font-style: normal;
+	color: #ff0;
+	text-shadow: 0.07ex 0.07ex 0.07ex #069;
+}
+
+.clearfix::after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: '.';
+	clear: both;
+	height: 0;
+}
+
+
+.hidden {
+	visibility: hidden;
+}
+
+.none {
+	display: none;
+}
+
+.separator {
+	color: #6cf;
+	background-color: #6cf;
+	width: 100%;
+	height: 0.1em;
+	border-style: solid;
+	margin: auto;
+	margin-top: 0;
+	margin-bottom: 0;
+}
