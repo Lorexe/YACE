@@ -70,28 +70,37 @@ public class ServletLogin extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Récupération du formulaire
         String pseudo = request.getParameter("pseudo");
         String pass = request.getParameter("pwd");
         
-        if(pseudo!=null && pass!=null && !pseudo.isEmpty() && !pass.isEmpty()) {   
+        // Test des champs
+        if(pseudo==null || pseudo.isEmpty()) {
+            request.setAttribute("error", "Vous devez entrer<br/>un pseudo !");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
+        else if(pass==null || pass.isEmpty()) {
+            request.setAttribute("error", "Vous devez entrer<br/>un mot de passe !");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        } else {
+            // Chargement de la facade
             YuserFacade userFac = ServicesLocator.getUserFacade();
             Yuser userTest= userFac.findUser(pseudo);
-
-            if(userTest!=null) {
-                if(userTest.getPasswordHash().equals(MD5Utils.digest(pass))) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", userTest);
-                    
-                    // TODO: rediriger vers l'accueil
-                    request.setAttribute("info", "Connexion OK !");
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("error", "Mauvais mot de passe");
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
-                }
-            } else {
+            
+            // Reste à tester les infos de connexion
+            if(userTest==null) {
                 request.setAttribute("error", "Utilisateur introuvable");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
+            } else {
+                if(!userTest.getPasswordHash().equals(MD5Utils.digest(pass))) {
+                    request.setAttribute("error", "Mauvais mot de passe");
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                } else {
+                    // Tout est OK, on crée la session
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", userTest);
+                    request.getRequestDispatcher("common.jsp").forward(request, response);
+                }
             }
         }
     }
