@@ -38,8 +38,6 @@ public class Yrank implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "idYRANK")
     private Integer idYRANK;
     @Basic(optional = false)
