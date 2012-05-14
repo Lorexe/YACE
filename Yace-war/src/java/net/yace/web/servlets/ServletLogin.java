@@ -6,25 +6,21 @@ package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import net.yace.ejb.YuserSessionBean;
 import net.yace.entity.Yuser;
+import net.yace.facade.YuserFacade;
 import net.yace.utils.MD5Utils;
+import net.yace.web.utils.ServicesLocator;
 
 /**
  *
  * @author Developpeur
  */
 public class ServletLogin extends HttpServlet {
-    
-    @EJB
-    private YuserSessionBean yuserSessionBean;
-
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -77,8 +73,9 @@ public class ServletLogin extends HttpServlet {
         String pseudo = request.getParameter("pseudo");
         String pass = request.getParameter("pwd");
         
-        if(pseudo!=null && pass!=null && !pseudo.isEmpty() && !pass.isEmpty()) {       
-            Yuser userTest= yuserSessionBean.getYuser(pseudo);
+        if(pseudo!=null && pass!=null && !pseudo.isEmpty() && !pass.isEmpty()) {   
+            YuserFacade userFac = ServicesLocator.getUserFacade();
+            Yuser userTest= userFac.findUser(pseudo);
 
             if(userTest!=null) {
                 if(userTest.getPasswordHash().equals(MD5Utils.digest(pass))) {

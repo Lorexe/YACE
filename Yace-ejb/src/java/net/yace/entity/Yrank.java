@@ -60,6 +60,7 @@ public class Yrank implements Serializable {
     private Collection<Yuser> yuserCollection;
 
     public Yrank() {
+        
     }
 
     public Yrank(Integer idYRANK) {

@@ -1,31 +1,27 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import javax.ejb.EJB;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.yace.ejb.YuserSessionBean;
 import net.yace.entity.Yrank;
 import net.yace.entity.Yuser;
+import net.yace.facade.YuserFacade;
 import net.yace.utils.MD5Utils;
+import net.yace.web.utils.ServicesLocator;
 
 /**
  *
- * @author Developpeur
+ * @author Scohy Jerome
+ * @author Boi Bruno
  */
 public class ServletRegister extends HttpServlet {
-
-    @EJB
-    private YuserSessionBean yuserSessionBean;
-
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -91,13 +87,16 @@ public class ServletRegister extends HttpServlet {
             request.setAttribute("error", "Vous devez indiquer deux fois<br/>le même mot de passe !");
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } else {
+            // Chargement de la facade
+            YuserFacade userFacade = ServicesLocator.getUserFacade();
+
             // Reste à tester que l'utilisateur n'existe pas déjà
-            Yuser userTest = yuserSessionBean.getYuser(email);
+            Yuser userTest = userFacade.findUser(email);
             if (userTest != null) { // Utilisateur existant !
                 request.setAttribute("error", "Email déjà utilisé.<br/>Veuillez indiquer un autre.");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
-                userTest = yuserSessionBean.getYuser(pseudo);
+                userTest = userFacade.findUser(pseudo);
                 if (userTest != null) { // Utilisateur existant !
                     request.setAttribute("error", "Pseudo déjà pris.<br/>Veuillez en choisir un autre.");
                     request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -106,9 +105,9 @@ public class ServletRegister extends HttpServlet {
                     u.setPseudo(pseudo);
                     u.setEmail(email);
                     u.setPasswordHash(MD5Utils.digest(pass));
-                    u.setRank(new Yrank()); //TODO : récupérer le rang par défaut
+                    u.setRank(new Yrank(1)); //TODO : récupérer le rang par défaut
 
-                    yuserSessionBean.insert(u);
+                    userFacade.create(u);
 
                     request.setAttribute("info", "Le compte a été créé.<br/>Vous pouvez vous connecter.");
                     request.getRequestDispatcher("login").forward(request, response);
