@@ -1,7 +1,7 @@
 /**
  * Polices
  */
- @font-face {
+@font-face {
     font-family: 'MuliItalic';
     src: url('./font/Muli/muli-italic-webfont.eot');
     src: url('./font/Muli/muli-italic-webfont.eot?#iefix') format('embedded-opentype'),
@@ -24,18 +24,18 @@
 }
 
 @font-face {
-    font-family: 'Ribeye';
-    src: url('./font/Ribeye/ribeye-regular-webfont.eot');
-    src: url('./font/Ribeye/ribeye-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('./font/Ribeye/ribeye-regular-webfont.woff') format('woff'),
-         url('./font/Ribeye/ribeye-regular-webfont.ttf') format('truetype'),
-         url('./font/Ribeye/ribeye-regular-webfont.svg#RibeyeRegular') format('svg');
+    font-family: 'Baumans';
+    src: url('./font/Baumans/baumans-regular-webfont.eot');
+    src: url('./font/Baumans/baumans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('./font/Baumans/baumans-regular-webfont.woff') format('woff'),
+         url('./font/Baumans/baumans-regular-webfont.ttf') format('truetype'),
+         url('./font/Baumans/baumans-regular-webfont.svg#BaumansRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 /**
- * >>>>>>>>> Communs <<<<<<<<<
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> Communs <<<<<<<<<
  */
 * {
 	margin: 0;
@@ -69,7 +69,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Ribeye', cursive;
+	font-family: 'Baumans', cursive;
   font-size: 1.54em;
   font-weight: normal;
   line-height: 24px;
@@ -89,6 +89,7 @@ ol, ul {
 
 li {
   margin: 0 0 .5em;
+  padding-left: 1em;
 }
 
 table {
@@ -107,10 +108,133 @@ strong {
 }
 
 /**
- * >>>>>>>>> Classes <<<<<<<<<
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> Classes <<<<<<<<<
  */
+
+/* :::: TABLEAUX :::: */
+.y-table-2
+{
+  font-size: 12px;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.y-table-2 thead th.rounded-company
+{
+  background: #b9c9fe url('table-images/left.png') left -1px no-repeat;
+}
+.y-table-2 thead th.rounded-q4
+{
+  background: #b9c9fe url('table-images/right.png') right -1px no-repeat;
+}
+.y-table-2 th
+{
+  padding: 8px;
+  font-weight: normal;
+  font-size: 13px;
+  color: #039;
+  background: #b9c9fe;
+}
+.y-table-2 td
+{
+  padding: 8px;
+  background: #e8edff;
+  border-top: 1px solid #fff;
+  color: #669;
+}
+.y-table-2 tfoot td.rounded-foot-left
+{
+  background: #e8edff url('table-images/botleft.png') left bottom no-repeat;
+}
+.y-table-2 tfoot td.rounded-foot-right
+{
+  background: #e8edff url('table-images/botright.png') right bottom no-repeat;
+}
+.y-table-2 tbody tr:hover td
+{
+  background: #d0dafd;
+}
+
+
+.y-table {
+  font-size: 12px;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+  .y-table th {
+    font-size: 14px;
+    font-weight: normal;
+    padding: 10px 8px;
+    color: #039;
+  }
+
+  .y-table td {
+    padding: 8px;
+    color: #669;
+  }
+
+  .y-table .odd {
+    background: #e8edff;
+  }
+
+.y-table-form {
+  width: 360px;
+}
+
+/* :::: RAYURES :::: */
+.stripes {
+  -webkit-background-size: 50px 50px;
+  -moz-background-size: 50px 50px;
+  background-size: 50px 50px; /* Controls the size of the stripes */
+
+  -moz-box-shadow: 1px 1px 8px gray;
+  -webkit-box-shadow: 1px 1px 8px gray;
+  box-shadow: 1px 1px 8px gray;
+}
+
+.angled {
+  background-color: #9cf;
+  background-image: -webkit-gradient(linear, 0 100%, 100% 0,
+              color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
+              color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
+              color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent),
+              to(transparent));
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+            transparent 75%, transparent);
+  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+            transparent 75%, transparent);
+  background-image: -ms-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+            transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+            transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+            transparent 75%, transparent);
+}
+
+/* :::: YACE LOGOS :::: */
+.yace-logo-big {
+	background-image: url('./img/logo647x232.png');
+  width: 647px;
+  height: 232px;
+}
+
 .yace-logo {
-	background-image: url('./img/logo.png');
+  background-image: url('./img/logo232x83.png');
+  width: 232px;
+  height: 83px;
+}
+
+.yace-logo-small {
+  background-image: url('./img/logo84x30.png');
+  width: 84px;
+  height: 30px;
 }
 
 .CE {
@@ -120,6 +244,51 @@ strong {
 	text-shadow: 0.07ex 0.07ex 0.07ex #069;
 }
 
+/* :::: MODAL BOXES :::: */
+.modal {
+  display: none;
+  width: 350px;
+  text-align: center;
+}
+
+  .modal-info h1 {
+    background: url('./img/icon/info_48.png') 0 50% no-repeat;
+    margin: 0px;
+    padding: 10px 0 10px 55px;
+  }
+
+/* :::: OUTPUT BOXES :::: */
+.info {
+  color: #393;
+  background-color: #cfc;
+  font-weight: bold;
+  border: #393 2px solid;
+}
+
+.warning {
+  color: #000;
+  background-color: #fc3;
+  font-family: 'MuliItalic', sans-serif;
+  font-style: italic;
+  border: #000 1px inset;
+}
+
+.fatal {
+  color: #000;
+  background-color: #f66;
+  font-weight: bold;
+  font-variant: small-caps;
+  border: #c00 2px outset;
+}
+
+.output {
+  padding: 0.6em;
+  text-shadow: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* :::: FIXES & TOOLS :::: */
 .clearfix::after {
 	visibility: hidden;
 	display: block;
@@ -128,7 +297,6 @@ strong {
 	clear: both;
 	height: 0;
 }
-
 
 .hidden {
 	visibility: hidden;

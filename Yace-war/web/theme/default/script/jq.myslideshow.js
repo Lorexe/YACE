@@ -46,19 +46,25 @@ $(document).ready(function(){
 
 	/* Bouton PLAY */
 	$('#play').click(function(){
-		$(document).everyTime("10s", "diapo", function(){
+		$(document).everyTime("7s", "diapo", function(){
 			$('.slide:first').slideUp(500, function(){
 			$(this).appendTo('#slideshow')
 			$('.slide:first').slideDown(500)
+			})
 		})
-		})
+		$('#play').hide();
+		$('#pause').show();
 	})
 
 	/* Bouton PAUSE */
 	$('#pause').click(function(){
 		$(document).stopTime("diapo")
+		$('#play').show();
+		$('#pause').hide();
 	})
 
+	$('#play').show();
+	$('#pause').hide();
 	$('#play').click() // lance le diapo
 
 });

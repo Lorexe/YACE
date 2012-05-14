@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import net.yace.ejb.UserSessionBean;
-import net.yace.entity.User;
+import net.yace.ejb.YuserSessionBean;
+import net.yace.entity.Yuser;
 import net.yace.utils.MD5Utils;
 
 /**
@@ -23,7 +23,7 @@ import net.yace.utils.MD5Utils;
 public class ServletLogin extends HttpServlet {
     
     @EJB
-    private UserSessionBean userSessionBean;
+    private YuserSessionBean yuserSessionBean;
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -74,29 +74,26 @@ public class ServletLogin extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //processRequest(request, response);
-        
-        String login = request.getParameter("login");
+        String pseudo = request.getParameter("pseudo");
         String pass = request.getParameter("pwd");
         
-        if(login!=null && pass!=null && !login.isEmpty() && !pass.isEmpty()) {       
-            User userTest= userSessionBean.getUser(login);
+        if(pseudo!=null && pass!=null && !pseudo.isEmpty() && !pass.isEmpty()) {       
+            Yuser userTest= yuserSessionBean.getYuser(pseudo);
 
             if(userTest!=null) {
                 if(userTest.getPasswordHash().equals(MD5Utils.digest(pass))) {
-                    
                     HttpSession session = request.getSession();
                     session.setAttribute("user", userTest);
                     
-                    //response.sendRedirect("connecte.jsp");
-                    request.setAttribute("error", "Connexion OK !");
+                    // TODO: rediriger vers l'accueil
+                    request.setAttribute("info", "Connexion OK !");
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("error", "Mot de passe érroné !");
+                    request.setAttribute("error", "Mauvais mot de passe");
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
             } else {
-                request.setAttribute("error", "Le compte n'existe pas !");
+                request.setAttribute("error", "Utilisateur introuvable");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         }

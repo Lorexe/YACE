@@ -1,0 +1,380 @@
+/**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> IMAGES <<<<<<<<<<
+ */
+#deleteicon {
+	background-image: url('./img/icon/delete_16.png');
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+#editicon {
+	background-image: url('./img/icon/edit_16.png');
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+#profileicon {
+	background-image: url('./img/icon/person_24.png');
+  width: 24px;
+  height: 24px;
+  margin: 0;
+}
+
+#exiticon {
+	background-image: url('./img/icon/shutdown_24.png');
+  width: 24px;
+  height: 24px;
+  margin: 0;
+}
+
+#helpicon {
+ 	background-image: url('./img/icon/interrogation_48.png');
+  width: 48px;
+  height: 48px;
+}
+
+#homeicon {
+ 	background-image: url('./img/icon/home_48.png');
+  width: 48px;
+	height: 48px;
+}
+
+#infoicon {
+ 	background-image: url('./img/icon/info_48.png');
+  width: 48px;
+  height: 48px;
+}
+
+#printicon {
+ 	background-image: url('./img/icon/print_24.png');
+  width: 24px;
+	height: 24px;
+}
+
+#searchicon {
+ 	background-image: url('./img/icon/search_24.png');
+  width: 39px;
+  height: 39px;
+
+  background-size: 39px;
+  -moz-background-size: 39px;
+  margin: 4px 5px 0 5px;
+}
+
+/**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> COMMON <<<<<<<<<<
+ */
+html {
+	min-width: 900px;
+	margin: 0 100px;
+}
+
+/**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> HEADER BAR <<<<<<<<<<
+ */
+header[role="menu"] {
+	width: 100%;
+	background-color: #39c;
+	background-repeat: no-repeat;
+	background-position: center right;
+	box-shadow: 0px 1px 10px 3px #39f;
+
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+	nav#menu {
+		margin: 16px 0 0 15px;
+	}
+
+	nav#menu * {
+		vertical-align: middle;
+		margin: auto;
+	}
+
+	/* :::: MENU :::: */
+
+	header[role="menu"] * {
+		display: inline-block;
+	}
+
+	form#menubar {
+		height: 50px;
+	}
+
+	/* :::: SearchBar :::: */
+	div#searchbar {
+		background: #f8f8ff;
+	  border: 1px solid #ccf;
+	  border-top: 1px solid #ccc;
+
+	  -webkit-border-radius: 15px/20px;
+	  -moz-border-radius: 15px/20px;
+	  border-radius: 15px/20px;
+	  box-shadow: 0px 1px 10px 3px #6cf;
+
+	  padding: 3px;
+	}
+
+	div#searchbar #keyword {
+		width: 300px;
+
+		height: 32px;
+
+		font-size: 1.5em;
+		box-shadow: inset 0px 1px 2px 1px #39f;
+		padding-right: 8px;
+		background: #cef;
+		color: #33f;
+	}
+
+	div#searchbar select {
+		margin-right: 5px;
+	}
+
+	/* :::: AccountBar :::: */
+	form#accountbar {
+		background: #f8f8ff;
+	  border: 1px solid #ccf;
+	  border-top: 1px solid #ccc;
+
+	  -webkit-border-radius: 15px/20px;
+	  -moz-border-radius: 15px/20px;
+	  border-radius: 15px/20px;
+	  box-shadow: 0px 1px 10px 3px #6cf;
+
+	  padding: 12px 5px;
+	}
+
+	form#accountbar fieldset {
+		margin-left: -20px;
+		padding: 0 10px 10px 0;
+	}
+
+/**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> NAVIGATION A GAUCHE <<<<<<<<<<
+ */
+aside#explore {
+	float: left;
+	min-width: 220px;
+	margin: 10px 10px 10px 0;
+	/*position: fixed;*/
+}
+
+	/* :::: Vue des collections :::: */
+	nav#collview {
+
+	}
+
+	/* :::: Vue détaillée :::: */
+	nav#detailview {
+
+	}
+
+/**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> AIDE & GUIDE <<<<<<<<<<
+ */
+aside#guide {
+	float:right;
+	margin: 10px 0 10px 10px;
+	width: 220px;
+}
+
+	/* :::: Vue des collections :::: */
+	section#infotips {
+
+	}
+
+		div.infobox {
+			background: #eef;
+			border-radius: 5px;
+			padding: 8px;
+		}
+
+	/* :::: Vue détaillée :::: */
+	section#legend {
+
+	}
+
+/**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> CONTENU PRINCIPAL <<<<<<<<<<
+ */
+section#main {
+	margin-top: 10px;
+	margin-left: 230px;
+}
+
+	aside#toggletips {
+		text-align: center;
+		float: right;
+		vertical-align: bottom;
+		width: 15px;
+		padding: 3px;
+		margin-top: -10px;
+		margin-right: -25px;
+		border: 2px solid #000;
+		border-right: none;
+		border-top: none;
+		border-bottom-left-radius: 5px;
+		background: #fe0;
+	}
+
+		aside#toggletips strong {
+			margin: auto 0;
+			color: #000;
+		}
+
+		aside#toggletips:hover {
+			background: #f90;
+			cursor: help;
+		}
+
+/* :::: CoverFlow :::: */
+figure.cover {
+	display: inline-block;
+	border: 1px solid #069;
+	border-radius: 1px;
+	width: 90px;
+	margin: 0 15px 15px 0;
+	cursor: pointer;
+	vertical-align: top;
+}
+
+	figure.cover aside.item-details {
+		text-align: center;
+		position: relative;
+		vertical-align: bottom;
+		padding: 3px;
+		margin-bottom: -21px;
+		margin-left: 33px;
+		border: 1px solid #000;
+		border-right: none;
+		border-top: none;
+		border-bottom-left-radius: 5px;
+		background: #fe0;
+	}
+
+		figure.cover aside.item-details strong {
+			margin: auto 0;
+			color: #000;
+		}
+
+		figure.cover aside.item-details:hover {
+			background: #f90;
+		}
+
+			figure.cover aside.item-details a:hover {
+				text-decoration: none;
+			}
+
+	figure.cover img {
+		height: 90px;
+		width: 90px;
+	}
+
+	figure.cover figcaption {
+		background: #069;
+		color: #fff;
+		padding: 3px 0;
+		text-align: center;
+		overflow: auto;
+	}
+
+/**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> VISIONNEUSE <<<<<<<<<<
+ */
+div#foreground {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba( 0, 0, 0, 0.6 );
+}
+
+section#splash {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 20pc;
+	height: 16pc;
+	margin-top: -8pc;
+	margin-left: -10pc;
+}
+
+/**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> PIED DE PAGE <<<<<<<<<<
+ */
+footer {
+	margin: 10em auto;
+	text-align: center;
+}
+
+/**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> ADMINISTRATION <<<<<<<<<<
+ */
+#adminquote {
+	font-size: 4em;
+	line-height: 1em;
+}
+
+/**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> CLASSES <<<<<<<<<<
+ */
+/* :::: WHITEBOX :::: */
+.whitebox {
+	background: #f8f8ff;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	border: 1px solid #39c;
+}
+
+.whitebox > * {
+	margin: 10px 10px;
+}
+
+.whitebox > header:nth-child(1) {
+	margin: 0;
+}
+
+.whitebox > header:nth-child(1) > *  {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.whitebox > header:nth-child(1) {
+	background: #9cf;
+	background-image: linear-gradient(bottom, rgb(153, 204, 255) 25%, rgb(51,153,204) 95%);
+	background-image: -moz-linear-gradient(bottom, rgb(153, 204, 255) 25%, rgb(51,153,204) 95%);
+	background-image: -ms-linear-gradient(bottom, rgb(153, 204, 255) 25%, rgb(51,153,204) 95%);
+	background-image: -o-linear-gradient(bottom, rgb(153, 204, 255) 25%, rgb(51,153,204) 95%);
+	background-image: -webkit-linear-gradient(bottom, rgb(153, 204, 255) 25%, rgb(51,153,204) 95%);
+	background-image: -webkit-gradient( linear, left bottom, left top,
+											color-stop(0.25, rgb(153, 204, 255)),
+											color-stop(0.95, rgb( 51, 153, 204))
+										);
+	border-bottom: 2px solid #39c;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	color: #fff;
+	font-size: 1.2em;
+	padding-bottom: 0;
+	padding: 7px;
+}
+
+/* :::: Contenu whitebox :::: */
+section.content {
+	margin: 0;
+	padding: 10px 25px;
+}
+
+	section.content > h1 {
+		border-bottom: 1px dotted #9cf;
+		margin-bottom: 20px;
+		padding-bottom: 6px;
+		padding-left: 15px;
+	}

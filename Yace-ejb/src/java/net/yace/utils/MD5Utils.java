@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Developpeur
+ * @author Jérôme Scohy <pyaitchpi@acdc.me>
  */
 public class MD5Utils {
     private MD5Utils() {}

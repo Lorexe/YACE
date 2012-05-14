@@ -1,5 +1,5 @@
 /**
-* >>>>>>>>> Formulaires et boutons <<<<<<<<<
+* ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> Formulaires et boutons <<<<<<<<<
 */
 /* form */
 button, input, select, textarea {
@@ -87,8 +87,8 @@ input[type=radio] {
   margin: 0;
   cursor: pointer;
   vertical-align: bottom;
-  background: #fff;
-  border: 1px solid #dcdcdc;
+  background: #cef;
+  border: 1px solid #ccc;
   -webkit-border-radius: 1px;
   -moz-border-radius: 1px;
   border-radius: 1px;
@@ -121,7 +121,7 @@ input[type=radio] {
 
 input[type=checkbox]:checked,
 input[type=radio]:checked {
-  background: #fff;
+  background: #9cf;
 }
 
 input[type=radio]:checked::after {
@@ -189,7 +189,7 @@ input[type=checkbox]:focus {
   -moz-user-select: none;
   user-select: none;
 
-  cursor: default;
+  cursor: pointer;
 }
 
 *+html .y-button {
@@ -246,7 +246,7 @@ button.y-button, input[type="submit"].y-button {
 color: #666;
 }
 
-.y-button-submit {
+.y-button-blue {
 	border: 1px solid #3079ED;
 	color: white;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.1);
@@ -259,7 +259,7 @@ color: #666;
 	background-image: linear-gradient(top,#4d90fe,#4787ed);
 }
 
-.y-button-submit:hover {
+.y-button-blue:hover {
   border: 1px solid #2f5bb7;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.3);
@@ -272,13 +272,13 @@ color: #666;
   background-image: linear-gradient(top,#4d90fe,#357ae8);
 }
 
-.y-button-submit:active {
+.y-button-blue:active {
   -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
   -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
 }
 
-.y-button-share {
+.y-button-green {
   border: 1px solid #29691d;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.1);
@@ -291,7 +291,7 @@ color: #666;
   background-image: linear-gradient(top,#3d9400,#398a00);
 }
 
-.y-button-share:hover {
+.y-button-green:hover {
   border: 1px solid #2d6200;
   color: #fff;
   text-shadow: 0 1px rgba(0,0,0,0.3);
@@ -304,7 +304,7 @@ color: #666;
   background-image: linear-gradient(top,#3d9400,#368200);
 }
 
-.y-button-share:active {
+.y-button-green:active {
   -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
   -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
@@ -379,20 +379,20 @@ color: #666;
 }
 
 .y-button-red:visited,
-.y-button-share:visited,
-.y-button-submit:visited {
+.y-button-green:visited,
+.y-button-blue:visited {
   color: #fff;
 }
 
-.y-button-submit:focus,
-.y-button-share:focus,
+.y-button-blue:focus,
+.y-button-green:focus,
 .y-button-red:focus {
   -webkit-box-shadow: inset 0 0 0 1px #fff;
   -moz-box-shadow: inset 0 0 0 1px #fff;
   box-shadow: inset 0 0 0 1px #fff;
 }
 
-.y-button-share:focus {
+.y-button-green:focus {
   border-color: #29691d;
 }
 
@@ -400,8 +400,8 @@ color: #666;
   border-color: #d14836;
 }
 
-.y-button-submit:focus:hover,
-.y-button-share:focus:hover,
+.y-button-blue:focus:hover,
+.y-button-green:focus:hover,
 .y-button-red:focus:hover {
   -webkit-box-shadow: inset 0 0 0 1px #fff, 0 1px 1px rgba(0,0,0,0.1);
   -moz-box-shadow: inset 0 0 0 1px #fff, 0 1px 1px rgba(0,0,0,0.1);

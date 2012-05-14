@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.ejb.Stateless;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -20,43 +21,50 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import net.yace.entity.User;
+import net.yace.entity.Yuser;
 
 /**
  *
- * @author Developpeur
+ * @author Jérôme Scohy <pyaitchpi@acdc.me>
  */
 @Stateless
-public class UserSessionBean {
+public class YuserSessionBean {
 
     @PersistenceContext
     EntityManager em;
 
-    public List<User> retrieve()
+    public List<Yuser> retrieve()
     {
-        Query query = em.createNamedQuery("User.findAll");
+        Query query = em.createNamedQuery("Yuser.findAll");
         return query.getResultList();
     }
     
-    public User getUser(String login) {
-        Query query = em.createNamedQuery("User.findByEmail");
-        query.setParameter("email", login);
+    public Yuser getYuser(String login) {
+        Query query;
+        if(Pattern.matches("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", login)) {
+            query = em.createNamedQuery("Yuser.findByEmail");
+            query.setParameter("email", login);
+        }
+        else {
+            query = em.createNamedQuery("Yuser.findByPseudo");
+            query.setParameter("pseudo", login);
+        }
 
-        User u=null;
+        Yuser u=null;
         try {
-            u=(User)query.getSingleResult();
+            u=(Yuser)query.getSingleResult();
         } catch(NoResultException e) {
         }
         
         return u;
     }
         
-    public User update(User u)
+    public Yuser update(Yuser u)
     {
         return em.merge(u);
     }
     
-    public void insert(User u) throws EntityExistsException, IllegalArgumentException {
+    public void insert(Yuser u) throws EntityExistsException, IllegalArgumentException {
         em.persist(u);
         em.flush();
     }
@@ -74,7 +82,7 @@ public class UserSessionBean {
         Session s = null;
         try {
             conn = cf.createConnection();
-            s = conn.createSession(false, s.AUTO_ACKNOWLEDGE);
+            s = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = (Destination) c.lookup("java:comp/env/jms/NotificationQueue");
             MessageProducer mp = s.createProducer(destination);
             mp.send(createJMSMessageForjmsNotificationQueue(s, messageData));

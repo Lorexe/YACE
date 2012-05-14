@@ -6,13 +6,16 @@ package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.yace.ejb.UserSessionBean;
-import net.yace.entity.User;
+import net.yace.ejb.YuserSessionBean;
+import net.yace.entity.Yrank;
+import net.yace.entity.Yuser;
+import net.yace.utils.MD5Utils;
 
 /**
  *
@@ -21,8 +24,8 @@ import net.yace.entity.User;
 public class ServletRegister extends HttpServlet {
 
     @EJB
-    private UserSessionBean userSessionBean;
-    
+    private YuserSessionBean yuserSessionBean;
+
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -45,7 +48,7 @@ public class ServletRegister extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
              */
-        } finally {            
+        } finally {
             out.close();
         }
     }
@@ -71,33 +74,47 @@ public class ServletRegister extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //processRequest(request, response);
-        
-        String login = request.getParameter("login");
+        // Récupération du formulaire
+        String pseudo = request.getParameter("pseudo");
+        String email = request.getParameter("email");
         String pass = request.getParameter("pwd");
         String passVerif = request.getParameter("pwd-verif");
 
-        if(login!=null && pass!=null && passVerif!=null && !login.isEmpty() && !pass.isEmpty() && !passVerif.isEmpty() && pass.equals(passVerif)) {       
-            User userTest= userSessionBean.getUser(login);
-            //User userTest = null;
-            if(userTest==null) {
-                User u = new User();
-                u.setEmail(login);
-                u.setPasswordHash(pass);
-                u.setRankID(0);
-
-                userSessionBean.insert(u);
-                
-                request.setAttribute("info", "Le compte a été créé.<br/>Vous pouvez vous connecter.");
-                request.getRequestDispatcher("ServletLogin").forward(request, response);
-            } else {
-                request.setAttribute("error", "L'utilisateur existe déjà !");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
-        } else {
-            request.setAttribute("error", "Il faut remplir tous les champs!");
+        // Test des champs
+        if (pseudo == null || pseudo.isEmpty()) {
+            request.setAttribute("error", "Vous devez choisir<br/>un pseudo !");
             request.getRequestDispatcher("index.jsp").forward(request, response);
-        }   
+        } else if (email == null || email.isEmpty() || !Pattern.matches("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", email)) {
+            request.setAttribute("error", "Vous devez indiquer<br/>un email valide !");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        } else if (pass == null || passVerif == null || pass.isEmpty() || passVerif.isEmpty() || !pass.equals(passVerif)) {
+            request.setAttribute("error", "Vous devez indiquer deux fois<br/>le même mot de passe !");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        } else {
+            // Reste à tester que l'utilisateur n'existe pas déjà
+            Yuser userTest = yuserSessionBean.getYuser(email);
+            if (userTest != null) { // Utilisateur existant !
+                request.setAttribute("error", "Email déjà utilisé.<br/>Veuillez indiquer un autre.");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            } else {
+                userTest = yuserSessionBean.getYuser(pseudo);
+                if (userTest != null) { // Utilisateur existant !
+                    request.setAttribute("error", "Pseudo déjà pris.<br/>Veuillez en choisir un autre.");
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                } else { // Tout est OK pour l'enregistrement
+                    Yuser u = new Yuser();
+                    u.setPseudo(pseudo);
+                    u.setEmail(email);
+                    u.setPasswordHash(MD5Utils.digest(pass));
+                    u.setRank(new Yrank()); //TODO : récupérer le rang par défaut
+
+                    yuserSessionBean.insert(u);
+
+                    request.setAttribute("info", "Le compte a été créé.<br/>Vous pouvez vous connecter.");
+                    request.getRequestDispatcher("login").forward(request, response);
+                }
+            }
+        }
     }
 
     /** 
@@ -106,6 +123,6 @@ public class ServletRegister extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Enregistre un membre";
+        return "Enregistre un membre dans la BDD";
     }
 }

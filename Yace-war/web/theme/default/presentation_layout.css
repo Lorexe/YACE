@@ -5,13 +5,13 @@
 	min-width: 780px;
 }
 /**
- * >>>>>>>>> GENERAL <<<<<<<<<
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> GENERAL <<<<<<<<<
  */
 body{
 }
 
 /**
- * >>>>>>>>> EN TETE <<<<<<<<<
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> EN TETE <<<<<<<<<
  */
 header[role="welcome"]{
 	margin: 2em auto;
@@ -25,18 +25,10 @@ header[role="welcome"]{
 	/**
 	 * Nom du site
 	 */
-	#logo-header{
-		width: 18em;
-		height: 6em;
-
-		-moz-background-size: 18em 6em; /* Firefox 3.6 */
-		background-size: 18em 6em;
-	}
-
-		#logo a{ text-decoration: none; }
+	#logo a{ text-decoration: none; }
 
 /**
- * >>>>>>>>> Formulaires <<<<<<<<<
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> Formulaires <<<<<<<<<
  */
 input{
 	width: 100%;
@@ -58,7 +50,7 @@ input[role="captcha"]{
 }
 
 /**
- * >>>>>>>>> CORPS <<<<<<<<<
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> CORPS <<<<<<<<<
  */
 /**
  * Visite guidée
@@ -78,14 +70,14 @@ input[role="captcha"]{
 	header[role="tour"]{
 		margin: 0 0 22px 15px;
 		font-size: 2em;
-		text-shadow: 2px 2px 2px #666;
+		text-shadow: 2px 2px 0px #333;
 	}
 
 	aside[role="signin"]{
 		float: right;
 		text-align: center;
 		width: 21%;
-		text-shadow: 2px 2px 2px #666;
+		text-shadow: 2px 2px 0px #333;
 	}
 
 		aside[role="signin"] form {
@@ -102,73 +94,55 @@ input[role="captcha"]{
 		width: 77%;
 	}
 
-	.info {
-		color: #393;
-		background-color: #cfc;
-		font-weight: bold;
-		border: #393 2px solid;
-	}
-
-	.warning {
-		color: #000;
-		background-color: #fc3;
-		font-family: 'MuliItalic', sans-serif;
-		font-style: italic;
-		border: #000 1px inset;
-	}
-
-	.fatal {
-		color: #000;
-		background-color: #f66;
-		font-weight: bold;
-		font-variant: small-caps;
-		border: #c00 2px outset;
-	}
-
-	.output {
-		padding: 0.6em;
-		text-shadow: none;
-		border-radius: 5px;
-		text-align: center;
-	}
-
 	/**
 	 * Contrôles diapo
 	 */
 	#prev{
-		background-image: url('./img/icon/prev_48.png');
+		background-image: url('./img/icon/prev_24g.png');
 		width: 24px;
 		height: 24px;
-
-		-moz-background-size: 24px 24px; /* Firefox 3.6 */
-		background-size: 24px 24px;
 	}
 
 	#pause{
-		background-image: url('./img/icon/remove_48.png');
+		background-image: url('./img/icon/pause_24g.png');
 		width: 24px;
 		height: 24px;
-
-		-moz-background-size: 24px 24px; /* Firefox 3.6 */
-		background-size: 24px 24px;
 	}
 
 	#play{
-		background-image: url('./img/icon/valid_48.png');
+		background-image: url('./img/icon/play_24g.png');
 		width: 24px;
 		height: 24px;
-
-		-moz-background-size: 24px 24px; /* Firefox 3.6 */
-		background-size: 24px 24px;
 	}
 
 	#next{
-		background-image: url('./img/icon/next_48.png');
+		background-image: url('./img/icon/next_24g.png');
 		width: 24px;
 		height: 24px;
+	}
 
-		-moz-background-size: 24px 24px; /* Firefox 3.6 */
-		background-size: 24px 24px;
+	#prev:hover{
+		background-image: url('./img/icon/prev_24.png');
+		width: 24px;
+		height: 24px;
+	}
+
+	#pause:hover{
+		background-image: url('./img/icon/pause_24.png');
+		width: 24px;
+		height: 24px;
+	}
+
+	#play:hover{
+		background-image: url('./img/icon/play_24.png');
+		width: 24px;
+		height: 24px;
+	}
+
+	#next:hover{
+		background-image: url('./img/icon/next_24.png');
+		width: 24px;
+		height: 24px;
 	}
 
 /**
@@ -176,10 +150,9 @@ input[role="captcha"]{
  */
 #slideshow {
 	width:75%;
-	height: 25em;
+	height: 26em;
 	margin:1em;
 	margin-bottom: 2em;
-	background-color: #ffc;
 	border-radius: 10px;
 }
 
@@ -192,14 +165,15 @@ input[role="captcha"]{
 	#slideshow > * { position:relative; left:0; top:0; }
 
 	.slide {
-		height:14em;
+		height:14.7em;
 		overflow:hidden;
-		padding: 25px 60px 26px;
+		padding: 18px 60px 33px;
 		background: #fff;
 		font-size: 1.5em;
 		color: #000;
 		border-radius: 10px;
 		box-shadow: 4px 4px 4px #003;
+		text-align: justify;
 	}
 
 		.slide h1{

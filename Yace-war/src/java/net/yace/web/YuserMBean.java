@@ -11,44 +11,44 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityExistsException;
-import net.yace.ejb.UserSessionBean;
-import net.yace.entity.User;
+import net.yace.ejb.YuserSessionBean;
+import net.yace.entity.Yuser;
 
 
 /**
  *
  * @author Developpeur
  */
-@Named(value = "user")
+@Named(value = "yuser")
 @SessionScoped
-public class UserMBean implements Serializable {
+public class YuserMBean implements Serializable {
     @EJB
-    private UserSessionBean userSessionBean = new UserSessionBean();
-    private User user;
+    private YuserSessionBean yuserSessionBean = new YuserSessionBean();
+    private Yuser yuser;
 
-    /** Creates a new instance of UserMBean */
-    public UserMBean() {
+    /** Creates a new instance of YuserMBean */
+    public YuserMBean() {
     }
     
-    public List<User> getUsers()
+    public List<Yuser> getYusers()
     {
-        return userSessionBean.retrieve();
+        return yuserSessionBean.retrieve();
     }
 
-    public User getUser(String pseudo) {
-        return userSessionBean.getUser(pseudo);
+    public Yuser getYuser(String pseudo) {
+        return yuserSessionBean.getYuser(pseudo);
     }
     
     public String update()
     {
         System.out.println("###UPDATE###");
-        user = userSessionBean.update(user);
+        yuser = yuserSessionBean.update(yuser);
         return "SAVED";
     }
     
-    public void addUser(User u) {
+    public void addYuser(Yuser u) {
         try {
-            userSessionBean.insert(u);
+            yuserSessionBean.insert(u);
         }
         catch(EntityExistsException e) {
             e.printStackTrace();
@@ -58,7 +58,7 @@ public class UserMBean implements Serializable {
         }
     }
     
-    public void setUser(User u) {
-        this.user = u;
+    public void setYuser(Yuser u) {
+        this.yuser = u;
     }
 }

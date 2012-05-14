@@ -10,11 +10,11 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletRegister</servlet-name>
-        <url-pattern>/ServletRegister</url-pattern>
+        <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletLogin</servlet-name>
-        <url-pattern>/ServletLogin</url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -24,4 +24,11 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    <resource-ref>
+        <description>Connexion à la DB</description>
+        <res-ref-name>Yacedb</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
 </web-app>

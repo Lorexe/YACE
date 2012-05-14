@@ -2,7 +2,7 @@ package net.yace.mdb;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.yace.entity.User;
+import net.yace.entity.Yuser;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
@@ -30,11 +30,11 @@ public class NotificationBean implements MessageListener {
             Object msgObj = ((ObjectMessage)message).getObject();
             if (msgObj != null)
             {
-                User u = (User)msgObj;
+                Yuser u = (Yuser)msgObj;
                 System.out.println("User has been updated:");
                 StringBuilder sb = new StringBuilder();
                 sb.append("User ID=");
-                sb.append(u.getId());
+                sb.append(u.getIdYUSER());
                 sb.append(", ");
                 sb.append("Login=");
                 sb.append(u.getEmail());
