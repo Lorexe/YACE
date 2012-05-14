@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr" class="angled stripes">
 <head>
-	<title>Page Xyz - YACE! Yet Another Collection Engine - Gestionnaire pour collectionneurs</title>
+	<title>Page Xyz - ${initParam.appName}</title>
 	<link rel="shortcut icon" href="favicon.ico" />
 	<meta charset="utf-8" />
 
@@ -26,11 +26,11 @@
 <body>
 	<header role="menu" class="yace-logo">
 		<nav id="menu">
-			<form name="menu" id="menubar" action="common.html" method="POST">
-				<input type="image" id="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" />
-				<input type="image" id="helpicon" alt="Aide" title="Affiche l'aide de YaCE!" src="./theme/default/img/img_trans.gif" />
+			<form name="menu" id="menubar" action="/menu" method="POST">
+				<input type="image" class="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" />
+				<input type="image" class="helpicon" alt="Aide" title="Affiche l'aide de YaCE!" src="./theme/default/img/img_trans.gif" />
 				<div id="searchbar" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
-					<input type="image" id="searchicon" src="./theme/default/img/img_trans.gif" />
+					<input type="image" class="searchicon" src="./theme/default/img/img_trans.gif" />
 					<input type="text" id="keyword" />
 					<select name="searchdomain">
 						<option label="Cette collection" value="thiscoll" />
@@ -38,10 +38,10 @@
 					</select>
 				</div>
 			</form>
-			<form action="#" method="POST" id="accountbar" name="account">
+			<form action="/menu" method="POST" id="accountbar" name="account">
 					Username
-					<input type="image" id="profileicon" alt="Votre compte" title="Modifiez vos informations personelles" src="./theme/default/img/img_trans.gif" />
-					<input type="image" id="exiticon" alt="D&eacute;connexion" title="D&eacute;connexion" src="./theme/default/img/img_trans.gif" />
+					<input type="image" class="profileicon" alt="Votre compte" title="Modifiez vos informations personelles" src="./theme/default/img/img_trans.gif" />
+					<input type="image" class="exiticon" alt="D&eacute;connexion" title="D&eacute;connexion" src="./theme/default/img/img_trans.gif" />
 			</form>
 		</nav>
 	</header>
@@ -95,7 +95,7 @@
 			<ul id="itemlist">
 				<li class="squarecol" style="color: blue;">Vase ancien</li>
 				<li class="squarecol" style="color: blue;">Vase anglais</li>
-				<li class="squarecol" style="color: green;">Vase français</li>
+				<li class="squarecol" style="color: green;">Vase fran&ccedil;ais</li>
 				<li class="squarecol" style="color: green;">Vase zoulou</li>
 			</ul>
 
@@ -112,19 +112,19 @@
 				<h1>Guide et astuces</h1>
 			</header>
 
-			<div class="info">
-				<img class="iconinfo" title="Que dois-je faire?" src="./theme/default/img/img_trans.gif" />
-				<p></p>
+			<div class="infobox">
+				<img class="infoicon32" title="Que dois-je faire?" src="./theme/default/img/img_trans.gif" />
+				<p>Veggies sunt bona vobis, proinde vos postulo esse magis yarrow watercress rock melon nori chard tigernut wakame pea sprouts wattle seed potato kale kohlrabi avocado aubergine.</p>
 			</div>
 
-			<div class="info">
-				<img class="iconinfo" title="Que dois-je faire?" src="./theme/default/img/img_trans.gif" />
-				<p></p>
+			<div class="infobox">
+				<img class="infoicon32" title="Que dois-je faire?" src="./theme/default/img/img_trans.gif" />
+				<p>Dandelion bush tomato quandong bok choy lotus root seakale plantain gram okra cress sorrel yarrow komatsuna chicory grape. Chard tomatillo grape black-eyed pea potato cress bamboo shoot. Epazote ricebean cauliflower kale kombu endive.</p>
 			</div>
 
-			<div class="tip">
-				<img class="icontips" title="Astuce!" src="./theme/default/img/img_trans.gif" />
-				<p></p>
+			<div class="tipbox">
+				<img class="tipicon" title="Astuce!" src="./theme/default/img/img_trans.gif" />
+				<p>Corn horseradish komatsuna bok choy artichoke salsify. Collard greens tatsoi potato bok choy catsear broccoli spinach parsley caulie soko. Prairie turnip cucumber rock melon arugula epazote bitterleaf cabbage potato coriander bunya nuts soybean nori spinach endive shallot.</p>
 			</div>
 		</section>
 
@@ -164,7 +164,7 @@
 				</aside>
 				<img id="test" alt="" src="./theme/default/img/icon/image_128.png">
 				<!-- POUR LE FIGCAPTION SUIVANT ==> PREVOIR TAILLE CONTENU MAXIMALE -->
-				<figcaption title="Vase blablablabla">Vase anc...</figcaption>
+				<figcaption title="Vase ancien">Vase anc...</figcaption>
 			</figure>
 			<figure class="cover">
 				<aside class="item-details">
@@ -173,7 +173,7 @@
 					</a>
 				</aside>
 				<img alt="" src="./theme/default/img/icon/image_128.png">
-				<figcaption title="Vase blablablabla">Vase angl...</figcaption>
+				<figcaption title="Vase anglais">Vase angl...</figcaption>
 			</figure>
 
 
@@ -185,7 +185,7 @@
 					</a>
 				</aside>
 				<img alt="" src="./theme/default/img/icon/image_128.png">
-				<figcaption title="Vase blablablabla">Vase zou...</figcaption>
+				<figcaption title="Vase zoulou">Vase zou...</figcaption>
 			</figure>
 			<figure class="cover">
 				<aside class="item-details">
@@ -194,7 +194,7 @@
 					</a>
 				</aside>
 				<img alt="" src="./theme/default/img/icon/image_128.png">
-				<figcaption title="Vase blablablabla">Vase franç...</figcaption>
+				<figcaption title="Vase fran&ccedil;ais">Vase fran&ccedil;...</figcaption>
 			</figure>
 
 		</section>
@@ -209,7 +209,7 @@
 					<h1>Aper&ccedil;u de "Objet"</h1>
 				</header>
 				<section class="content">
-					<h1>Hé ouais</h1>
+					<h1>H&eacute; ouais</h1>
 					oh yeah
 				</section>
 			</section>
@@ -217,7 +217,7 @@
 
 	<footer class="clearfix">
 		<p id="copyright">&copy; Ya<em class="CE">ce</em>!</p>
-		<a href="admin.html"><strong>Administrer Ya<em class="CE">ce</em>!</strong></a>
+		<a href="/yadmin"><strong>Administrer Ya<em class="CE">ce</em>!</strong></a>
 	</footer>
 </body>
 </html>

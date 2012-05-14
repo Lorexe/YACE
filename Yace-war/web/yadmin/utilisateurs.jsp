@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr" class="angled stripes">
 <head>
-	<title>Administration - Gestion utilisateurs - YACE! Yet Another Collection Engine - Gestionnaire pour collectionneurs</title>
+	<title>Administration - Gestion utilisateurs - ${initParam.appName}</title>
 	<link rel="shortcut icon" href="favicon.ico" />
 	<meta charset="utf-8" />
 
@@ -24,11 +24,11 @@
 <body>
 	<header role="menu" class="yace-logo">
 		<nav id="menu">
-			<form name="menu" id="menubar" action="common.html" method="POST">
-				<input type="image" id="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" />
-				<input type="image" id="helpicon" alt="Aide" title="Affiche l'aide de YaCE!" src="./theme/default/img/img_trans.gif" />
+			<form name="menu" id="menubar" action="/menu" method="POST">
+				<input type="image" class="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" />
+				<input type="image" class="helpicon" alt="Aide" title="Affiche l'aide de YaCE!" src="./theme/default/img/img_trans.gif" />
 				<div id="searchbar" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
-					<input type="image" id="searchicon" src="./theme/default/img/img_trans.gif" />
+					<input type="image" class="searchicon" src="./theme/default/img/img_trans.gif" />
 					<input type="text" id="keyword" />
 					<select name="searchdomain">
 						<option label="Cette collection" value="thiscoll" />
@@ -36,10 +36,10 @@
 					</select>
 				</div>
 			</form>
-			<form action="#" method="POST" id="accountbar" name="account">
-					Admin
-					<input type="image" id="profileicon" alt="Editer" title="Modifiez vos informations personelles" src="./theme/default/img/img_trans.gif" />
-					<input type="image" id="exiticon" alt="Quitter" title="D&eacute;connexion" src="./theme/default/img/img_trans.gif" />
+			<form action="/menu" method="POST" id="accountbar" name="account">
+					Username
+					<input type="image" class="profileicon" alt="Votre compte" title="Modifiez vos informations personelles" src="./theme/default/img/img_trans.gif" />
+					<input type="image" class="exiticon" alt="D&eacute;connexion" title="D&eacute;connexion" src="./theme/default/img/img_trans.gif" />
 			</form>
 		</nav>
 	</header>
@@ -173,7 +173,7 @@
 
 	<footer class="clearfix">
 		<p id="copyright">&copy; Ya<em class="CE">ce</em>!</p>
-		<a href="admin.html"><strong>Administrer Ya<em class="CE">ce</em>!</strong></a>
+		<a href="/yadmin"><strong>Administrer Ya<em class="CE">ce</em>!</strong></a>
 	</footer>
 </body>
 </html>

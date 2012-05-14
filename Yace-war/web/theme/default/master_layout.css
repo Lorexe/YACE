@@ -1,59 +1,71 @@
 /**
  * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> IMAGES <<<<<<<<<<
  */
-#deleteicon {
+.deleteicon {
 	background-image: url('./img/icon/delete_16.png');
   width: 16px;
   height: 16px;
   margin: 0;
 }
 
-#editicon {
+.editicon {
 	background-image: url('./img/icon/edit_16.png');
   width: 16px;
   height: 16px;
   margin: 0;
 }
 
-#profileicon {
+.profileicon {
 	background-image: url('./img/icon/person_24.png');
   width: 24px;
   height: 24px;
   margin: 0;
 }
 
-#exiticon {
+.exiticon {
 	background-image: url('./img/icon/shutdown_24.png');
   width: 24px;
   height: 24px;
   margin: 0;
 }
 
-#helpicon {
+.helpicon {
  	background-image: url('./img/icon/interrogation_48.png');
   width: 48px;
   height: 48px;
 }
 
-#homeicon {
+.homeicon {
  	background-image: url('./img/icon/home_48.png');
   width: 48px;
 	height: 48px;
 }
 
-#infoicon {
- 	background-image: url('./img/icon/info_48.png');
+.infoicon {
+  background-image: url('./img/icon/info_48.png');
   width: 48px;
   height: 48px;
 }
 
-#printicon {
+.infoicon32 {
+  background-image: url('./img/icon/info_32.png');
+  width: 32px;
+  height: 32px;
+}
+
+.tipicon {
+ 	background-image: url('./img/icon/tip_32.png');
+  width: 32px;
+  height: 32px;
+}
+
+.printicon {
  	background-image: url('./img/icon/print_24.png');
   width: 24px;
 	height: 24px;
 }
 
-#searchicon {
+.searchicon {
  	background-image: url('./img/icon/search_24.png');
   width: 39px;
   height: 39px;
@@ -183,14 +195,31 @@ aside#guide {
 }
 
 	/* :::: Vue des collections :::: */
-	section#infotips {
-
-	}
+	section#infotips div img {
+            float: left;
+            width: 32px;
+            height: 32px;
+            margin: 0 4px 0 -4px;
+        }
+        
+        section#infotips div p {
+            font-size: 0.9em;
+        }
 
 		div.infobox {
 			background: #eef;
 			border-radius: 5px;
 			padding: 8px;
+                        margin-bottom: 7px;
+                        border: 1px solid #ccd;
+		}
+
+                div.tipbox {
+			background: #ffe;
+			border-radius: 5px;
+			padding: 8px;
+                        margin-bottom: 7px;
+                        border: 1px solid #ddc;
 		}
 
 	/* :::: Vue détaillée :::: */
