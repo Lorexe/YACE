@@ -57,7 +57,18 @@ public class ServletLogin extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession(false);
+        if(session==null) {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        } else {
+            Yuser yuser = (Yuser)session.getAttribute("user");
+            if(yuser==null) {
+                request.setAttribute("error", "Session invalide");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("common.jsp").forward(request, response);
+            }
+        }
     }
 
     
