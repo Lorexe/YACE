@@ -13,6 +13,10 @@
         <servlet-name>ServletLogin</servlet-name>
         <servlet-class>net.yace.web.servlets.ServletLogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletDisplayDetails</servlet-name>
+        <servlet-class>net.yace.web.servlets.ServletDisplayDetails</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletRegister</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -21,10 +25,12 @@
         <servlet-name>ServletLogin</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletDisplayDetails</servlet-name>
+        <url-pattern>/details</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>1800</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
