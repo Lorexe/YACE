@@ -67,11 +67,11 @@
                     <input type="button" class="y-button y-button-blue" value="Enregistrez-vous" onclick="validateCaptcha()?submit():errorCaptcha()" />
                 </form>
                 <% if (request.getAttribute("error") != null) {%>
-                    <output id="out1" class="warning output"><%= request.getAttribute("error")%></output>
+                <output id="out1" class="warning output"><%= request.getAttribute("error")%></output>
                 <% } else if (request.getAttribute("info") != null) {%>
-                    <output id="out1" class="info output"><%= request.getAttribute("info")%></output>
+                <output id="out1" class="info output"><%= request.getAttribute("info")%></output>
                 <% } else {%>
-                    <output id="out1" class="hidden"></output>
+                <output id="out1" class="hidden"></output>
                 <% }%>
             </aside>
 

@@ -215,11 +215,11 @@ aside#guide {
 		}
 
                 div.tipbox {
-			background: #ffe;
+			background: #ffc;
 			border-radius: 5px;
 			padding: 8px;
                         margin-bottom: 7px;
-                        border: 1px solid #ddc;
+                        border: 1px solid #dda;
 		}
 
 	/* :::: Vue détaillée :::: */
@@ -265,7 +265,7 @@ figure.cover {
 	display: inline-block;
 	border: 1px solid #069;
 	border-radius: 1px;
-	width: 90px;
+	width: 110px;
 	margin: 0 15px 15px 0;
 	cursor: pointer;
 	vertical-align: top;
@@ -299,23 +299,25 @@ figure.cover {
 			}
 
 	figure.cover img {
-		height: 90px;
-		width: 90px;
+		height: 110px;
+		width: 110px;
 	}
 
 	figure.cover figcaption {
 		background: #069;
 		color: #fff;
+                max-height: 2em;
 		padding: 3px 0;
 		text-align: center;
-		overflow: auto;
+		overflow: hidden;
+                font-size: 0.9em;
 	}
 
 /**
  * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> VISIONNEUSE <<<<<<<<<<
  */
 div#foreground {
-	position: absolute;
+	position: fixed;
 	left: 0;
 	top: 0;
 	height: 100%;
@@ -323,14 +325,14 @@ div#foreground {
 	background: rgba( 0, 0, 0, 0.6 );
 }
 
-section#splash {
-	position: absolute;
-	top: 50%;
+section.splash {
+	position: fixed;
+	top: 0;
 	left: 50%;
-	width: 20pc;
-	height: 16pc;
-	margin-top: -8pc;
-	margin-left: -10pc;
+	width: 70%;
+	height: 80%;
+	margin-top: 3pc;
+	margin-left: -35%;
 }
 
 /**
@@ -399,6 +401,7 @@ footer {
 section.content {
 	margin: 0;
 	padding: 10px 25px;
+        overflow: auto;
 }
 
 	section.content > h1 {

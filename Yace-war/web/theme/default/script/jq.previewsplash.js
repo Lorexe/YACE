@@ -10,15 +10,19 @@
  */
  $(document).ready(function(){
 
+        $('div#foreground').hide()
  	$('div[role="preview"]').hide()
 
 	$('figure.cover > img, figure.cover > figcaption').click(function(){
-		$('div[role="preview"]').fadeIn(150)
+                var id = this.parentNode.id;
+                $('div#foreground').fadeIn(150)
+                $('div[role="preview"]#prev-'+id).fadeIn(150)
 		/* Ajax etc */
 	})
 
 	$('div#foreground').click(function(){
-		$('div[role="preview"]').hide()
+		$(this).hide()
+                $('div[role="preview"]').hide()
 	})
 
 });
