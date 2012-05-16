@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Ycollection.findAll", query = "SELECT y FROM Ycollection y"),
     @NamedQuery(name = "Ycollection.findByIdYCOLLECTION", query = "SELECT y FROM Ycollection y WHERE y.idYCOLLECTION = :idYCOLLECTION"),
-    @NamedQuery(name = "Ycollection.findByTheme", query = "SELECT y FROM Ycollection y WHERE y.theme = :theme")})
+    @NamedQuery(name = "Ycollection.findByTheme", query = "SELECT y FROM Ycollection y WHERE y.theme = :theme"),
+    @NamedQuery(name = "Ycollection.findAllThemesLike", query = "SELECT y FROM Ycollection y WHERE y.theme LIKE %:theme%")})
 public class Ycollection implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
