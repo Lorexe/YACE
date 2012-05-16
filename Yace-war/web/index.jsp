@@ -46,7 +46,7 @@
 
             <aside role="signin">
                 <h1>Connexion</h1>
-                <form name="connexion" action="login" method="post" autocomplete="on">
+                <form name="connexion" action="login" method="post">
                     <input type="text" name="pseudo" maxlength="200" placeholder="Pseudo ou email" />
                     <br />
                     <input type="password" name="pwd" maxlength="200" placeholder="Mot de passe" />
@@ -54,7 +54,7 @@
                     <input type="submit" class="y-button y-button-blue" value="Connectez-vous" />
                 </form>
                 <h1>Inscription</h1>
-                <form name="inscription" action="register" method="post" autocomplete="on">
+                <form name="inscription" action="register" method="post">
                     <input type="text" name="pseudo" maxlength="200" placeholder="Nom d'utilisateur" />
                     <br />
                     <input type="text" name="email" maxlength="200" placeholder="Email valide" />

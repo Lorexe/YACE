@@ -2,10 +2,8 @@ package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import java.util.regex.Pattern;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +20,10 @@ import net.yace.web.utils.ServicesLocator;
  * @author Boi Bruno
  */
 public class ServletRegister extends HttpServlet {
+    
+    private final static String VUE_PRESENTATION = "index.jsp";
+    private final static String SVLT_LOGIN = "login";
+    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -79,27 +81,27 @@ public class ServletRegister extends HttpServlet {
         // Test des champs
         if (pseudo == null || pseudo.isEmpty()) {
             request.setAttribute("error", "Vous devez choisir<br/>un pseudo !");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else if (email == null || email.isEmpty() || !Pattern.matches("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", email)) {
             request.setAttribute("error", "Vous devez indiquer<br/>un email valide !");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else if (pass == null || passVerif == null || pass.isEmpty() || passVerif.isEmpty() || !pass.equals(passVerif)) {
             request.setAttribute("error", "Vous devez indiquer deux fois<br/>le même mot de passe !");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else {
             // Chargement de la facade
             YuserFacade userFacade = ServicesLocator.getUserFacade();
-
+            
             // Reste à tester que l'utilisateur n'existe pas déjà
             Yuser userTest = userFacade.findUser(email);
             if (userTest != null) { // Utilisateur existant !
                 request.setAttribute("error", "Email déjà utilisé.<br/>Veuillez indiquer un autre.");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
                 userTest = userFacade.findUser(pseudo);
                 if (userTest != null) { // Utilisateur existant !
                     request.setAttribute("error", "Pseudo déjà pris.<br/>Veuillez en choisir un autre.");
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                    request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
                 } else { // Tout est OK pour l'enregistrement
                     Yuser u = new Yuser();
                     u.setPseudo(pseudo);
@@ -110,7 +112,7 @@ public class ServletRegister extends HttpServlet {
                     userFacade.create(u);
 
                     request.setAttribute("info", "Le compte a été créé.<br/>Vous pouvez vous connecter.");
-                    request.getRequestDispatcher("login").forward(request, response);
+                    request.getRequestDispatcher(SVLT_LOGIN).forward(request, response);
                 }
             }
         }

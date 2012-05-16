@@ -17,6 +17,10 @@
         <servlet-name>ServletDisplayDetails</servlet-name>
         <servlet-class>net.yace.web.servlets.ServletDisplayDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletLogout</servlet-name>
+        <servlet-class>net.yace.web.servlets.ServletLogout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletRegister</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -29,12 +33,31 @@
         <servlet-name>ServletDisplayDetails</servlet-name>
         <url-pattern>/details</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletLogout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>1800</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    <jsp-config>
+        <jsp-property-group>
+            <description>Header and footer settings</description>
+            <display-name>Includes</display-name>
+            <url-pattern>/WEB-INF/view/admin/*</url-pattern>
+            <url-pattern>/WEB-INF/view/user/*</url-pattern>
+            <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
+            <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>
+        </jsp-property-group>
+        <jsp-property-group>
+            <description>Index</description>
+            <display-name>Presentation</display-name>
+            <url-pattern>/index.jsp</url-pattern>
+        </jsp-property-group>
+    </jsp-config>
     <resource-ref>
         <description>Connexion à la DB</description>
         <res-ref-name>Yacedb</res-ref-name>

@@ -21,32 +21,9 @@ import net.yace.web.utils.ServicesLocator;
  * @author Developpeur
  */
 public class ServletLogin extends HttpServlet {
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletLogin</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletLogin at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-             */
-        } finally {            
-            out.close();
-        }
-    }
+    
+    private final static String VUE_PRESENTATION = "index.jsp";
+    private final static String VUE_HOME = "WEB-INF/view/user/common.jsp";
 
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -59,14 +36,14 @@ public class ServletLogin extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if(session==null) {
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else {
             Yuser yuser = (Yuser)session.getAttribute("user");
             if(yuser==null) {
                 request.setAttribute("error", "Session invalide");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
-                request.getRequestDispatcher("common.jsp").forward(request, response);
+                request.getRequestDispatcher(VUE_HOME).forward(request, response);
             }
         }
     }
@@ -88,11 +65,11 @@ public class ServletLogin extends HttpServlet {
         // Test des champs
         if(pseudo==null || pseudo.isEmpty()) {
             request.setAttribute("error", "Vous devez entrer<br/>un pseudo !");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         }
         else if(pass==null || pass.isEmpty()) {
             request.setAttribute("error", "Vous devez entrer<br/>un mot de passe !");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else {
             // Chargement de la facade
             YuserFacade userFac = ServicesLocator.getUserFacade();
@@ -101,16 +78,16 @@ public class ServletLogin extends HttpServlet {
             // Reste à tester les infos de connexion
             if(userTest==null) {
                 request.setAttribute("error", "Utilisateur introuvable");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
                 if(!userTest.getPasswordHash().equals(MD5Utils.digest(pass))) {
                     request.setAttribute("error", "Mauvais mot de passe");
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                    request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
                 } else {
                     // Tout est OK, on crée la session
                     HttpSession session = request.getSession();
                     session.setAttribute("user", userTest);
-                    request.getRequestDispatcher("common.jsp").forward(request, response);
+                    request.getRequestDispatcher(VUE_HOME).forward(request, response);
                 }
             }
         }
@@ -122,6 +99,6 @@ public class ServletLogin extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Connecte un utilisateur";
     }// </editor-fold>
 }

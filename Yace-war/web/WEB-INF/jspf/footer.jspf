@@ -1,0 +1,9 @@
+        <footer class="clearfix">
+            <p id="copyright">
+                &copy; Ya<em class="CE">ce</em>!<br/>
+                C'est "yes" mais avec "yeah" dedans.               
+            </p>
+            <a href="/yadmin"><strong>Administrer Ya<em class="CE">ce</em>!</strong></a>
+        </footer>
+    </body>
+</html>

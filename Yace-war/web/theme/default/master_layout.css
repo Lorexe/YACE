@@ -112,12 +112,12 @@ header[role="menu"] {
 		display: inline-block;
 	}
 
-	form#menubar {
+	div#menubar {
 		height: 50px;
 	}
 
 	/* :::: SearchBar :::: */
-	div#searchbar {
+	form#searchbar {
 		background: #f8f8ff;
 	  border: 1px solid #ccf;
 	  border-top: 1px solid #ccc;
@@ -130,7 +130,7 @@ header[role="menu"] {
 	  padding: 3px;
 	}
 
-	div#searchbar #keyword {
+	form#searchbar #keyword {
 		width: 300px;
 
 		height: 32px;
@@ -142,12 +142,12 @@ header[role="menu"] {
 		color: #33f;
 	}
 
-	div#searchbar select {
+	form#searchbar select {
 		margin-right: 5px;
 	}
 
 	/* :::: AccountBar :::: */
-	form#accountbar {
+	div#accountbar {
 		background: #f8f8ff;
 	  border: 1px solid #ccf;
 	  border-top: 1px solid #ccc;
@@ -160,7 +160,7 @@ header[role="menu"] {
 	  padding: 12px 5px;
 	}
 
-	form#accountbar fieldset {
+	div#accountbar fieldset {
 		margin-left: -20px;
 		padding: 0 10px 10px 0;
 	}
