@@ -5,7 +5,6 @@
 package net.yace.web.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +42,7 @@ public class ServletLogin extends HttpServlet {
                 request.setAttribute("error", "Session invalide");
                 request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
+                session.setAttribute("pageTitle", "Page d'accueil");
                 request.getRequestDispatcher(VUE_HOME).forward(request, response);
             }
         }
@@ -73,20 +73,21 @@ public class ServletLogin extends HttpServlet {
         } else {
             // Chargement de la facade
             YuserFacade userFac = ServicesLocator.getUserFacade();
-            Yuser userTest= userFac.findUser(pseudo);
+            Yuser u = userFac.findUser(pseudo);
             
             // Reste à tester les infos de connexion
-            if(userTest==null) {
+            if(u==null) {
                 request.setAttribute("error", "Utilisateur introuvable");
                 request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
-                if(!userTest.getPasswordHash().equals(MD5Utils.digest(pass))) {
+                if(!u.getPasswordHash().equals(MD5Utils.digest(pass))) {
                     request.setAttribute("error", "Mauvais mot de passe");
                     request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
                 } else {
                     // Tout est OK, on crée la session
                     HttpSession session = request.getSession();
-                    session.setAttribute("user", userTest);
+                    session.setAttribute("user", u);
+                    session.setAttribute("pageTitle", "Page d'accueil");
                     request.getRequestDispatcher(VUE_HOME).forward(request, response);
                 }
             }

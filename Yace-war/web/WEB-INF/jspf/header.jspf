@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="fr" class="angled stripes">
     <head>
-        <title>Page Xyz - ${initParam.appName}</title>
+        <title>${pageTitle} - ${initParam.appName}</title>
         <link rel="shortcut icon" href="favicon.ico" />
         <meta charset="utf-8" />
 

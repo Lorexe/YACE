@@ -54,6 +54,8 @@ public class Yuser implements Serializable {
     @Size(min = 1, max = 32)
     @Column(name = "password_hash")
     private String passwordHash;
+    @Basic(optional = false)
+    @NotNull
     @Size(max = 45)
     @Column(name = "pseudo")
     private String pseudo;

@@ -61,7 +61,7 @@
     <resource-ref>
         <description>Connexion à la DB</description>
         <res-ref-name>Yacedb</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
+        <res-type>javax.sql.ConnectionPoolDataSource</res-type>
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>

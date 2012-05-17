@@ -1,3 +1,10 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+
+<sql:query var="subscribeOk" dataSource="Yacedb">
+    SELECT val FROM ysetting WHERE ysetting.name = "subscribeOk"
+</sql:query>
+
 <!--
  Nom
         index.html
@@ -53,6 +60,9 @@
                     <br />
                     <input type="submit" class="y-button y-button-blue" value="Connectez-vous" />
                 </form>
+                
+        <c:forEach var="row" items="${subscribeOk.rows}">
+            <c:if test='${row.val == "true"}'>
                 <h1>Inscription</h1>
                 <form name="inscription" action="register" method="post">
                     <input type="text" name="pseudo" maxlength="200" placeholder="Nom d'utilisateur" />
@@ -66,6 +76,9 @@
                     <script type="text/javascript">showCaptcha();</script>
                     <input type="button" class="y-button y-button-blue" value="Enregistrez-vous" onclick="validateCaptcha()?submit():errorCaptcha()" />
                 </form>
+            </c:if> 
+        </c:forEach>
+                
                 <% if (request.getAttribute("error") != null) {%>
                 <output id="out1" class="warning output"><%= request.getAttribute("error")%></output>
                 <% } else if (request.getAttribute("info") != null) {%>
