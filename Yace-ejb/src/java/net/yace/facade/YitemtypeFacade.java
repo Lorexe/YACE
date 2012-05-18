@@ -4,9 +4,12 @@
  */
 package net.yace.facade;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import net.yace.entity.Yitemtype;
 
 /**
@@ -24,6 +27,38 @@ public class YitemtypeFacade extends AbstractFacade<Yitemtype> {
 
     public YitemtypeFacade() {
         super(Yitemtype.class);
+    }
+    
+    //recherche par nom
+    public Yitemtype findItemType(String name){
+        Query query;
+        query = em.createNamedQuery("Yitemtype.findByName");
+        query.setParameter("name", name);
+
+        Yitemtype type=null;
+        try {
+            type=(Yitemtype)query.getSingleResult();
+        } catch(NoResultException e) {
+        }
+        
+        return type;
+    }
+    
+    //liste des types, recherche par nom
+    public List<Yitemtype> findItemTypes(String name)
+    {
+        List<Yitemtype> tList = null;//liste à retourner
+        Query query;
+        query = em.createNamedQuery("Yitemtype.findAllTypesLike");
+        query.setParameter("name", name);
+        
+        try 
+        {
+            tList = query.getResultList();
+        }catch(NoResultException e){
+        }
+        
+        return tList;
     }
     
 }
