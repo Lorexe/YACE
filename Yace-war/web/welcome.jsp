@@ -1,10 +1,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+<%@ page pageEncoding="UTF-8" %>
 
 <sql:query var="subscribeOk" dataSource="Yacedb">
     SELECT val FROM ysetting WHERE ysetting.name = "subscribeOk"
 </sql:query>
-
+    
 <!--
  Nom
         index.html
@@ -14,6 +15,7 @@
  Auteur
         Bruno BOI <biddaputzese@gmail.com>
 -->
+
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -76,8 +78,9 @@
                     <script type="text/javascript">showCaptcha();</script>
                     <input type="button" class="y-button y-button-blue" value="Enregistrez-vous" onclick="validateCaptcha()?submit():errorCaptcha()" />
                 </form>
-            </c:if> 
+            </c:if>
         </c:forEach>
+
                 
                 <% if (request.getAttribute("error") != null) {%>
                 <output id="out1" class="warning output"><%= request.getAttribute("error")%></output>
@@ -113,10 +116,10 @@
                 <article class="slide">
                     <h1>Compl&egrave;te les informations</h1>
                     <p>
-                        Les types d'objets les plus courant (films, livres, CD,...) b&eacute;n&eacute;ficient donc d'une <strong>fonctionnalit&eacute; d'auto-compl&eacute;tion</strong>, r&eacute;alis&eacute;e grâce aux bases de donn&eacute;es populaires. Ces types d'objets sont <strong>personnalisable</strong>. Vous pouvez leur rajouter les informations que vous souhaitez !
+                        Les types d'objets les plus courant (films, livres, CD,...) b&eacute;n&eacute;ficient donc d'une <strong>fonctionnalit&eacute; d'auto-compl&eacute;tion</strong>, r&eacute;alis&eacute;e grÃ¢ce aux bases de donn&eacute;es populaires. Ces types d'objets sont <strong>personnalisable</strong>. Vous pouvez leur rajouter les informations que vous souhaitez !
                     </p>
                     <p>
-                        L'auto-compl&eacute;tion r&eacute;cup&egrave;re automatiquement ses informations de sites sp&eacute;cialis&eacute;s, comme <a href="http://www.imdb.com">The Internet Movie Database</a> - base de donn&eacute;es n°1 pour les films - ou encore <a href="http://www.amazon.com">Amazon</a> - base de donn&eacute;es de r&eacute;f&eacute;rence pour les livres, musiques, films, jeux vid&eacute;os... - et beaucoup d'autres.
+                        L'auto-compl&eacute;tion r&eacute;cup&egrave;re automatiquement ses informations de sites sp&eacute;cialis&eacute;s, comme <a href="http://www.imdb.com">The Internet Movie Database</a> - base de donn&eacute;es nÂ°1 pour les films - ou encore <a href="http://www.amazon.com">Amazon</a> - base de donn&eacute;es de r&eacute;f&eacute;rence pour les livres, musiques, films, jeux vid&eacute;os... - et beaucoup d'autres.
                     </p>
                 </article>
 

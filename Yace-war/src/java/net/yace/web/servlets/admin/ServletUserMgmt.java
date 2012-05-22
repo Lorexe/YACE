@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.yace.web.servlets;
+package net.yace.web.servlets.admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,9 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MaBoy <bruno.boi@student.helha.be>
  */
-public class ServletLogout extends HttpServlet {
-    
-    private final static String VUE_PRESENTATION = "welcome.jsp";
+public class ServletUserMgmt extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -28,8 +26,22 @@ public class ServletLogout extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().invalidate();
-        request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+            /* TODO output your page here
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ServletUserMgmt</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ServletUserMgmt at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+             */
+        } finally {            
+            out.close();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -65,6 +77,6 @@ public class ServletLogout extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Déconnecte un utilisateur";
+        return "Short description";
     }// </editor-fold>
 }

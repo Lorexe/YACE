@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Scohy Jérôme
  */
-public class ServletDisplayDetails extends HttpServlet {
+public class ServletItemDetails extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -32,10 +32,10 @@ public class ServletDisplayDetails extends HttpServlet {
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ServletDisplayDetails</title>");  
+            out.println("<title>Servlet ServletItemDetails</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ServletDisplayDetails at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ServletItemDetails at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
              */

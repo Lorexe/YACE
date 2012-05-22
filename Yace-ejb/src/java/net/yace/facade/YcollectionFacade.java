@@ -29,9 +29,24 @@ public class YcollectionFacade extends AbstractFacade<Ycollection> {
         super(Ycollection.class);
     }
     
+    //recherche par Id
+    public Ycollection find(int id){
+        Query query;
+        query = em.createNamedQuery("Ycollection.findByIdYCOLLECTION");
+        query.setParameter("idYCOLLECTION", id);
+
+        Ycollection coll=null;
+        try {
+            coll=(Ycollection)query.getSingleResult();
+        } catch(NoResultException e) {
+        }
+        
+        return coll;
+    }
+    
     
     //recherche par theme
-    public Ycollection findCollection(String theme){
+    public Ycollection find(String theme){
         Query query;
         query = em.createNamedQuery("Ycollection.findByTheme");
         query.setParameter("theme", theme);
@@ -46,7 +61,7 @@ public class YcollectionFacade extends AbstractFacade<Ycollection> {
     }
     
     //recherche des collections ayant un theme similaire
-    public List<Ycollection> findCollections(String theme)
+    public List<Ycollection> findAll(String theme)
     {
         List<Ycollection> cList = null;//liste à retourner
         Query query;

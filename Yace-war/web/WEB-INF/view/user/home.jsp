@@ -1,7 +1,7 @@
 <section id="main" class="whitebox"> <!-- main panel -->
 
     <header>
-        <input type="image" id="printicon" alt="Imprimer la page" title="Imprimer la page" src="./theme/default/img/img_trans.gif" />
+        <input type="image" class="printicon" alt="Imprimer la page" title="Imprimer la page" src="./theme/default/img/img_trans.gif" />
         <h1>
             Consultation de <strong>Vases</strong>
         </h1>

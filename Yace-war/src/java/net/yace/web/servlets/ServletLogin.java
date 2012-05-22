@@ -21,8 +21,8 @@ import net.yace.web.utils.ServicesLocator;
  */
 public class ServletLogin extends HttpServlet {
     
-    private final static String VUE_PRESENTATION = "index.jsp";
-    private final static String VUE_HOME = "WEB-INF/view/user/common.jsp";
+    private final static String VUE_PRESENTATION = "welcome.jsp";
+    private final static String VUE_HOME = "WEB-INF/view/user/home.jsp";
 
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -33,16 +33,16 @@ public class ServletLogin extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
         if(session==null) {
             request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else {
             Yuser yuser = (Yuser)session.getAttribute("user");
             if(yuser==null) {
-                request.setAttribute("error", "Session invalide");
+                //request.setAttribute("error", "Session invalide");
                 request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
-                session.setAttribute("pageTitle", "Page d'accueil");
+                request.setAttribute("pageTitle", "Page d'accueil");
                 request.getRequestDispatcher(VUE_HOME).forward(request, response);
             }
         }
@@ -87,7 +87,9 @@ public class ServletLogin extends HttpServlet {
                     // Tout est OK, on crée la session
                     HttpSession session = request.getSession();
                     session.setAttribute("user", u);
-                    session.setAttribute("pageTitle", "Page d'accueil");
+                    
+                    // On nomme et affiche la page
+                    request.setAttribute("pageTitle", "Page d'accueil");
                     request.getRequestDispatcher(VUE_HOME).forward(request, response);
                 }
             }

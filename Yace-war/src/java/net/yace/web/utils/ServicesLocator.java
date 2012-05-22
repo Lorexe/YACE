@@ -5,12 +5,12 @@ import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import net.yace.entity.Yattribute;
-import net.yace.entity.Yattributevalue;
-import net.yace.entity.Ycollection;
-import net.yace.entity.Yitem;
-import net.yace.entity.Yitemtype;
-import net.yace.entity.Yrank;
+import net.yace.facade.YattributeFacade;
+import net.yace.facade.YattributevalueFacade;
+import net.yace.facade.YcollectionFacade;
+import net.yace.facade.YitemFacade;
+import net.yace.facade.YitemtypeFacade;
+import net.yace.facade.YrankFacade;
 import net.yace.facade.YuserFacade;
 
 /**
@@ -31,60 +31,60 @@ public abstract class ServicesLocator {
         }
     }
     
-    public static Yattribute getAttributeFacade() {
+    public static YattributeFacade getAttributeFacade() {
         try {
             Context context = new InitialContext();
-            return (Yattribute) context.lookup("java:global/Yace/Yace-ejb/Yattribute");
+            return (YattributeFacade) context.lookup("java:global/Yace/Yace-ejb/YattributeFacade");
         } catch (NamingException ex) {
             Logger.getLogger(ServicesLocator.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
     
-    public static Yattributevalue getAttributeValueFacade() {
+    public static YattributevalueFacade getAttributeValueFacade() {
         try {
             Context context = new InitialContext();
-            return (Yattributevalue) context.lookup("java:global/Yace/Yace-ejb/Yattributevalue");
+            return (YattributevalueFacade) context.lookup("java:global/Yace/Yace-ejb/YattributevalueFacade");
         } catch (NamingException ex) {
             Logger.getLogger(ServicesLocator.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
     
-    public static Ycollection getCollectionFacade() {
+    public static YcollectionFacade getCollectionFacade() {
         try {
             Context context = new InitialContext();
-            return (Ycollection) context.lookup("java:global/Yace/Yace-ejb/Ycollection");
+            return (YcollectionFacade) context.lookup("java:global/Yace/Yace-ejb/YcollectionFacade");
         } catch (NamingException ex) {
             Logger.getLogger(ServicesLocator.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
     
-    public static Yitem getItemFacade() {
+    public static YitemFacade getItemFacade() {
         try {
             Context context = new InitialContext();
-            return (Yitem) context.lookup("java:global/Yace/Yace-ejb/Yitem");
+            return (YitemFacade) context.lookup("java:global/Yace/Yace-ejb/YitemFacade");
         } catch (NamingException ex) {
             Logger.getLogger(ServicesLocator.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
     
-    public static Yitemtype getItemTypeFacade() {
+    public static YitemtypeFacade getItemTypeFacade() {
         try {
             Context context = new InitialContext();
-            return (Yitemtype) context.lookup("java:global/Yace/Yace-ejb/Yitemtype");
+            return (YitemtypeFacade) context.lookup("java:global/Yace/Yace-ejb/YitemtypeFacade");
         } catch (NamingException ex) {
             Logger.getLogger(ServicesLocator.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
     
-    public static Yrank getRankFacade() {
+    public static YrankFacade getRankFacade() {
         try {
             Context context = new InitialContext();
-            return (Yrank) context.lookup("java:global/Yace/Yace-ejb/Yrank");
+            return (YrankFacade) context.lookup("java:global/Yace/Yace-ejb/YrankFacade");
         } catch (NamingException ex) {
             Logger.getLogger(ServicesLocator.class.getName()).log(Level.SEVERE, null, ex);
             return null;

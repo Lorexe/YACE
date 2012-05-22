@@ -3,7 +3,10 @@
                 &copy; Ya<em class="CE">ce</em>!<br/>
                 C'est "yes" mais avec "yeah" dedans.               
             </p>
-            <a href="/yadmin"><strong>Administrer Ya<em class="CE">ce</em>!</strong></a>
+            <a href="yadmin"><strong>Administrer Ya<em class="CE">ce</em>!</strong></a>
         </footer>
+<!-- BEGIN TESTZONE -->
+<div style="margin:auto;padding:5px;">${footDebug}</div>
+<!-- END TESTZONE -->
     </body>
 </html>

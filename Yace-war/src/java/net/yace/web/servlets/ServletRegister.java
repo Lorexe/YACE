@@ -20,9 +20,9 @@ import net.yace.web.utils.ServicesLocator;
  */
 public class ServletRegister extends HttpServlet {
     
-    private final static String VUE_PRESENTATION = "index.jsp";
+    private final static String VUE_PRESENTATION = "welcome.jsp";
     private final static String SVLT_LOGIN = "login";
-    private final static String VUE_HOME = "WEB-INF/view/user/common.jsp";
+    private final static String VUE_HOME = "WEB-INF/view/user/home.jsp";
 
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -42,7 +42,7 @@ public class ServletRegister extends HttpServlet {
                 request.setAttribute("error", "Session invalide");
                 request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
-                session.setAttribute("pageTitle", "Page d'accueil");
+                request.setAttribute("pageTitle", "Page d'accueil");
                 request.getRequestDispatcher(VUE_HOME).forward(request, response);
             }
         }
@@ -62,7 +62,7 @@ public class ServletRegister extends HttpServlet {
         String email = request.getParameter("email");
         String pass = request.getParameter("pwd");
         String passVerif = request.getParameter("pwd-verif");
-
+        
         // Test des champs
         if (pseudo == null || pseudo.isEmpty()) {
             request.setAttribute("error", "Vous devez choisir<br/>un pseudo !");
@@ -96,7 +96,6 @@ public class ServletRegister extends HttpServlet {
 
                     userFacade.create(u);
 
-                    request.setAttribute("info", "Le compte a été créé.<br/>Vous pouvez vous connecter.");
                     request.getRequestDispatcher(SVLT_LOGIN).forward(request, response);
                 }
             }
