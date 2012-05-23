@@ -79,15 +79,13 @@ public class ServletWizard extends HttpServlet {
                     YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
                     Ycollection collection = facColl.find(Integer.parseInt(idCollection));
                     
-                    // TODO: vérifier que l'utilisateur possède la collection !
-                    
                     if(collection==null || collection.getOwner().getIdYUSER() != yuser.getIdYUSER()){
                         /*
                          * Erreur: on essaie d'accéder à une collection inexistante
                          */
                         // On défini l'erreur qui s'est produite
                         request.setAttribute("errorMsg",
-                            "Nous sommes désolé, mais la collection que vous tentez de modifier n'est pas en votre possession.<br/>"
+                            "Nous sommes désolé, mais vous ne pouvez pas accéder à la collection demandée.<br/>"
                             + "Référez-vous à l'aide contextuelle pour plus d'information.<br/>"
                             + "Vous n'êtes pas satisfait ? <a href='about'>Contactez-nous</a> !"
                         );
@@ -98,14 +96,12 @@ public class ServletWizard extends HttpServlet {
                         List<String> infoBoxes = new ArrayList<String>();
                         List<String> tipBoxes = new ArrayList<String>();
                         
-                        infoBoxes.add("azerty");
-                        infoBoxes.add("Dandelion bush tomato quandong bok choy lotus root seakale plantain gram okra cress sorrel yarrow komatsuna chicory grape. Chard tomatillo grape black-eyed pea potato cress bamboo shoot. Epazote ricebean cauliflower kale kombu endive.");
-                        infoBoxes.add("Veggies sunt bona vobis, proinde vos postulo esse magis yarrow watercress rock melon nori chard tigernut wakame pea sprouts wattle seed potato kale kohlrabi avocado aubergine.");
-                        tipBoxes.add("qsdfghjklm");
-                        tipBoxes.add("Corn horseradish komatsuna bok choy artichoke salsify. Collard greens tatsoi potato bok choy catsear broccoli spinach parsley caulie soko. Prairie turnip cucumber rock melon arugula epazote bitterleaf cabbage potato coriander bunya nuts soybean nori spinach endive shallot.");
+                        infoBoxes.add("La collection qui est demandée est introuvable ou n'est pas en votre possession.");
+                        tipBoxes.add("Essayez d'accéder à une autre collection !");
+                        tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous pensez qu'il s'agit d'une erreur de notre part. N'oubliez pas de détailler les actions qui vous ont mené à cette page, merci.");
                         
-                        asideHelp.put("info", infoBoxes);
                         asideHelp.put("tip", tipBoxes);
+                        asideHelp.put("info", infoBoxes);
                         
                         request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
                         

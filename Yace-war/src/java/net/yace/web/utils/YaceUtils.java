@@ -22,7 +22,8 @@ public class YaceUtils {
      * @return 
      */
     public static String getAsideHelp(Map<String, List<String>> boxes){
-        String html = "";
+        String tipsHTML = "";
+        String infosHTML = "";
         Iterator<String> itKeys = boxes.keySet().iterator();
         
         while (itKeys.hasNext()) {
@@ -31,14 +32,14 @@ public class YaceUtils {
             while (values.hasNext()) {
                 String value = values.next();
                 if (key.equals("info")) {
-                    html +=
+                    infosHTML +=
                         "<div class='infobox'>"
                         + "<img class='infoicon32' title='Que dois-je faire?' src='./theme/default/img/img_trans.gif' />"
                         + "<p>" + value + "</p>"
                         + "</div>";
                 }
                 else if (key.equals("tip")) {
-                    html +=
+                    tipsHTML +=
                         "<div class='tipbox'>"
                         + "<img class='tipicon' title='Astuce!' src='./theme/default/img/img_trans.gif' />"
                         + "<p>" + value + "</p>"
@@ -47,6 +48,6 @@ public class YaceUtils {
             }
         }
         
-        return html;
+        return infosHTML+tipsHTML;
     }
 }
