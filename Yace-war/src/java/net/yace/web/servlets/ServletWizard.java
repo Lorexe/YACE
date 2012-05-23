@@ -5,7 +5,10 @@
 package net.yace.web.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -90,12 +93,20 @@ public class ServletWizard extends HttpServlet {
                         );
                         
                         // Aide contextuelle
-                        Map<String,String> asideHelp = new HashMap<String,String>();
-                        asideHelp.put("info", "azerty");
-                        asideHelp.put("tip", "qsdfghjklm");
-                        asideHelp.put("tip", "Corn horseradish komatsuna bok choy artichoke salsify. Collard greens tatsoi potato bok choy catsear broccoli spinach parsley caulie soko. Prairie turnip cucumber rock melon arugula epazote bitterleaf cabbage potato coriander bunya nuts soybean nori spinach endive shallot.");
-                        asideHelp.put("info", "Dandelion bush tomato quandong bok choy lotus root seakale plantain gram okra cress sorrel yarrow komatsuna chicory grape. Chard tomatillo grape black-eyed pea potato cress bamboo shoot. Epazote ricebean cauliflower kale kombu endive.");
-                        asideHelp.put("info", "Veggies sunt bona vobis, proinde vos postulo esse magis yarrow watercress rock melon nori chard tigernut wakame pea sprouts wattle seed potato kale kohlrabi avocado aubergine.");
+                        Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+                        
+                        List<String> infoBoxes = new ArrayList<String>();
+                        List<String> tipBoxes = new ArrayList<String>();
+                        
+                        infoBoxes.add("azerty");
+                        infoBoxes.add("Dandelion bush tomato quandong bok choy lotus root seakale plantain gram okra cress sorrel yarrow komatsuna chicory grape. Chard tomatillo grape black-eyed pea potato cress bamboo shoot. Epazote ricebean cauliflower kale kombu endive.");
+                        infoBoxes.add("Veggies sunt bona vobis, proinde vos postulo esse magis yarrow watercress rock melon nori chard tigernut wakame pea sprouts wattle seed potato kale kohlrabi avocado aubergine.");
+                        tipBoxes.add("qsdfghjklm");
+                        tipBoxes.add("Corn horseradish komatsuna bok choy artichoke salsify. Collard greens tatsoi potato bok choy catsear broccoli spinach parsley caulie soko. Prairie turnip cucumber rock melon arugula epazote bitterleaf cabbage potato coriander bunya nuts soybean nori spinach endive shallot.");
+                        
+                        asideHelp.put("info", infoBoxes);
+                        asideHelp.put("tip", tipBoxes);
+                        
                         request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
                         
                         // On nomme et affiche la page
