@@ -1,11 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ page pageEncoding="UTF-8" %>
-
-<sql:query var="subscribeOk" dataSource="Yacedb">
-    SELECT val FROM ysetting WHERE ysetting.name = "subscribeOk"
-</sql:query>
-    
 <!--
  Nom
         index.html
@@ -60,11 +55,14 @@
                     <br />
                     <input type="password" name="pwd" maxlength="200" placeholder="Mot de passe" />
                     <br />
-                    <input type="submit" class="y-button y-button-blue" value="Connectez-vous" />
+                    <input type="submit" class="y-button y-button-blue" value="Je me connecte" />
                 </form>
                 
-        <c:forEach var="row" items="${subscribeOk.rows}">
-            <c:if test='${row.val == "true"}'>
+        <%-- BEGIN REGSTRATION TEST --%>
+            <sql:query var="subscribeOk" dataSource="Yacedb">
+                SELECT * FROM ysetting WHERE ysetting.name = "subscribeOk" AND ysetting.val = "true"
+            </sql:query>
+            <c:if test='${!empty subscribeOk.rows}'>
                 <h1>Inscription</h1>
                 <form name="inscription" action="register" method="post">
                     <input type="text" name="pseudo" maxlength="200" placeholder="Nom d'utilisateur" />
@@ -76,10 +74,10 @@
                     <input type="password" name="pwd-verif" maxlength="200" placeholder="Confirmation MDP" />
                     <br />
                     <script type="text/javascript">showCaptcha();</script>
-                    <input type="button" class="y-button y-button-blue" value="Enregistrez-vous" onclick="validateCaptcha()?submit():errorCaptcha()" />
+                    <input type="button" class="y-button y-button-blue" value="Je m'enregistre" onclick="validateCaptcha()?submit():errorCaptcha()" />
                 </form>
             </c:if>
-        </c:forEach>
+        <%-- END REGSTRATION TEST --%>
 
                 
                 <% if (request.getAttribute("error") != null) {%>

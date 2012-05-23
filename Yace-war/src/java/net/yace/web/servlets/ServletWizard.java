@@ -57,13 +57,12 @@ public class ServletWizard extends HttpServlet {
         /*
          * Test de la session
          */
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
         if(session==null) {
             request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else {
             Yuser yuser = (Yuser)session.getAttribute("user");
             if(yuser==null) {
-                //request.setAttribute("error", "Session invalide");
                 request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
                 /*
@@ -111,7 +110,24 @@ public class ServletWizard extends HttpServlet {
                     }
                 }
                 
-                // request.setAttribute("pageTitle", "Assistant de création de collection");
+                
+                // Aide contextuelle
+                Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+                List<String> infoBoxes = new ArrayList<String>();
+                List<String> tipBoxes = new ArrayList<String>();
+
+                infoBoxes.add("En cours de rédaction");
+                tipBoxes.add("En cours de rédaction");
+                
+                asideHelp.put("tip", tipBoxes);
+                asideHelp.put("info", infoBoxes);
+
+                request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+                
+                // On nomme et affiche la page
+                request.setAttribute("pageTitle", "Assistant de création de collection");
+                request.getRequestDispatcher(VUE_WIZARD).forward(request,response);
             }
         }
     }

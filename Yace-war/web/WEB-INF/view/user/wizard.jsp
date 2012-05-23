@@ -7,62 +7,51 @@
 
     <section class="content"> <!-- contenu intÃ©ressant -->
         <aside id="toggletips"><strong>A I D E</strong></aside>
+        <form name="editcollection" method="POST" action="#">
+            <sql:query var="ycollections" dataSource="Yacedb">
+                SELECT * FROM ycollection WHERE ycollection.owner = ?
+                <sql:param value="${user.idYUSER}"/>
+            </sql:query>
+            <c:choose>
+                <c:when test="">
+                    
+                </c:when>
+                <c:otherwise>
+                </c:otherwise>
+            </c:choose>
 
-        <h1>Choix de la collection</h1>
-        
-        <h1>Types d'objet</h1>
+            <h1>Choisissez une collection</h1>
+            <c:choose>
+                <c:when test="${!empty ycollections.rows}">
+                    <%-- Si l'utilisateur possède déjà des collections --%>
+                    <select name="collection">
+                        <c:forEach var="ycollection" items="${ycollections.rows}">
+                            <c:choose>
+                                <c:when test="${ycollection.idYCOLLECTION == idCollection}">
+                                    <%-- Pour présélectionner la collection --%>
+                                    <option value="${ycollection.idYCOLLECTION}" selected="selected">
+                                        ${ycollection.theme}
+                                    </option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${ycollection.idYCOLLECTION}">
+                                        ${ycollection.theme}
+                                    </option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
+                </c:when>
+                <c:otherwise>
+                    <%-- Si l'utilisateur ne possède encore aucune collection --%>
+                    <label for="">Entrez la thématique de votre première collection</label> : <input type="text" name="theme"/>
+                </c:otherwise>
+            </c:choose>
 
+            <h1>Types d'objet</h1>
+            
+            <input type="submit" class="y-button y-button-white" value="Je valide !"/>
+        </form>
     </section>
 
 </section>
-
-<div id="foreground"></div>
-
-<div role="preview" id="prev-item1">
-    <section class="splash whitebox">
-        <header>
-            <h1>Vase ancien de tr&egrave;s grande valeur - Aper&ccedil;u</h1>
-        </header>
-        <section class="content">
-            <h1>H&eacute; ouais</h1>
-            oh yeah
-        </section>
-    </section>
-</div>
-
-<div role="preview" id="prev-item2">
-    <section class="splash whitebox">
-        <header>
-            <h1>Vase anglais - Aper&ccedil;u</h1>
-        </header>
-        <section class="content">
-            <h1>H&eacute; ouais</h1>
-            oh yeah
-        </section>
-    </section>
-</div>
-
-<div role="preview" id="prev-item3">
-    <section class="splash whitebox">
-        <header>
-            <h1>Vase zoulou - Aper&ccedil;u</h1>
-        </header>
-        <section class="content">
-            <h1>H&eacute; ouais</h1>
-            oh yeah
-        </section>
-    </section>
-</div>
-
-<div role="preview" id="prev-item4">
-    <section class="splash whitebox">
-        <header>
-            <h1>Vase fran&ccedil;ais - Aper&ccedil;u</h1>
-        </header>
-        <section class="content">
-            <h1>H&eacute; ouais</h1>
-            oh yeah
-        </section>
-    </section>
-</div>
-

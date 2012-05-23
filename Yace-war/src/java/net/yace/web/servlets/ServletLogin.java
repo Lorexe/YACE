@@ -5,6 +5,10 @@
 package net.yace.web.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +18,7 @@ import net.yace.entity.Yuser;
 import net.yace.facade.YuserFacade;
 import net.yace.utils.MD5Utils;
 import net.yace.web.utils.ServicesLocator;
+import net.yace.web.utils.YaceUtils;
 
 /**
  *
@@ -42,6 +47,21 @@ public class ServletLogin extends HttpServlet {
                 //request.setAttribute("error", "Session invalide");
                 request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
+                // Aide contextuelle
+                Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+                List<String> infoBoxes = new ArrayList<String>();
+                List<String> tipBoxes = new ArrayList<String>();
+
+                infoBoxes.add("Bienvenue sur Ya<em class='CE'>ce</em> !");
+                infoBoxes.add("Vous pouvez gérer vos collections blablabla !");
+
+                asideHelp.put("tip", tipBoxes);
+                asideHelp.put("info", infoBoxes);
+
+                request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+                
+                // On nomme et affiche la page
                 request.setAttribute("pageTitle", "Page d'accueil");
                 request.getRequestDispatcher(VUE_HOME).forward(request, response);
             }
@@ -87,6 +107,20 @@ public class ServletLogin extends HttpServlet {
                     // Tout est OK, on crée la session
                     HttpSession session = request.getSession();
                     session.setAttribute("user", u);
+                    
+                    // Aide contextuelle
+                    Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+                    List<String> infoBoxes = new ArrayList<String>();
+                    List<String> tipBoxes = new ArrayList<String>();
+
+                    infoBoxes.add("Bienvenue sur Ya<em class='CE'>ce</em> !");
+                    infoBoxes.add("Vous pouvez gérer vos collections blablabla !");
+                    
+                    asideHelp.put("tip", tipBoxes);
+                    asideHelp.put("info", infoBoxes);
+
+                    request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
                     
                     // On nomme et affiche la page
                     request.setAttribute("pageTitle", "Page d'accueil");
