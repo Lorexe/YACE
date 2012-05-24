@@ -103,6 +103,10 @@ public class Yrank implements Serializable {
     public void setIsAdmin(byte[] isAdmin) {
         this.isAdmin = isAdmin;
     }
+    
+    public boolean isAdmin() {
+        return this.isAdmin[0]!=0;
+    }
 
     @XmlTransient
     public Collection<Yuser> getYuserCollection() {

@@ -57,9 +57,7 @@ var yesnobuttons = $('#confirm button').click(function(e){
 	// récupère le bouton cliqué (le premier dans le flux)
 	var yes = yesnobuttons.index(this) === 0;
 
-	if(yes)
-		// --> à changer lors du traitement jee
-		toggleSubscribe();
+	if(yes) document.forms["confirm"].submit();
 
 });
 

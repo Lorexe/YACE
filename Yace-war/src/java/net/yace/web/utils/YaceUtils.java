@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.yace.entity.Ycollection;
 
 /**
  *
@@ -55,6 +56,20 @@ public class YaceUtils {
         return infosHTML+tipsHTML;
     }
     
+    /**
+     * 
+     * @param collection
+     * @return 
+     */
+    public static String getAsideCollectionView(Ycollection collection) {
+        return "";
+    }
+    
+    /**
+     * 
+     * @param s
+     * @return 
+     */
     public static String digestMD5(String s) {
         
         String ret = null;

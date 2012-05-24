@@ -1,118 +1,60 @@
-<!DOCTYPE html>
-<html lang="fr" class="angled stripes">
-<head>
-	<title>Administration - Gestion inscriptions - ${initParam.appName}</title>
-	<link rel="shortcut icon" href="favicon.ico" />
-	<meta charset="utf-8" />
+<section id="main" class="whitebox"> <!-- main panel -->
 
-	<link rel="stylesheet" type="text/css" href="./theme/default/common.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="./theme/default/buttonsandforms.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="./theme/default/master_layout.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="./theme/default/jquery.tooltip.css" media="screen" />
+    <header>
+        <h1>
+            G&eacute;rer les <strong>inscriptions</strong>
+        </h1>
+    </header>
 
-	<script src="./theme/default/script/jquery-1.7.js"></script>
-	<script src="./theme/default/script/jquery.tools.min.js"></script>
-	<script src="./theme/default/script/common.js"></script>
-	<script src="./theme/default/script/jq.mymodals.js"></script>
+    <section class="content"> <!-- contenu intÈressant -->
         
-        <!--
-                Le script suivant permet de faire en sorte que les nouvelles balises HTML5 s'affichent correctement sur les anciennes versions d'Internet Explorer (IE6, IE7, IE8, IE9).
-        -->
-        <!--[if lt IE 10]>
-                <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
-<body>
-	<header role="menu" class="yace-logo">
-		<nav id="menu">
-			<form name="menu" id="menubar" action="/menu" method="POST">
-				<input type="image" class="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" />
-				<input type="image" class="helpicon" alt="Aide" title="Affiche l'aide de YaCE!" src="./theme/default/img/img_trans.gif" />
-				<div id="searchbar" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
-					<input type="image" class="searchicon" src="./theme/default/img/img_trans.gif" />
-					<input type="text" id="keyword" />
-					<select name="searchdomain">
-						<option label="Cette collection" value="thiscoll" />
-						<option label="Mes collections" value="all" />
-					</select>
-				</div>
-			</form>
-			<form action="/menu" method="POST" id="accountbar" name="account">
-					Username
-					<input type="image" class="profileicon" alt="Votre compte" title="Modifiez vos informations personelles" src="./theme/default/img/img_trans.gif" />
-					<input type="image" class="exiticon" alt="D&eacute;connexion" title="D&eacute;connexion" src="./theme/default/img/img_trans.gif" />
-			</form>
-		</nav>
-	</header>
+        <%-- BEGIN REGSTRATION TEST --%>
+            <sql:query var="subscribeOk" dataSource="Yacedb">
+                SELECT * FROM ysetting WHERE ysetting.name = "subscribeOk" AND ysetting.val = "true"
+            </sql:query>
+            <c:choose>
+                <c:when test="${!empty subscribeOk.rows}">
+                    <h1>Les inscriptions sont <strong style="color: green">activ&eacute;es</strong></h1>
+                    <p>
+                        Cette fonctionnalit&eacute; permet <strong>uniquement</strong> d'activer ou d&eacute;sactiver les <strong>nouvelles inscriptions</strong> au site.<br>
+                        Les utilisateurs <strong>d&eacute;j&agrave;† inscrits</strong> pourront toujours <strong>se connecter</strong>.
+                    </p>
+                    <button class="y-button y-button-red" id="toggleSubscribe" rel="#confirm">
+                        d&eacute;sactiver les inscriptions
+                    </button>
+                </c:when>
+                <c:otherwise>
+                    <h1>Les inscriptions sont <strong style="color: red">d&eacute;sactiv&eacute;es</strong></h1>
+                    <p>
+                        Cette fonctionnalit&eacute; permet <strong>uniquement</strong> d'activer ou d&eacute;sactiver les <strong>nouvelles inscriptions</strong> au site.<br>
+                        Les utilisateurs <strong>d&eacute;j&agrave;† inscrits</strong> pourront toujours <strong>se connecter</strong>.
+                    </p>
+                    <button class="y-button y-button-blue" id="toggleSubscribe" rel="#confirm">
+                        activer les inscriptions
+                    </button>
+                </c:otherwise>
+            </c:choose>
+        <%-- END REGSTRATION TEST --%>
+        
 
-	<aside id="explore" class="whitebox"> <!-- left panel -->
-		<header>
-			<h1>Administration</h1>
-		</header>
+    </section>
 
-		<nav>
-			<h2>Gestion du site</h2>
-			<ul>
-				<li>
-						<a href="admin-inscriptions.html">G&eacute;rer les inscriptions</a>
-				</li>
-			</ul>
-		</nav>
-
-		<nav>
-			<h2>Gestion des utilisateurs</h2>
-			<ul>
-				<li>
-						<a href="admin-utilisateurs.html">G&eacute;rer les utilisateurs</a>
-				</li>
-				<li>
-						<a href="admin-niveaux.html">G&eacute;rer les niveaux d'utilisateurs</a>
-				</li>
-			</ul>
-		</nav>
-	</aside>
-
-	<section id="main" class="whitebox"> <!-- main panel -->
-
-		<header>
-			<h1>
-				G&eacute;rer les <strong>inscriptions</strong>
-			</h1>
-		</header>
-
-		<section class="content"> <!-- contenu int√©ressant -->
-			<h1>Les inscriptions sont <strong style="color: red">d&eacute;sactiv&eacute;es</strong></h1>
-			<p>
-				Cette fonctionnalit&eacute; permet <strong>uniquement</strong> d'activer ou d&eacute;sactiver les <strong>nouvelles inscriptions</strong> au site.<br>
-				Les utilisateurs <strong>d√©j√† inscrits</strong> pourront toujours <strong>se connecter</strong>.
-			</p>
-			<button class="y-button y-button-blue" id="toggleSubscribe" rel="#confirm">
-				activer les inscriptions
-			</button>
-		</section>
-
-	</section>
-
-	<footer class="clearfix">
-		<p id="copyright">&copy; Ya<em class="CE">ce</em>!</p>
-		<a href="/yadmin"><strong>Administrer Ya<em class="CE">ce</em>!</strong></a>
-	</footer>
+</section>
 
 <!-- Modal dialogs -->
-	<!-- confirm dialog -->
-	<div class="modal modal-info whitebox" id="confirm">
-		<header>
-			<h1><strong>Confirmation</strong> attendue</h1>
-		</header>
-		<p>
-			Vous effectuez une <strong>action</strong> qui demande une <strong>confirmation</strong>. Souhaitez-vous <strong>continuer</strong> ?
-		</p>
+<!-- confirm dialog -->
+<div class="modal modal-info whitebox" id="confirm">
+    <header>
+        <h1><strong>Confirmation</strong> attendue</h1>
+    </header>
+    <p>
+        Vous effectuez une <strong>action</strong> qui demande une <strong>confirmation</strong>. Souhaitez-vous <strong>continuer</strong> ?
+    </p>
 
-		<p>
-			<button class="close y-button y-button-red"> oui </button>
-			<button class="close y-button y-button-blue"> non </button>
-		</p>
-	</div>
-
-</body>
-</html>
+    <form action="#" method="POST" name="confirm">
+        <p>
+            <button class="close y-button y-button-red"> oui </button>
+            <button class="close y-button y-button-blue"> non </button>
+        </p>
+    </form>
+</div>

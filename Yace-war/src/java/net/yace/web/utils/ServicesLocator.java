@@ -11,6 +11,7 @@ import net.yace.facade.YcollectionFacade;
 import net.yace.facade.YitemFacade;
 import net.yace.facade.YitemtypeFacade;
 import net.yace.facade.YrankFacade;
+import net.yace.facade.YsettingFacade;
 import net.yace.facade.YuserFacade;
 
 /**
@@ -85,6 +86,16 @@ public abstract class ServicesLocator {
         try {
             Context context = new InitialContext();
             return (YrankFacade) context.lookup("java:global/Yace/Yace-ejb/YrankFacade");
+        } catch (NamingException ex) {
+            Logger.getLogger(ServicesLocator.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public static YsettingFacade getSettingFacade() {
+        try {
+            Context context = new InitialContext();
+            return (YsettingFacade) context.lookup("java:global/Yace/Yace-ejb/YsettingFacade");
         } catch (NamingException ex) {
             Logger.getLogger(ServicesLocator.class.getName()).log(Level.SEVERE, null, ex);
             return null;

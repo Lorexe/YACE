@@ -71,15 +71,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletAdminToggleSubscriptions</servlet-name>
-        <url-pattern>/yadmin/activate-subscriptions</url-pattern>
+        <url-pattern>/yadmin-activate-subscriptions</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletAdminUserMgmt</servlet-name>
-        <url-pattern>/yadmin/users</url-pattern>
+        <url-pattern>/yadmin-users</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletAdminRankMgmt</servlet-name>
-        <url-pattern>/yadmin/ranks</url-pattern>
+        <url-pattern>/yadmin-ranks</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletHome</servlet-name>
