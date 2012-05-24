@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Test auto complétion</title>
+        <script type="application/javascript" src="jquery-1.7.2.js"></script>
+        <script type="application/javascript" src="ac-film.js"></script>
+		<script type="application/javascript" src="ac-music.js"></script>
+    </head>
+    <body>
+        <form>
+            <input type="text" id="name"/>
+            <input type="button" id="btn" value="Get films" onclick="getMovies()"/>
+			<input type="button" id="btn" value="Get albums" onclick="getAlbums()"/>
+        </form>
+        
+        <div id="content"> </div>
+    </body>
+</html>
