@@ -51,9 +51,8 @@ public class Yrank implements Serializable {
     private int nbMaxItem;
     @Basic(optional = false)
     @NotNull
-    @Lob
     @Column(name = "is_admin")
-    private byte[] isAdmin;
+    private Boolean isAdmin;
     @OneToMany(mappedBy = "rank")
     private Collection<Yuser> yuserCollection;
 
@@ -65,7 +64,7 @@ public class Yrank implements Serializable {
         this.idYRANK = idYRANK;
     }
 
-    public Yrank(Integer idYRANK, String description, int nbMaxItem, byte[] isAdmin) {
+    public Yrank(Integer idYRANK, String description, int nbMaxItem, Boolean isAdmin) {
         this.idYRANK = idYRANK;
         this.description = description;
         this.nbMaxItem = nbMaxItem;
@@ -96,16 +95,16 @@ public class Yrank implements Serializable {
         this.nbMaxItem = nbMaxItem;
     }
 
-    public byte[] getIsAdmin() {
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(byte[] isAdmin) {
+    public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
     
     public boolean isAdmin() {
-        return this.isAdmin[0]!=0;
+        return this.isAdmin;
     }
 
     @XmlTransient

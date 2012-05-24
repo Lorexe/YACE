@@ -54,9 +54,8 @@ public class Yattributevalue implements Serializable {
     @Column(name = "val_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date valDate;
-    @Lob
     @Column(name = "val_bool")
-    private byte[] valBool;
+    private Boolean valBool;
     @ManyToMany(mappedBy = "yattributevalueCollection")
     private Collection<Yitem> yitemCollection;
     @JoinColumn(name = "attribute", referencedColumnName = "idYATTRIBUTE")
@@ -110,11 +109,11 @@ public class Yattributevalue implements Serializable {
         this.valDate = valDate;
     }
 
-    public byte[] getValBool() {
+    public Boolean getValBool() {
         return valBool;
     }
 
-    public void setValBool(byte[] valBool) {
+    public void setValBool(Boolean valBool) {
         this.valBool = valBool;
     }
 
