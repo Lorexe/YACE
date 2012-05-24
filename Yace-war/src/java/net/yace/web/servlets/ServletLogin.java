@@ -100,7 +100,7 @@ public class ServletLogin extends HttpServlet {
                 request.setAttribute("error", "Utilisateur introuvable");
                 request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
-                if(!u.getPasswordHash().equals(MD5Utils.digest(pass))) {
+                if(!u.getPasswordHash().equals(YaceUtils.digestMD5(pass))) {
                     request.setAttribute("error", "Mauvais mot de passe");
                     request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
                 } else {

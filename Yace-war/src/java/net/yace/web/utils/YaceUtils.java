@@ -4,9 +4,13 @@
  */
 package net.yace.web.utils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -49,5 +53,28 @@ public class YaceUtils {
         }
         
         return infosHTML+tipsHTML;
+    }
+    
+    public static String digestMD5(String s) {
+        
+        String ret = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            
+            md.reset();
+            md.update(s.getBytes());
+            byte[] digest = md.digest();
+            
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i<digest.length; i++) {
+                sb.append(Integer.toHexString(0xFF & digest[i]));
+            }
+            
+            ret = sb.toString();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(YaceUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return ret;
     }
 }

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpSession;
 import net.yace.entity.Yrank;
 import net.yace.entity.Yuser;
 import net.yace.facade.YuserFacade;
-import net.yace.utils.MD5Utils;
 import net.yace.web.utils.ServicesLocator;
+import net.yace.web.utils.YaceUtils;
 
 /**
  *
@@ -91,7 +91,7 @@ public class ServletRegister extends HttpServlet {
                     Yuser u = new Yuser();
                     u.setPseudo(pseudo);
                     u.setEmail(email);
-                    u.setPasswordHash(MD5Utils.digest(pass));
+                    u.setPasswordHash(YaceUtils.digestMD5(pass));
                     u.setRank(new Yrank(1)); //TODO : récupérer le rang par défaut
 
                     userFacade.create(u);
