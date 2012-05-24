@@ -17,7 +17,7 @@ function addBook(book)
         "<li>Authors : " + authorstr + "</li>" +
         "<li>Title : " + book.title + "</li>" +
         "<li>Plot : " + book.plot + "</li>" +
-        "<li>Cover : <img width=150 src=\"" + book.cover + "\"/></li>" + 
+        "<li>Cover : <img width=150 src=\"" + book.cover + "\"/></li>" +
         "</ul>"
     );
 }
