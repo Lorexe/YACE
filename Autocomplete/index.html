@@ -5,15 +5,18 @@
         <title>Test auto complétion</title>
         <script type="application/javascript" src="jquery-1.7.2.js"></script>
         <script type="application/javascript" src="ac-film.js"></script>
-		<script type="application/javascript" src="ac-music.js"></script>
+        <script type="application/javascript" src="ac-music.js"></script>
+        <script type="application/javascript" src="ac-book.js"></script>
     </head>
     <body>
         <form>
             <input type="text" id="name"/>
-            <input type="button" id="btn" value="Get films" onclick="getMovies()"/>
-			<input type="button" id="btn" value="Get albums" onclick="getAlbums()"/>
+            <input type="button" id="btn1" value="Get films" onclick="getMovies()"/>
+            <input type="button" id="btn2" value="Get albums" onclick="getAlbums()"/>            
+            <input type="button" id="btn3" value="Get books en" onclick="getBooks('en')"/>
+            <input type="button" id="btn4" value="Get books fr" onclick="getBooks('fr')"/>
         </form>
-        
+
         <div id="content"> </div>
     </body>
 </html>
