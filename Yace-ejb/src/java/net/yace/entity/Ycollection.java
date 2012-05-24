@@ -49,9 +49,8 @@ public class Ycollection implements Serializable {
     private String theme;
     @Basic(optional = false)
     @NotNull
-    @Lob
     @Column(name = "is_public")
-    private byte[] isPublic;
+    private Boolean isPublic;
     @OneToMany(mappedBy = "collection")
     private Collection<Yitem> yitemCollection;
     @JoinColumn(name = "owner", referencedColumnName = "idYUSER")
@@ -65,7 +64,7 @@ public class Ycollection implements Serializable {
         this.idYCOLLECTION = idYCOLLECTION;
     }
 
-    public Ycollection(Integer idYCOLLECTION, String theme, byte[] isPublic) {
+    public Ycollection(Integer idYCOLLECTION, String theme, Boolean isPublic) {
         this.idYCOLLECTION = idYCOLLECTION;
         this.theme = theme;
         this.isPublic = isPublic;
@@ -87,11 +86,11 @@ public class Ycollection implements Serializable {
         this.theme = theme;
     }
 
-    public byte[] getIsPublic() {
+    public Boolean getIsPublic() {
         return isPublic;
     }
 
-    public void setIsPublic(byte[] isPublic) {
+    public void setIsPublic(Boolean isPublic) {
         this.isPublic = isPublic;
     }
 

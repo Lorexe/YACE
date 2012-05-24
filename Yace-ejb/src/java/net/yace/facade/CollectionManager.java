@@ -10,7 +10,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-
+import javax.ejb.EJB;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
@@ -28,11 +28,19 @@ import net.yace.entity.*;
 @LocalBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class CollectionManager {
+    //inutile on utilise les facades
     @PersistenceContext(unitName = "Yace-ejbPU")
     private EntityManager em;
+    
     @Resource
     private SessionContext context;
     
+    @EJB
+    private YcollectionFacade colFacade;
+    @EJB
+    private YitemtypeFacade itypeFacade;
+    @EJB
+    private YattributeFacade attrFacade;
     
     
     //ajout de collection
@@ -43,12 +51,13 @@ public class CollectionManager {
         coll.setTheme(theme);
         
         //temp section, à modifier
-        byte[] btab = new byte[1];
-        btab[0] = 0;
-        coll.setIsPublic(btab);
+        //byte[] btab = new byte[1];
+        //btab[0] = 0;
+        coll.setIsPublic(isPublic);
         
         //mettre le resultat dans la db
-        em.persist(coll);
+        //em.persist(coll);
+        colFacade.create(coll);
     }
     
     //bloc de creation de Yitemtype et de ses Yattribute
@@ -78,7 +87,8 @@ public class CollectionManager {
         Yitemtype ytype = new Yitemtype();
         ytype.setName(name);
         
-        em.persist(ytype);
+        //em.persist(ytype);
+        itypeFacade.create(ytype);
         return ytype;
     }
     
@@ -94,7 +104,8 @@ public class CollectionManager {
         attr.setMany(null);*/
         
         
-        em.persist(attr);
+        //em.persist(attr);
+        attrFacade.create(attr);
     }
     
 }

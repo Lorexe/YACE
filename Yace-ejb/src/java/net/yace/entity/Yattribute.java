@@ -57,9 +57,8 @@ public class Yattribute implements Serializable {
     private int noOrder;
     @Basic(optional = false)
     @NotNull
-    @Lob
     @Column(name = "many")
-    private byte[] many;
+    private Boolean many;
     @OneToMany(mappedBy = "attribute")
     private Collection<Yattributevalue> yattributevalueCollection;
     @JoinColumn(name = "itemtype", referencedColumnName = "idYITEMTYPE")
@@ -73,7 +72,7 @@ public class Yattribute implements Serializable {
         this.idYATTRIBUTE = idYATTRIBUTE;
     }
 
-    public Yattribute(Integer idYATTRIBUTE, String name, String type, int noOrder, byte[] many) {
+    public Yattribute(Integer idYATTRIBUTE, String name, String type, int noOrder, Boolean many) {
         this.idYATTRIBUTE = idYATTRIBUTE;
         this.name = name;
         this.type = type;
@@ -113,11 +112,11 @@ public class Yattribute implements Serializable {
         this.noOrder = noOrder;
     }
 
-    public byte[] getMany() {
+    public Boolean getMany() {
         return many;
     }
 
-    public void setMany(byte[] many) {
+    public void setMany(Boolean many) {
         this.many = many;
     }
 
