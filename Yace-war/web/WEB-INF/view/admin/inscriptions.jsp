@@ -50,11 +50,9 @@
     <p>
         Vous effectuez une <strong>action</strong> qui demande une <strong>confirmation</strong>. Souhaitez-vous <strong>continuer</strong> ?
     </p>
-
-    <form action="#" method="POST" name="confirm">
-        <p>
-            <button class="close y-button y-button-red"> oui </button>
-            <button class="close y-button y-button-blue"> non </button>
-        </p>
-    </form>
+    
+    <p>
+        <button class="close y-button y-button-red confirm-yes"> oui </button>
+        <button class="close y-button y-button-blue"> non </button>
+    </p>
 </div>
