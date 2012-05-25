@@ -86,7 +86,7 @@ public class Ycollection implements Serializable {
         this.theme = theme;
     }
 
-    public Boolean getIsPublic() {
+    public Boolean isPublic() {
         return isPublic;
     }
 

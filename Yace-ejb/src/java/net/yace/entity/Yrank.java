@@ -95,16 +95,12 @@ public class Yrank implements Serializable {
         this.nbMaxItem = nbMaxItem;
     }
 
-    public Boolean getIsAdmin() {
+    public Boolean isAdmin() {
         return isAdmin;
     }
 
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
-    }
-    
-    public boolean isAdmin() {
-        return this.isAdmin;
     }
 
     @XmlTransient
