@@ -51,9 +51,9 @@
             <aside role="signin">
                 <h1>Connexion</h1>
                 <form name="connexion" action="login" method="post">
-                    <input type="text" name="pseudo" maxlength="200" placeholder="Pseudo ou email" />
+                    <input type="text" name="pseudo" maxlength="200" placeholder="Pseudo ou email" required="required" />
                     <br />
-                    <input type="password" name="pwd" maxlength="200" placeholder="Mot de passe" />
+                    <input type="password" name="pwd" maxlength="200" placeholder="Mot de passe" required="required" />
                     <br />
                     <input type="submit" class="y-button y-button-blue" value="Je me connecte" />
                 </form>
@@ -65,13 +65,13 @@
             <c:if test='${!empty subscribeOk.rows}'>
                 <h1>Inscription</h1>
                 <form name="inscription" action="register" method="post">
-                    <input type="text" name="pseudo" maxlength="200" placeholder="Nom d'utilisateur" />
+                    <input type="text" name="pseudo" placeholder="Nom d'utilisateur" required="required" />
                     <br />
-                    <input type="text" name="email" maxlength="200" placeholder="Email valide" />
+                    <input type="text" name="email" placeholder="Email valide" required="required" />
                     <br />
-                    <input type="password" name="pwd" maxlength="200" placeholder="Mot de passe" />
+                    <input type="password" name="pwd" placeholder="Mot de passe" required="required" />
                     <br />
-                    <input type="password" name="pwd-verif" maxlength="200" placeholder="Confirmation MDP" />
+                    <input type="password" name="pwd-verif" placeholder="Confirmation MDP" required="required" />
                     <br />
                     <script type="text/javascript">showCaptcha();</script>
                     <input type="button" class="y-button y-button-blue" value="Je m'enregistre" onclick="validateCaptcha()?submit():errorCaptcha()" />
