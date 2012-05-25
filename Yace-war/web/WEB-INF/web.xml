@@ -45,6 +45,14 @@
         <servlet-name>ServletHome</servlet-name>
         <servlet-class>net.yace.web.servlets.admin.ServletHome</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletAutocomplete</servlet-name>
+        <servlet-class>net.yace.web.servlets.ServletAutocomplete</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletProfile</servlet-name>
+        <servlet-class>net.yace.web.servlets.ServletProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletRegister</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -84,6 +92,14 @@
     <servlet-mapping>
         <servlet-name>ServletHome</servlet-name>
         <url-pattern>/yadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAutocomplete</servlet-name>
+        <url-pattern>/autocomplete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletProfile</servlet-name>
+        <url-pattern>/profile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>1800</session-timeout>
