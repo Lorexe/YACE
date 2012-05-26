@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Yrank.findAll", query = "SELECT y FROM Yrank y"),
     @NamedQuery(name = "Yrank.findByIdYRANK", query = "SELECT y FROM Yrank y WHERE y.idYRANK = :idYRANK"),
     @NamedQuery(name = "Yrank.findByDescription", query = "SELECT y FROM Yrank y WHERE y.description = :description"),
-    @NamedQuery(name = "Yrank.findByNbMaxItem", query = "SELECT y FROM Yrank y WHERE y.nbMaxItem = :nbMaxItem")})
+    @NamedQuery(name = "Yrank.findByNbMaxItem", query = "SELECT y FROM Yrank y WHERE y.nbMaxItem = :nbMaxItem"),
+    @NamedQuery(name = "Yrank.findByIsAdmin", query = "SELECT y FROM Yrank y WHERE y.isAdmin = :isAdmin")})
 public class Yrank implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

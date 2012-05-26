@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Yattribute.findByName", query = "SELECT y FROM Yattribute y WHERE y.name = :name"),
     @NamedQuery(name = "Yattribute.findByNameLike", query = "SELECT y FROM Yattribute y WHERE y.name LIKE :name"),
     @NamedQuery(name = "Yattribute.findByType", query = "SELECT y FROM Yattribute y WHERE y.type = :type"),
-    @NamedQuery(name = "Yattribute.findByNoOrder", query = "SELECT y FROM Yattribute y WHERE y.noOrder = :noOrder")})
+    @NamedQuery(name = "Yattribute.findByNoOrder", query = "SELECT y FROM Yattribute y WHERE y.noOrder = :noOrder"),
+    @NamedQuery(name = "Yattribute.findByMany", query = "SELECT y FROM Yattribute y WHERE y.many = :many")})
 public class Yattribute implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

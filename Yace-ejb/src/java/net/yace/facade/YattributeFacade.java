@@ -50,7 +50,7 @@ public class YattributeFacade extends AbstractFacade<Yattribute> {
         List<Yattribute> attrList = null;//liste à retourner
         Query query;
         query = em.createNamedQuery("Yattribute.findByNameLike");
-        query.setParameter("name", name);
+        query.setParameter("name", "%"+name+"%");
         
         try 
         {

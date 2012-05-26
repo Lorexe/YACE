@@ -66,7 +66,23 @@ public class YcollectionFacade extends AbstractFacade<Ycollection> {
         List<Ycollection> cList = null;//liste à retourner
         Query query;
         query = em.createNamedQuery("Ycollection.findAllThemesLike");
-        query.setParameter("theme", theme);
+        query.setParameter("theme", "%"+theme+"%");//ajout des "%" pour le LIKE
+        
+        try 
+        {
+            cList = query.getResultList();
+        }catch(NoResultException e){
+        }
+        
+        return cList;
+    }
+    
+    public List<Ycollection> findAllPublic(String theme)
+    {
+        List<Ycollection> cList = null;//liste à retourner
+        Query query;
+        query = em.createNamedQuery("Ycollection.findAllPublicThemes");
+        query.setParameter("theme", "%"+theme+"%");
         
         try 
         {
