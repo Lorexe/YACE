@@ -6,6 +6,7 @@
   width: 16px;
   height: 16px;
   margin: 0;
+  cursor: pointer;
 }
 
 .editicon {
@@ -13,6 +14,7 @@
   width: 16px;
   height: 16px;
   margin: 0;
+  cursor: pointer;
 }
 
 .profileicon {
@@ -73,6 +75,38 @@
   background-size: 39px;
   -moz-background-size: 39px;
   margin: 4px 5px 0 5px;
+}
+
+.moreicon {
+    background-image: url('./img/icon/more_16.png');
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.undoicon {
+    background-image: url('./img/icon/undo_16.png');
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.validicon {
+    background-image: url('./img/icon/valid_16.png');
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.wheelicon {
+    background-image: url('./img/icon/settings_16.png');
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
 }
 
 /**

@@ -7,7 +7,7 @@
     </header>
 
     <section class="content"> <!-- contenu intéressant -->
-        
+        <aside id="toggletips"><strong>A I D E</strong></aside>
         <%-- BEGIN REGSTRATION TEST --%>
             <sql:query var="subscribeOk" dataSource="Yacedb">
                 SELECT * FROM ysetting WHERE ysetting.name = "subscribeOk" AND ysetting.val = "true"

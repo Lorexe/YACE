@@ -7,6 +7,7 @@
     </header>
 
     <section class="content"> <!-- contenu intéressant -->
+        <aside id="toggletips"><strong>A I D E</strong></aside>
         <p>
             <cite>&laquo;<em>With great power comes great responsibility</em>&raquo;</cite>
             <br>

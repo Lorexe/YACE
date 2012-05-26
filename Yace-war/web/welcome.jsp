@@ -50,7 +50,7 @@
 
             <aside role="signin">
                 <h1>Connexion</h1>
-                <form name="connexion" action="login" method="post">
+                <form name="connexion" action="login" method="post" autocomplete="on">
                     <input type="text" name="pseudo" maxlength="200" placeholder="Pseudo ou email" required="required" />
                     <br />
                     <input type="password" name="pwd" maxlength="200" placeholder="Mot de passe" required="required" />
@@ -64,7 +64,7 @@
             </sql:query>
             <c:if test='${!empty subscribeOk.rows}'>
                 <h1>Inscription</h1>
-                <form name="inscription" action="register" method="post">
+                <form name="inscription" action="register" method="post" autocomplete="off">
                     <input type="text" name="pseudo" placeholder="Nom d'utilisateur" required="required" />
                     <br />
                     <input type="text" name="email" placeholder="Email valide" required="required" />

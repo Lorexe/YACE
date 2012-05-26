@@ -7,6 +7,7 @@
     </header>
 
     <section class="content"> <!-- contenu intéressant -->
+        <aside id="toggletips"><strong>A I D E</strong></aside>
         <button class="y-button y-button-blue">Ajouter un utilisateur</button>
         <br><br>
         <h1>Liste des <strong>utilisateurs</strong></h1>
