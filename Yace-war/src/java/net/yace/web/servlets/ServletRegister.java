@@ -80,7 +80,7 @@ public class ServletRegister extends HttpServlet {
             // Reste à tester que l'utilisateur n'existe pas déjà
             Yuser userTest = userFacade.findUser(email);
             if (userTest != null) { // Utilisateur existant !
-                request.setAttribute("error", "Email déjà utilisé.<br/>Veuillez indiquer un autre.");
+                request.setAttribute("error", "Email déjà utilisé.<br/>Veuillez en indiquer un autre.");
                 request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
             } else {
                 userTest = userFacade.findUser(pseudo);

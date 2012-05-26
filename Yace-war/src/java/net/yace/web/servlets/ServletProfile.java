@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.yace.entity.Yuser;
+import net.yace.facade.YuserFacade;
 import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 
@@ -118,12 +119,24 @@ public class ServletProfile extends HttpServlet {
                 } else if (newPass != null && newPassVerif != null && !newPass.isEmpty() && !newPassVerif.isEmpty() && !newPass.equals(newPassVerif)) {
                     request.setAttribute("error", "Vous devez indiquer deux fois le même nouveau mot de passe");
                 } else {
-                    yuser.setEmail(email);
-                    yuser.setPseudo(pseudo);
-                    if(newPass != null && newPassVerif != null && !newPass.isEmpty() && !newPassVerif.isEmpty() && newPass.equals(newPassVerif)){
-                        yuser.setPasswordHash(YaceUtils.digestMD5(newPass));
+                    // Reste à tester que les infos ne sont pas déjà utilisées par un autre user
+                    YuserFacade userFacade = ServicesLocator.getUserFacade();
+                    Yuser userTest = userFacade.findUser(email);
+                    if (userTest != null) { // Utilisateur existant !
+                        request.setAttribute("error", "Email déjà utilisé. Veuillez en indiquer un autre.");
+                    } else {
+                        userTest = userFacade.findUser(pseudo);
+                        if (userTest != null) { // Utilisateur existant !
+                            request.setAttribute("error", "Pseudo déjà pris. Veuillez en choisir un autre.");
+                        } else { // Tout est OK pour l'enregistrement
+                            yuser.setEmail(email);
+                            yuser.setPseudo(pseudo);
+                            if(newPass != null && newPassVerif != null && !newPass.isEmpty() && !newPassVerif.isEmpty() && newPass.equals(newPassVerif)){
+                                yuser.setPasswordHash(YaceUtils.digestMD5(newPass));
+                            }
+                            userFacade.edit(yuser);
+                        }
                     }
-                    ServicesLocator.getUserFacade().edit(yuser);
                 }
                 
                 // Aide contextuelle
@@ -132,8 +145,9 @@ public class ServletProfile extends HttpServlet {
                 List<String> infoBoxes = new ArrayList<String>();
                 List<String> tipBoxes = new ArrayList<String>();
 
-                infoBoxes.add("En cours de rédaction");
-                tipBoxes.add("En cours de rédaction");
+                infoBoxes.add("Sur cette page, vous pouvez redéfinir vos informations de connexion à Ya<em class='CE'>ce</em>.");
+                tipBoxes.add("Renforcez votre mot de passe en y faisant figurer des caractères accentués ou spéciaux (p. ex. $£µ*%<>./+-).");
+                tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous avez une suggestion à nous transmettre.");
 
                 asideHelp.put("tip", tipBoxes);
                 asideHelp.put("info", infoBoxes);
