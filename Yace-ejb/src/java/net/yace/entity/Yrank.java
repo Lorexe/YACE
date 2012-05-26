@@ -71,6 +71,13 @@ public class Yrank implements Serializable {
         this.nbMaxItem = nbMaxItem;
         this.isAdmin = isAdmin;
     }
+    
+    public Yrank(String description, int nbMaxItem, Boolean isAdmin)
+    {
+        this.description = description;
+        this.nbMaxItem = nbMaxItem;
+        this.isAdmin = isAdmin;
+    }
 
     public Integer getIdYRANK() {
         return idYRANK;

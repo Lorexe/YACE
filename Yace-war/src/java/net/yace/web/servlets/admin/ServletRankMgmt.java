@@ -1,16 +1,13 @@
 package net.yace.web.servlets.admin;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import net.yace.entity.Yuser;
+import net.yace.entity.Yrank;
+import net.yace.facade.YrankFacade;
+import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 
 /**
@@ -58,7 +55,26 @@ public class ServletRankMgmt extends HttpServlet {
         YaceUtils.SessionState state = YaceUtils.getSessionState(request);
 
         if (state == YaceUtils.SessionState.admin) {
-            //TODO
+            String rankname = request.getParameter("name");
+            String nbmax = request.getParameter("nbMax");
+            String[] admin = request.getParameterValues("isAdmin");
+            String id = request.getParameter("idYRANK");
+
+            boolean isadmin = false;
+            if (admin != null) {
+                isadmin = true;
+            }
+
+            YrankFacade facade = ServicesLocator.getRankFacade();
+
+            if (id.equals("new")) {
+                Yrank rank = new Yrank(rankname, Integer.parseInt(nbmax), isadmin);
+                facade.create(rank);
+            } else {
+                int idrank = Integer.parseInt(id);
+                Yrank rank = new Yrank(idrank, rankname, Integer.parseInt(nbmax), isadmin);
+                facade.edit(rank);
+            }
         }
 
         doGet(request, response);
