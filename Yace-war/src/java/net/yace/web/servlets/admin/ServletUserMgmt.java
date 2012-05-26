@@ -1,16 +1,15 @@
 package net.yace.web.servlets.admin;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import net.yace.entity.Yrank;
 import net.yace.entity.Yuser;
+import net.yace.facade.YrankFacade;
+import net.yace.facade.YuserFacade;
+import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 
 /**
@@ -55,10 +54,58 @@ public class ServletUserMgmt extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        /* "mode" : add, edit ou delete suivant l'opération
+         * "id" : l'id de l'utilisateur (sauf pour le add)
+         * "name" : nom de l'utilisateur
+         * "email" : adresse email
+         * "rank" : integer représentant l'id du rang
+         * 
+         * Attribut "error" : message d'erreur !
+         */
+
         YaceUtils.SessionState state = YaceUtils.getSessionState(request);
 
         if (state == YaceUtils.SessionState.admin) {
-            // TODO
+            String mode = request.getParameter("mode");
+            String id = request.getParameter("id");
+            String name = request.getParameter("name");
+            String email = request.getParameter("email");
+            String rank = request.getParameter("rank");
+
+            YuserFacade userFacade = ServicesLocator.getUserFacade();
+            YrankFacade rankFacade = ServicesLocator.getRankFacade();
+
+            if (mode.equals("add")) {
+                //Test données uniques
+                Yuser usermail = userFacade.findUser(email);
+                Yuser userpseudo = userFacade.findUser(name);
+                if (usermail == null && userpseudo == null) {
+                    Yuser user = new Yuser();
+                    user.setPseudo(name);
+                    user.setEmail(email);
+
+                    Yrank entrank = rankFacade.find(Integer.parseInt(rank));
+                    user.setRank(entrank);
+
+                    userFacade.create(user);
+                } else {
+                    request.setAttribute("error", "Pseudo ou e-mail déjà utilisé");
+                }
+            } else if (mode.equals("edit")) {
+                Yuser user = new Yuser();
+
+                user.setIdYUSER(Integer.parseInt(id));
+                user.setPseudo(name);
+                user.setEmail(email);
+
+                Yrank entrank = rankFacade.find(Integer.parseInt(rank));
+                user.setRank(entrank);
+
+                userFacade.edit(user);
+            } else if (mode.equals("delete")) {
+                Yuser user = userFacade.find(Integer.parseInt(id));
+                userFacade.remove(user);
+            }
         }
 
         doGet(request, response);
