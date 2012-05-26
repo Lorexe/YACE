@@ -1,15 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets.admin;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import net.yace.entity.Yuser;
+import net.yace.web.utils.YaceUtils;
 
 /**
  *
@@ -17,34 +19,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ServletUserMgmt extends HttpServlet {
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletUserMgmt</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletUserMgmt at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-             */
-        } finally {            
-            out.close();
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    private final static String VUE_PRESENTATION = "welcome.jsp";
+    private final static String VUE_GESTION_USERS = "WEB-INF/view/admin/utilisateurs.jsp";
+    private final static String ERROR_PAGE = "WEB-INF/view/user/errorpage.jsp";
+    
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -55,7 +33,52 @@ public class ServletUserMgmt extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        /*
+         * Test de la session
+         */
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+        } else {
+            Yuser yuser = (Yuser) session.getAttribute("user");
+            if (yuser == null) {
+                request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+            } else {
+                // session ok
+                // On teste si privilèges admin
+                if (yuser.getRank().isAdmin()) {                    
+                    // On nomme et affiche la page
+                    request.setAttribute("pageTitle", "Gestion des utilisateurs - Administration du site");
+                    request.getRequestDispatcher(VUE_GESTION_USERS).forward(request, response);                
+                } else {
+                    // User, et pas admin
+                    // On défini l'erreur qui s'est produite
+                    request.setAttribute("errorMsg",
+                            "Nous sommes désolé, mais vous ne pouvez pas accéder à l'administration.<br/>"
+                            + "Référez-vous à l'aide contextuelle pour plus d'information.<br/>"
+                            + "Vous n'êtes pas satisfait ? <a href='about'>Contactez-nous</a> !");
+
+                    // Aide contextuelle
+                    Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+                    List<String> infoBoxes = new ArrayList<String>();
+                    List<String> tipBoxes = new ArrayList<String>();
+
+                    infoBoxes.add("Vous tentez d'accéder à l'administration sans en avoir les privilèges.");
+                    tipBoxes.add("Essayez de ne pas accéder à l'administration !");
+                    tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous pensez qu'il s'agit d'une erreur de notre part. N'oubliez pas de détailler les actions qui vous ont mené à cette page, merci.");
+
+                    asideHelp.put("tip", tipBoxes);
+                    asideHelp.put("info", infoBoxes);
+
+                    request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+
+                    // On nomme et affiche la page
+                    request.setAttribute("pageTitle", "Accès non autorisé");
+                    request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+                } //if is admin
+            } //if user null
+        } //if session null
     }
 
     /** 
@@ -68,15 +91,6 @@ public class ServletUserMgmt extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
-
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 }
