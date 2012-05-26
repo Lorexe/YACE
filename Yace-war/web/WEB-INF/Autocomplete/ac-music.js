@@ -133,6 +133,7 @@ function getLastfmAlbum(mbid)
             console.log(data);
             
             var album = {
+                provider: "lastfm",
                 artist: data.album.artist,
                 name: data.album.name,
                 released: data.album.releasedate,

@@ -48,6 +48,7 @@ function searchGBook(name, lang)
                         image = data.items[i].volumeInfo.imageLinks["thumbnail"];
                     
                     var book = {
+                        provider: "Google Books",
                         authors: authors,
                         title: data.items[i].volumeInfo.title,
                         plot: data.items[i].volumeInfo.description,
