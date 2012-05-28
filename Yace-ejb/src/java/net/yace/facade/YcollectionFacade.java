@@ -140,4 +140,21 @@ public class YcollectionFacade extends AbstractFacade<Ycollection> {
         return cList;
     }
     
+    public List<Ycollection> findFromUserByItemType(String type, int id)
+    {
+        List<Ycollection> cList = null;//liste à retourner
+        Query query;
+        query = em.createNamedQuery("Ycollection.findPubFromUserByYIT");
+        query.setParameter("name", "%"+type+"%");
+        query.setParameter("idYUSER", id);
+        
+        try 
+        {
+            cList = query.getResultList();
+        }catch(NoResultException e){
+        }
+        
+        return cList;
+    }
+    
 }
