@@ -54,11 +54,22 @@
         </header>
 
         <aside id="explore" class="whitebox"> <!-- left panel -->
-            <%-- regarder pour afficher tel ou tel menu en fonction du contexte et si l'utilisateur est bien admin ou pas --%>
             <header>
                 <h1>Navigation</h1>
             </header>
 
+<% if (!request.getRequestURL().toString().contains("/admin")) { %>
+            <%-- BEGIN TEST MENU --%>
+            <nav>
+                <h2>Test</h2>
+                <ul>
+                    <li>
+                        <a href="autocomplete">Test autocompl&eacute;tion</a>
+                    </li>
+                </ul>
+            </nav>
+            <%-- END TEST MENU --%>
+            
             <nav id="collview">
                 <h2>Mes collections</h2>
                 <input type="button" class="y-button y-button-white" value="Nouvelle collection" name="newColl" />
@@ -108,7 +119,7 @@
                 </ul>
 
             </nav>
-
+<% } else { %>
             <header>
                 <h1>Menu admin</h1>
             </header>
@@ -133,6 +144,7 @@
                     </li>
                 </ul>
             </nav>
+<% } %>
         </aside>
 
         <aside id="guide" class="none whitebox"> <!-- aide et guide Ã  l'utilisation -->

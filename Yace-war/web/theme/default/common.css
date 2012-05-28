@@ -184,6 +184,14 @@ strong {
     width: 360px;
 }
 
+.y-table-center td {
+    text-align: center;
+}
+
+.y-table-center th {
+    text-align: center;
+}
+
 /* :::: RAYURES :::: */
 .stripes {
     -webkit-background-size: 50px 50px;

@@ -445,3 +445,12 @@ section.content {
         padding-bottom: 6px;
         padding-left: 15px;
     }
+
+/* :::: Administration :::: */
+div.mgmtIcons {
+    width:36px;
+}
+
+div.mgmtIcons img {
+    display: inline-block;
+}

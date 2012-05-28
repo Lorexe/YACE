@@ -106,6 +106,13 @@ public class Yrank implements Serializable {
     public Boolean isAdmin() {
         return isAdmin;
     }
+    
+    /*
+     * Important pour pouvoir utiliser ${user.rank.isAdmin} dans les jsp...
+     */
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
 
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;

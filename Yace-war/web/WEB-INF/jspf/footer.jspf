@@ -1,9 +1,12 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
         <footer class="clearfix">
             <p id="copyright">
                 &copy; Ya<em class="CE">ce</em>!<br/>
                 C'est "yes" mais avec "yeah" dedans.               
             </p>
-            <a href="yadmin"><strong>Administrer Ya<em class="CE">ce</em>!</strong></a>
+            <c:if test="${user.rank.isAdmin}">
+                <a href="yadmin"><strong>Administrer Ya<em class="CE">ce</em>!</strong></a>
+            </c:if>
         </footer>
 <!-- BEGIN TESTZONE -->
 <div style="margin:auto;padding:5px;">${footDebug}</div>

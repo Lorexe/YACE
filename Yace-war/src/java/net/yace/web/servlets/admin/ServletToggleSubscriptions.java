@@ -9,13 +9,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import net.yace.entity.Ysetting;
-import net.yace.entity.Yuser;
 import net.yace.facade.YsettingFacade;
 import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
@@ -40,7 +39,7 @@ public class ServletToggleSubscriptions extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         YaceUtils.SessionState state = YaceUtils.getSessionState(request);
-
+        
         if (state == YaceUtils.SessionState.admin) {
 
             // Aide contextuelle
