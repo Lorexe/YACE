@@ -75,36 +75,49 @@ public class ServletUserMgmt extends HttpServlet {
             YuserFacade userFacade = ServicesLocator.getUserFacade();
             YrankFacade rankFacade = ServicesLocator.getRankFacade();
 
-            if (mode.equals("add")) {
-                //Test données uniques
-                Yuser usermail = userFacade.findUser(email);
-                Yuser userpseudo = userFacade.findUser(name);
-                if (usermail == null && userpseudo == null) {
+            if (name.length() == 0 || name.length() > 254) {
+                request.setAttribute("footDebug", "User name cannot exceed 254 characters or be empty");
+            } else if (email.length() == 0 || email.length() > 254) {
+                request.setAttribute("footDebug", "User email cannot exceed 254 characters or be empty");
+            } else if (! YaceUtils.isValidEmail(email) ){
+                request.setAttribute("footDebug", "User email : Wrong format");
+            } else {
+
+                if (mode.equals("add")) {
+                    //Test données uniques
+                    Yuser usermail = userFacade.findUser(email);
+                    Yuser userpseudo = userFacade.findUser(name);
+                    if (usermail == null && userpseudo == null) {
+                        Yuser user = new Yuser();
+                        user.setPseudo(name);
+                        user.setEmail(email);
+
+                        Yrank entrank = rankFacade.find(Integer.parseInt(rank));
+                        user.setRank(entrank);
+
+                        userFacade.create(user);
+                    } else {
+                        request.setAttribute("error", "Pseudo ou e-mail déjà utilisé");
+                    }
+                } else if (mode.equals("edit")) {
                     Yuser user = new Yuser();
-                    user.setPseudo(name);
-                    user.setEmail(email);
+                    try {
+                        int userid = Integer.parseInt(id);
+                        user.setIdYUSER(userid);
+                        user.setPseudo(name);
+                        user.setEmail(email);
 
-                    Yrank entrank = rankFacade.find(Integer.parseInt(rank));
-                    user.setRank(entrank);
+                        Yrank entrank = rankFacade.find(Integer.parseInt(rank));
+                        user.setRank(entrank);
 
-                    userFacade.create(user);
-                } else {
-                    request.setAttribute("error", "Pseudo ou e-mail déjà utilisé");
+                        userFacade.edit(user);
+                    } catch (NumberFormatException e) {
+                        request.setAttribute("footDebug", "Wrong user ID");
+                    }
+                } else if (mode.equals("delete")) {
+                    Yuser user = userFacade.find(Integer.parseInt(id));
+                    userFacade.remove(user);
                 }
-            } else if (mode.equals("edit")) {
-                Yuser user = new Yuser();
-
-                user.setIdYUSER(Integer.parseInt(id));
-                user.setPseudo(name);
-                user.setEmail(email);
-
-                Yrank entrank = rankFacade.find(Integer.parseInt(rank));
-                user.setRank(entrank);
-
-                userFacade.edit(user);
-            } else if (mode.equals("delete")) {
-                Yuser user = userFacade.find(Integer.parseInt(id));
-                userFacade.remove(user);
             }
         }
 

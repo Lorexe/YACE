@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -100,6 +102,15 @@ public class YaceUtils {
         }
 
         return ret;
+    }
+    
+    public static boolean isValidEmail(String email)
+    {
+        String expr = "^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z{2,4}$";
+        CharSequence input = email;
+        Pattern pattern = Pattern.compile(expr, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
     }
 
     public static enum SessionState {

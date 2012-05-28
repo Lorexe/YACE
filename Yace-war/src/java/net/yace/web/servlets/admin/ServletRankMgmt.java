@@ -70,8 +70,8 @@ public class ServletRankMgmt extends HttpServlet {
                         isadmin = true;
                     }
 
-                    if (rankname.length() >= 254) {
-                        request.setAttribute("footDebug", "Length of rank description cannot exceed 254 characters");
+                    if (rankname.length() >= 254 || rankname.length() == 0) {
+                        request.setAttribute("footDebug", "Length of rank description cannot exceed 254 characters or be empty");
                     } else {
 
                         YrankFacade facade = ServicesLocator.getRankFacade();
