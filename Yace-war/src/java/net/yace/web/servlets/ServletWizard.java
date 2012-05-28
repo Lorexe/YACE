@@ -45,7 +45,7 @@ public class ServletWizard extends HttpServlet {
         //S'en suit un C.V. et si c'est bon, on passe l'attribut "collection" pour la jsp.
         // TODO : déterminer quels renseignements sont nécessaires à l'assistant histoire que tout soit disponible dans la request
         //        la modification d'une collection existante est certainement une fonctionnalité dont on peut se passer pour vendredi
-        //        je prropose donc qu'on se concentre d'abord sur la création proprement dite (donc code get bon, reste code post).
+        //        je prropose donc qu'on se concentre d'abord sur la création proprement dite (donc code get bon, reste code post)
         YaceUtils.SessionState state = YaceUtils.getSessionState(request);
         if (state == YaceUtils.SessionState.noauth) {
             request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);

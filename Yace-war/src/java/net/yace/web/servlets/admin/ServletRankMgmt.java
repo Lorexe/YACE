@@ -60,20 +60,38 @@ public class ServletRankMgmt extends HttpServlet {
             String[] admin = request.getParameterValues("isAdmin");
             String id = request.getParameter("idYRANK");
 
-            boolean isadmin = false;
-            if (admin != null) {
-                isadmin = true;
-            }
+            try {
+                int inbmax = Integer.parseInt(nbmax);
+                if (inbmax < -1) {
+                    request.setAttribute("footDebug", "Max number of items must be positive or equal to -1");
+                } else {
+                    boolean isadmin = false;
+                    if (admin != null) {
+                        isadmin = true;
+                    }
 
-            YrankFacade facade = ServicesLocator.getRankFacade();
+                    if (rankname.length() >= 254) {
+                        request.setAttribute("footDebug", "Length of rank description cannot exceed 254 characters");
+                    } else {
 
-            if (id.equals("new")) {
-                Yrank rank = new Yrank(rankname, Integer.parseInt(nbmax), isadmin);
-                facade.create(rank);
-            } else {
-                int idrank = Integer.parseInt(id);
-                Yrank rank = new Yrank(idrank, rankname, Integer.parseInt(nbmax), isadmin);
-                facade.edit(rank);
+                        YrankFacade facade = ServicesLocator.getRankFacade();
+
+                        if (id.equals("new")) {
+                            Yrank rank = new Yrank(rankname, inbmax, isadmin);
+                            facade.create(rank);
+                        } else {
+                            try {
+                                int idrank = Integer.parseInt(id);
+                                Yrank rank = new Yrank(idrank, rankname, inbmax, isadmin);
+                                facade.edit(rank);
+                            } catch (NumberFormatException e) {
+                                request.setAttribute("footDebug", "Invalid Rank ID");
+                            }
+                        }
+                    }
+                }
+            } catch (NumberFormatException e) {
+                request.setAttribute("footDebug", "Max number of items must be an integer value");
             }
         }
 
