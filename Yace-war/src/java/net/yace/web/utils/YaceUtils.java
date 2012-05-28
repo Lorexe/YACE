@@ -187,7 +187,7 @@ public class YaceUtils {
         request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
 
         // On nomme et affiche la page
-        request.setAttribute("pageTitle", "Accès non autorisé");
+        request.setAttribute("pageTitle", "Utilisateur introuvable");
         request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
     }
 }
