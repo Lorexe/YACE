@@ -294,6 +294,15 @@ section#main {
             background: #f90;
             cursor: help;
         }
+        
+        div.radios {
+            margin-top: 15px;
+            margin-bottom: 70px;
+        }
+        
+        div.radios input[type=radio] {
+            margin-top: 10px;
+        }
 
 /* :::: CoverFlow :::: */
 figure.cover {

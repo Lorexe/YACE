@@ -66,6 +66,9 @@
                     <li>
                         <a href="autocomplete">Test autocompl&eacute;tion</a>
                     </li>
+                    <li>
+                        <a href="collections">Liste de mes collections</a>
+                    </li>
                 </ul>
             </nav>
             <%-- END TEST MENU --%>

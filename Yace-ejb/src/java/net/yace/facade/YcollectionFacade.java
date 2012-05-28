@@ -93,4 +93,34 @@ public class YcollectionFacade extends AbstractFacade<Ycollection> {
         return cList;
     }
     
+    public List<Ycollection> findAllPublicFromUser(int id) {
+        List<Ycollection> cList = null;//liste à retourner
+        Query query;
+        query = em.createNamedQuery("Ycollection.findAllPublicFromUser");
+        query.setParameter("idYUSER", id);
+        
+        try 
+        {
+            cList = query.getResultList();
+        }catch(NoResultException e){
+        }
+        
+        return cList;
+    }
+    
+    public List<Ycollection> findAllFromUser(int id) {
+        List<Ycollection> cList = null;//liste à retourner
+        Query query;
+        query = em.createNamedQuery("Ycollection.findAllFromUser");
+        query.setParameter("idYUSER", id);
+        
+        try 
+        {
+            cList = query.getResultList();
+        }catch(NoResultException e){
+        }
+        
+        return cList;
+    }
+    
 }

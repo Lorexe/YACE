@@ -40,7 +40,7 @@ public class ServletUserMgmt extends HttpServlet {
         } else if (state == YaceUtils.SessionState.noauth) {
             request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else {
-            YaceUtils.DisplayAdminError(request, response);
+            YaceUtils.displayAdminError(request, response);
         }
     }
 
