@@ -123,4 +123,21 @@ public class YcollectionFacade extends AbstractFacade<Ycollection> {
         return cList;
     }
     
+    //recherche collections par itemtype des items
+    public List<Ycollection> findAllByItemType(String type)
+    {
+        List<Ycollection> cList = null;//liste à retourner
+        Query query;
+        query = em.createNamedQuery("Ycollection.findAllPublicByItemType");
+        query.setParameter("name", "%"+type+"%");
+        
+        try 
+        {
+            cList = query.getResultList();
+        }catch(NoResultException e){
+        }
+        
+        return cList;
+    }
+    
 }
