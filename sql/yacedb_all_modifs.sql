@@ -4,7 +4,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 --
 -- Base de données: `yacedb`
--- Inclut tous les MAJ 
+-- Inclut tous les MAJ  
 -- 28-05-2012
 --
 DROP DATABASE IF EXISTS `yacedb`;

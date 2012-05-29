@@ -75,6 +75,7 @@ public class Yitemtype implements Serializable {
         this.name = name;
     }
     
+    //ajout
     public Yitemtype(Integer idYITEMTYPE, String name, Boolean isPublic) {
         this.idYITEMTYPE = idYITEMTYPE;
         this.name = name;
