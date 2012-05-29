@@ -47,6 +47,10 @@ public class Yitemtype implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "is_public")
+    private Boolean isPublic;
     @JoinTable(name = "link_types", joinColumns = {
         @JoinColumn(name = "child", referencedColumnName = "idYITEMTYPE")}, inverseJoinColumns = {
         @JoinColumn(name = "parent", referencedColumnName = "idYITEMTYPE")})
@@ -70,6 +74,12 @@ public class Yitemtype implements Serializable {
         this.idYITEMTYPE = idYITEMTYPE;
         this.name = name;
     }
+    
+    public Yitemtype(Integer idYITEMTYPE, String name, Boolean isPublic) {
+        this.idYITEMTYPE = idYITEMTYPE;
+        this.name = name;
+        this.isPublic = isPublic;
+    }
 
     public Integer getIdYITEMTYPE() {
         return idYITEMTYPE;
@@ -85,6 +95,14 @@ public class Yitemtype implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public Boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
     }
 
     @XmlTransient

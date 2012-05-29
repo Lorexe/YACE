@@ -50,7 +50,7 @@ public class YitemtypeFacade extends AbstractFacade<Yitemtype> {
         List<Yitemtype> tList = null;//liste à retourner
         Query query;
         query = em.createNamedQuery("Yitemtype.findAllTypesLike");
-        query.setParameter("name", name);
+        query.setParameter("name", "%"+name+"%");
         
         try 
         {

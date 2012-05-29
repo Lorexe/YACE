@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `yattribute` (
   `name` varchar(255) NOT NULL,
   `type` varchar(45) NOT NULL,
   `no_order` int(11) NOT NULL,
-  `many` tinyint(1) NOT NULL,
+  `many` BOOLEAN NOT NULL,
   `itemtype` int(11) DEFAULT NULL,
   PRIMARY KEY (`idYATTRIBUTE`),
   KEY `itemtype` (`itemtype`)
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `yattributevalue` (
   `val_int` int(11) DEFAULT NULL,
   `val_flt` decimal(2,0) DEFAULT NULL,
   `val_date` datetime DEFAULT NULL,
-  `val_bool` tinyint(1) DEFAULT NULL,
+  `val_bool` BOOLEAN DEFAULT NULL,
   `attribute` int(11) DEFAULT NULL,
   PRIMARY KEY (`idYATTRIBUTEVALUE`),
   KEY `attribute` (`attribute`)
@@ -86,7 +86,7 @@ DROP TABLE IF EXISTS `ycollection`;
 CREATE TABLE IF NOT EXISTS `ycollection` (
   `idYCOLLECTION` int(11) NOT NULL AUTO_INCREMENT,
   `theme` varchar(255) NOT NULL,
-  `is_public` tinyint(1) NOT NULL,
+  `is_public` BOOLEAN NOT NULL,
   `owner` int(11) DEFAULT NULL,
   PRIMARY KEY (`idYCOLLECTION`),
   KEY `owner` (`owner`)
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `yrank` (
   `idYRANK` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(255) NOT NULL,
   `nb_max_item` int(11) NOT NULL,
-  `is_admin` tinyint(1) NOT NULL,
+  `is_admin` BOOLEAN NOT NULL,
   PRIMARY KEY (`idYRANK`)
 ) ENGINE=InnoDB;
 
