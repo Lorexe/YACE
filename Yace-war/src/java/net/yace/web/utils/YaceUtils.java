@@ -164,7 +164,7 @@ public class YaceUtils {
         request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
     }
     
-    public static void displayUserUnknownError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public static void displayUnknownUserError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // On défini l'erreur qui s'est produite
         request.setAttribute("errorMsg",
                 "Nous sommes désolé, mais l'utilisateur que vous recherchez n'existe pas dans notre base de données.<br/>"
