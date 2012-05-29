@@ -1,6 +1,8 @@
-var append = "&api_key=c9aec14b6bfccf2883dbc1ad9e9adf6c&format=json&callback=?";
-var uri="http://ws.audioscrobbler.com/2.0/";
- 
+var append_album = "&api_key=c9aec14b6bfccf2883dbc1ad9e9adf6c&format=json&callback=?";
+var uri_album = "http://ws.audioscrobbler.com/2.0/";
+
+var semamusic = 0;
+
 function getAlbums()
 {
     //var apik = "c9aec14b6bfccf2883dbc1ad9e9adf6c";
@@ -18,6 +20,30 @@ function addAlbum(album)
         "<li>Album : " + album.name + "</li>" +
         "</ul>");
 }
+
+function searchAlbumStarted()
+{
+    $("#searching").append("Searching...");
+}
+
+function searchAlbumStopped()
+{
+    $("#searching").empty();
+}
+
+function doingAlbumSearch()
+{
+    if (semamusic == 0)
+        searchAlbumStarted();
+    semamusic++;
+}
+
+function finishingAlbumSearch()
+{
+    semamusic--;
+    if (semamusic == 0)
+        searchAlbumStopped();
+}
  
 function searchLastfm(name)
 {
@@ -28,7 +54,7 @@ function searchLastfm(name)
 function searchLastfmArtist(name)
 {
     //search related artists and their albums
-    var url = uri + "?method=artist.search&artist=" + name + append;
+    var url = uri_album + "?method=artist.search&artist=" + name + append_album;
     $.ajax({
         type:"GET",
         url:url,
@@ -52,7 +78,7 @@ function searchLastfmArtist(name)
 function getLastfmArtistAlbums(mbid)
 {
     //search available albums for an artist
-    var url = uri + "?method=artist.getTopAlbums&mbid=" + mbid + append;
+    var url = uri_album + "?method=artist.getTopAlbums&mbid=" + mbid + append_album;
     $.ajax({
         type:"GET",
         url:url,
@@ -88,7 +114,7 @@ function getLastfmArtistAlbums(mbid)
 function searchLastfmAlbum(name)
 {
     //search related albums
-    var url = uri + "?method=album.search&album=" + name + append;
+    var url = uri_album + "?method=album.search&album=" + name + append_album;
     $.ajax({
         type:"GET",
         url:url,
@@ -122,8 +148,10 @@ function searchLastfmAlbum(name)
  
 function getLastfmAlbum(mbid)
 {
+    doingAlbumSearch();
+    
     //Get information for a specific album
-    var url = uri + "?method=album.getInfo&mbid=" + mbid + append;
+    var url = uri_album + "?method=album.getInfo&mbid=" + mbid + append_album;
     $.ajax({
         type:"GET",
         url:url,
@@ -141,6 +169,7 @@ function getLastfmAlbum(mbid)
             };
 			
             addAlbum(album);
+            finishingAlbumSearch();
         }
     }); // ajax
 }
