@@ -58,6 +58,6 @@ public class ServletAbout extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "A propos de Yace et de ses développeurs";
     }
 }

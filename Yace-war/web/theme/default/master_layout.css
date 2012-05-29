@@ -455,11 +455,11 @@ section.content {
         padding-left: 15px;
     }
 
-/* :::: Administration :::: */
-div.mgmtIcons {
-    width:36px;
-}
+/* :::: Administration ou autre :::: */
+div.mgmtIcons{width:36px;}
 
-div.mgmtIcons img {
-    display: inline-block;
-}
+div.mgmtIcons img{display:inline-block;}
+
+div#dummy{display:none;}
+
+div#newOrExisting{width:360px;text-align:center;}
