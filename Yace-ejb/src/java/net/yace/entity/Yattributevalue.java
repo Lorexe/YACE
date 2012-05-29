@@ -5,11 +5,14 @@
 package net.yace.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -42,6 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Yattributevalue implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idYATTRIBUTEVALUE")
     private Integer idYATTRIBUTEVALUE;
     @Lob
@@ -126,6 +130,15 @@ public class Yattributevalue implements Serializable {
     public void setYitemCollection(Collection<Yitem> yitemCollection) {
         this.yitemCollection = yitemCollection;
     }
+    
+    /*
+    //ajoute un yitem
+    //don't use it now, need some tests
+    public void addYitem(Yitem item) {
+        if(this.yitemCollection == null)
+            this.yitemCollection = new ArrayList<Yitem>();
+        this.yitemCollection.add(item);
+    }*/
 
     public Yattribute getAttribute() {
         return attribute;

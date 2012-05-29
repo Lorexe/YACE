@@ -5,7 +5,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 --
 -- Base de données: `yacedb`
 -- Inclut tous les MAJ  
--- 28-05-2012
+-- 29-05-2012
 --
 DROP DATABASE IF EXISTS `yacedb`;
 CREATE DATABASE `yacedb` DEFAULT CHARACTER SET latin1 ;
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `link_types` (
 
 DROP TABLE IF EXISTS `yattribute`;
 CREATE TABLE IF NOT EXISTS `yattribute` (
-  `idYATTRIBUTE` int(11) NOT NULL,
+  `idYATTRIBUTE` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `type` varchar(45) NOT NULL,
   `no_order` int(11) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `yattribute` (
 
 DROP TABLE IF EXISTS `yattributevalue`;
 CREATE TABLE IF NOT EXISTS `yattributevalue` (
-  `idYATTRIBUTEVALUE` int(11) NOT NULL,
+  `idYATTRIBUTEVALUE` int(11) NOT NULL AUTO_INCREMENT,
   `val_str` longtext,
   `val_int` int(11) DEFAULT NULL,
   `val_flt` decimal(2,0) DEFAULT NULL,
@@ -118,6 +118,7 @@ DROP TABLE IF EXISTS `yitemtype`;
 CREATE TABLE IF NOT EXISTS `yitemtype` (
   `idYITEMTYPE` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `is_public` BOOLEAN NOT NULL,
   PRIMARY KEY (`idYITEMTYPE`)
 ) ENGINE=InnoDB;
 
