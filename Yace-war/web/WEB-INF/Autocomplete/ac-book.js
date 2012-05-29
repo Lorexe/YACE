@@ -1,5 +1,7 @@
-var uri = "https://www.googleapis.com/books/v1/volumes";
-var append = "key=AIzaSyACxun2j0Wat4J9vtrBFDSgluDft7UI-mg&callback=?";
+var uri_book = "https://www.googleapis.com/books/v1/volumes";
+var append_book = "key=AIzaSyACxun2j0Wat4J9vtrBFDSgluDft7UI-mg&callback=?";
+
+var semabook = 0;
 
 function getBooks(lang)
 {
@@ -8,6 +10,9 @@ function getBooks(lang)
     searchGBook(name, lang);
 }
 
+/*
+ * Le code des fonctions addBook, searchBookStarted et searchBookStopped est modifiable pour l'affichage 
+ */
 function addBook(book)
 {
     var authorstr = "";
@@ -22,9 +27,33 @@ function addBook(book)
     );
 }
 
+function searchBookStarted()
+{
+    $("#searching").append("Searching...");
+}
+
+function searchBookStopped()
+{
+    $("#searching").empty();
+}
+
+function doingBookSearch()
+{
+    if (semabook == 0)
+        searchBookStarted();
+    semabook++;
+}
+
+function finishingBookSearch()
+{
+    semabook--;
+    if (semabook==0)
+        searchBookStopped();
+}
 function searchGBook(name, lang)
 {
-    var url = uri + "?q=" + name + "&langRestrict=" + lang + "&" + append;
+    var url = uri_book + "?q=" + name + "&langRestrict=" + lang + "&" + append_book;
+    doingBookSearch();
     
     $.ajax({
         type:"GET",
@@ -59,6 +88,7 @@ function searchGBook(name, lang)
                     };
                     
                     addBook(book);
+                    finishingBookSearch();
                 }
             }
         }

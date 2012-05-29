@@ -1,3 +1,5 @@
+var semafilm = 0;
+
 //Start all the research
 function getMovies()
 {
@@ -18,10 +20,35 @@ function addFilm(film)
         "<li>Poster: <img height=150 src=\"" + film.poster + "\"/></li></ul>");
 }
 
+function searchFilmStarted()
+{
+    $("#searching").append("Searching...");
+}
+
+function searchFilmStopped()
+{
+    $("#searching").empty();
+}
+
+function doingFilmSearch()
+{
+    if (semafilm == 0)
+        searchFilmStarted();
+    semafilm++;
+}
+
+function finishingFilmSearch()
+{
+    semafilm--;
+    if (semafilm == 0)
+        searchFilmStopped();
+}
+
 //Get imdb info with film title
 function getImdb(name)
 {
     var uri = "http://www.imdbapi.com/?t="+name+"&callback=?";
+    doingFilmSearch();
     
     $.ajax({
        type:"GET",
@@ -44,6 +71,7 @@ function getImdb(name)
                 year : data.Year
             };    
             addFilm(film);
+            finishingFilmSearch();
        }
    }); // ajax
 }
@@ -72,6 +100,8 @@ function getTmdb(name)
 function getTmdbFilm(id, lang)
 {
     var uri = "http://api.themoviedb.org/2.1/Movie.getInfo/"+ lang +"/json/e5ce14dd590334e71c1ac17d889d1d81/" + id + "?callback=?";
+    
+    doingFilmSearch();
     
     $.ajax({
        type:"GET",
@@ -122,6 +152,7 @@ function getTmdbFilm(id, lang)
             };
             
             addFilm(film);
+            finishingFilmSearch();
        }
    }); // ajax
 }

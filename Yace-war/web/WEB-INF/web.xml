@@ -57,6 +57,10 @@
         <servlet-name>ServletCollectionsList</servlet-name>
         <servlet-class>net.yace.web.servlets.ServletCollectionsList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletAbout</servlet-name>
+        <servlet-class>net.yace.web.servlets.ServletAbout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletRegister</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -108,6 +112,10 @@
     <servlet-mapping>
         <servlet-name>ServletCollectionsList</servlet-name>
         <url-pattern>/collections</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAbout</servlet-name>
+        <url-pattern>/about</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>1800</session-timeout>
