@@ -60,8 +60,6 @@ function searchGBook(name, lang)
         url:url,
         dataType:"jsonp",
         success: function(data){
-            console.log("-BOOK SEARCH-");
-            console.log(data);
 
             var keeper = data.items.length;
             if (keeper != undefined)

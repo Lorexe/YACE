@@ -12,10 +12,17 @@ function getMovies()
 //Adds a film to the list (to be modified)
 function addFilm(film)
 {
+    var writers="";
+    var directors="";
+    
+    for (var i = 0; i < film.writers.length; i++)
+        writers += film.writers[i].name + ",";
+    for (i = 0; i < film.directors.length; i++)
+        directors += film.directors[i].name + ",";
     $("#content").append("<h2>Results from "+ film.provider + "</h2>" +
         "<ul><li>Title: " + film.title + "</li>" +
-        "<li>Writer: " + film.writer + "</li>" +
-        "<li>Director: " + film.director + "</li>" +
+        "<li>Writer: " + writers + "</li>" +
+        "<li>Director: " + directors + "</li>" +
         "<li>Resume: " + film.plot + "</li>" +
         "<li>Poster: <img height=150 src=\"" + film.poster + "\"/></li></ul>");
 }
@@ -55,18 +62,43 @@ function getImdb(name)
        url:uri,
        dataType:"jsonp",
        success: function(data){
-            console.log(data);
+            
+            var writers = [];
+            var actors = [];
+            var directors = [];
+            var genres = [];
+            
+            var splitted = data.Writer.split(",");
+            for (var i = 0; i < splitted.length; i++) {
+                writers.push({"name":splitted[i]});
+            }
+            
+            splitted = data.Actors.split(",");
+            for (i = 0; i < splitted.length; i++) {
+                actors.push({"name":splitted[i]});
+            }
+            
+            splitted = data.Director.split(",");
+            for (i = 0; i < splitted.length; i++) {
+                directors.push({"name":splitted[i]});
+            }
+            
+            splitted = data.Genre.split(",");
+            for (i = 0; i < splitted.length; i++) {
+                genres.push({"name":splitted[i]});
+            }
+            
             var film = {
                 provider : "imdb",
                 title : data.Title,
-                director : data.Director,
-                writer : data.Writer,
-                actors : data.Actors,
+                directors : directors,
+                writers : writers,
+                actors : actors,
                 plot : data.Plot,
                 poster : data.Poster,
                 runtime : data.Runtime,
                 rating : data.Rating,
-                genre : data.Genre,
+                genres : genres,
                 released : data.Released,
                 year : data.Year
             };    
@@ -86,7 +118,6 @@ function getTmdb(name)
        url:uri,
        dataType:"jsonp",
        success: function(data){
-           console.log(data);
            for (var i = 0; i < data.length; i++)
            {
                getTmdbFilm(data[i].id, "en");  
@@ -108,13 +139,12 @@ function getTmdbFilm(id, lang)
        url:uri,
        dataType:"jsonp",
        success: function(data){
-            console.log(data);
             
             //We need the writer, actors, poster and genre
-            var writer = "";
-            var actor = "";
-            var director = "";
-            var genre = "";
+            var writers = [];
+            var actors = [];
+            var directors = [];
+            var genres = [];
             var poster = "";
             //writer; actors; director
             
@@ -122,17 +152,17 @@ function getTmdbFilm(id, lang)
             {
                 var elt = data[0].cast[i];
                 if (elt.department == "Writing")
-                    writer += elt.name + ", ";
+                    writers.push({"name":elt.name});
                 else if (elt.department == "Actors")
-                    actor += elt.name + ", ";
+                    actors.push({"name":elt.name});
                 else if (elt.department == "Directing")
-                    director += elt.name + ", ";
+                    directors.push({"name":elt.name});
             }
             //genre
             for (i = 0; i < data[0].genres.length; i++)
             {
                 elt = data[0].genres[i];
-                genre += elt.name+", ";
+                genres.push({"name":elt.name});
             }
             //poster
             poster = data[0].posters[4].image.url;
@@ -140,14 +170,14 @@ function getTmdbFilm(id, lang)
             var film = {
                 provider : "tmdb",
                 title : data[0].original_name,
-                writer : writer,
-                director : director,
-                actors : actor,
+                writers : writers,
+                directors : directors,
+                actors : actors,
                 plot : data[0].overview,
                 poster : poster,
                 runtime : data[0].runtime,
                 rating : data[0].rating,
-                genre : genre,
+                genres : genres,
                 released : data[0].released
             };
             
