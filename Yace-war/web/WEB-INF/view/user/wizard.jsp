@@ -21,59 +21,6 @@
 
 <section class="content"> <!-- contenu intÃ©ressant -->
     <aside id="toggletips"><strong>A I D E</strong></aside>
-    
-    <c:choose>
-        <c:when test="${empty coll}">
-            <label for="theme">Entrez la thématique de la nouvelle collection</label> : <input type="text" id="theme" name="theme"/>
-        </c:when>
-        <c:otherwise>
-            <%-- TABLE D'AFFICHAGE DES ITEMTYPES DE LA COLLECTION --%>
-            <sql:query var="itemtypes" dataSource="Yacedb">
-                SELECT * FROM yitemtype JOIN yitem ON yitemtype.idYITEMTYPE = yitem.type
-            </sql:query>
-            <table id="itemtypes" class="y-table y-table-form y-table-center" style="display:none;">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Nb. objets</th>
-                        <th>
-                            <img class="wheelicon" src="./theme/default/img/img_trans.gif" alt="Edition" title="Edition" />
-                        </th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr id="itemtypenew" <c:if test="${itemtypes.rowCount % 2 == 0}">class="odd"</c:if>>
-                        <td colspan="3">Ajouter un nouveau type d'objet <img class="moreicon" src="./theme/default/img/img_trans.gif" alt="Ajouter" title="Ajouter" onclick="newItemType()" style="margin-bottom: -4px;"/></td>
-                    </tr>
-                </tfoot>
-                <tbody>
-                <c:forEach var="itemtype" items="${itemtypes.rows}">
-                    <tr id="itemtype${itemtype.idYITEMTYPE}" <c:if test="${itemtype.idYITEMTYPE % 2 != 0}">class="odd"</c:if>>
-                        <td>${itemtype.name}</td>
-                        <td>
-                            <sql:query var="nbItem" dataSource="Yacedb">
-                                SELECT DISTINCT yitem.idYITEM FROM yitem y WHERE y.type = ? AND y.collection = ?
-                                <sql:param value="${itemtype.idYITEMTYPE}"/>
-                                <sql:param value="${coll.rows[0].idYCOLLECTION}"/>
-                            </sql:query>
-                            ${nbItem.rowCount}
-                        </td>
-                        <td>
-                            <div class="mgmtIcons">
-                                <img class='editicon' src='./theme/default/img/img_trans.gif' alt='Editer' title='Editer' onclick='edit("itemtype${itemtype.idYITEMTYPE}")' />
-                                <%-- <img class='deleteicon' src='./theme/default/img/img_trans.gif' alt='Supprimer' title='Supprimer' onclick='del("rank${rank.idYRANK}")' /> --%>
-                            </div>
-                            <div class="mgmtIcons">
-                                <img class='undoicon' src='./theme/default/img/img_trans.gif' alt='Annuler' title='Annuler' onclick='undo("itemtype${itemtype.idYITEMTYPE}")' style='display: none;' />
-                                <img class='validicon' src='./theme/default/img/img_trans.gif' alt='Valider' title='Valider' onclick='send("itemtype${itemtype.idYITEMTYPE}")' style='display: none;' />
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </c:otherwise>
-    </c:choose>
 
     <div id="appender"></div>
 
@@ -85,47 +32,38 @@
 </section>
 
 <div id="dummy">
-<%-- ECRAN CHOIX ITEMTYPE NOUVEAU OU EXISTANT --%>
-    <div id="newOrExisting">
-        <a onclick="showExistingItemTypes()">Ajouter un type d'objet existant</a><br/>
-        <strong>OU</strong><br/>
-        <a onclick="showItemTypeCreation()">Cr&eacute;er un nouveau type d'objet</a><br/>
-    </div> 
-
-<%-- ECRAN ITEMTYPE EXISTANT --%>
+<%-- TABLE D'AFFICHAGE DES ITEMTYPES DE LA COLLECTION --%>
     <sql:query var="itemtypes" dataSource="Yacedb">
-        SELECT * FROM yitemtype y WHERE y.is_public = 1
+        SELECT * FROM yitemtype JOIN yitem ON yitemtype.idYITEMTYPE = yitem.type
     </sql:query>
-    <table id="itemtypes" class="y-table y-table-form y-table-center" style="display:none;">
+    <table id="itemtypes" class="y-table y-table-form y-table-center">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Nb. objets</th>
-                <th>
-                    <img class="wheelicon" src="./theme/default/img/img_trans.gif" alt="Edition" title="Edition" />
-                </th>
+                <th><img class="wheelicon" src="./theme/default/img/img_trans.gif" alt="Edition" title="Edition" /></th>
             </tr>
         </thead>
         <tfoot>
-            <tr id="itemtypenew" <c:if test="${itemtypes.rowCount % 2 == 0}">class="odd"</c:if>>
+            <tr <c:if test="${itemtypes.rowCount % 2 == 0}">class="odd"</c:if>>
                 <td colspan="3">Ajouter un nouveau type d'objet <img class="moreicon" src="./theme/default/img/img_trans.gif" alt="Ajouter" title="Ajouter" onclick="newItemType()" style="margin-bottom: -4px;"/></td>
             </tr>
         </tfoot>
         <tbody>
         <c:forEach var="itemtype" items="${itemtypes.rows}">
-            <tr id="itemtype${itemtype.idYITEMTYPE}" <c:if test="${itemtype.idYITEMTYPE % 2 != 0}">class="odd"</c:if>>
+            <tr <c:if test="${itemtype.idYITEMTYPE % 2 != 0}">class="odd"</c:if>>
                 <td>${itemtype.name}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${!empty coll}">
+                        <c:when test="${empty coll}">0</c:when>
+                        <c:otherwise>
                             <sql:query var="nbItem" dataSource="Yacedb">
-                                SELECT DISTINCT yitem.idYITEM FROM yitem y WHERE y.type = ? AND y.collection = ?
+                                SELECT DISTINCT idYITEM FROM yitem y WHERE y.type = ? AND y.collection = ?
                                 <sql:param value="${itemtype.idYITEMTYPE}"/>
                                 <sql:param value="${coll.rows[0].idYCOLLECTION}"/>
                             </sql:query>
                             ${nbItem.rowCount}
-                        </c:when>
-                        <c:otherwise>0</c:otherwise>
+                        </c:otherwise>
                     </c:choose>
                 </td>
                 <td>
@@ -143,6 +81,38 @@
         </tbody>
     </table>
 
+<%-- ECRAN ITEMTYPE PREDEFINI --%>
+    <sql:query var="publicIT" dataSource="Yacedb">
+        <%-- Changer la requête pour ne pas prendre en compte les itemtypes déjà dans la collection --%>
+        SELECT * FROM yitemtype y WHERE y.is_public = 1
+    </sql:query>
+    <table id="publicIT" class="y-table y-table-form">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nom</th>
+                <%-- <th><img class="wheelicon" src="./theme/default/img/img_trans.gif" alt="Edition" title="Edition" /></th> --%>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr <c:if test="${publicIT.rowCount % 2 == 0}">class="odd"</c:if>>
+                <%-- <td colspan="3"> --%>
+                <td colspan="2">
+                    <button class="y-button y-button-white" onclick="valid()">J'ai choisi !</button>
+                </td>
+            </tr>
+        </tfoot>
+        <tbody>
+        <c:forEach var="it" items="${publicIT.rows}">
+            <tr id="itemtype${it.idYITEMTYPE}" <c:if test="${it.idYITEMTYPE % 2 != 0}">class="odd"</c:if>>
+                <td><input type="radio" name="itPublic" id="itPublic${it.idYITEMTYPE}"/></td>
+                <td><label for="itPublic${it.idYITEMTYPE}">${it.name}</label></td>
+                <%-- <td><img class='eyeicon' src='./theme/default/img/img_trans.gif' alt='Voir' title='Voir les d&eacute;tails' onclick='see("itemtype${it.idYITEMTYPE}")' /></td> --%>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+
 <%-- ECRAN CREATION ITEMTYPE --%>
     
 </div> 
@@ -151,12 +121,6 @@
 function showItemTypes(){
 $(document).ready(function(){
     $("div#appender").append($("div#dummy table#itemtypes").clone())
-});
-}
-
-function newItemType(){
-$(document).ready(function(){
-    
 });
 }
 
@@ -171,4 +135,104 @@ $(document).ready(function(){
     $("section.content").append(saveButton);
 });
 }
+
+function showNewCollection() {
+$(document).ready(function(){
+    var newCollection = document.createElement("div");
+    var labelTheme = document.createElement("label");
+    var inputTheme = document.createElement("input");
+    var continueButton = document.createElement("button");
+
+    $(continueButton)
+        .attr("class","y-button y-button-white")
+        .attr("onclick","collectionNameVerif()")
+        .html("Je continue !");
+
+    $(inputTheme)
+        .attr("type","text")
+        .attr("id","theme")
+        .attr("name","theme")
+        .attr("required","required");
+
+    $(labelTheme)
+        .attr("for","theme")
+        .html("Entrez la th&eacute;matique de la nouvelle collection : ");
+
+    $(newCollection)
+        .attr("id","newCollection")
+        .attr("class","wizardBox")
+        .append(labelTheme)
+        .append(inputTheme)
+        .append(continueButton);
+
+    $("div#appender").append(newCollection);
+});
+}
+
+function collectionNameVerif(){
+$(document).ready(function(){
+    var theme = $("#theme").val();
+    
+    theme = theme.trim();
+    
+    if(!theme || theme.length === 0 || (/^\s*$/).test(theme)) {
+        alert("Oh noooon !");
+    } else {
+        var collectionName = document.createElement("input");
+        $(collectionName)
+            .attr("type","hidden")
+            .attr("name","collectionName")
+            .attr("value",theme);
+        $("form[name='wizardcollection']").append(collectionName);
+
+        $("section.content div#newCollection").remove();
+        showNewOrPublic();
+    }
+});
+}
+
+function showNewOrPublic(){
+$(document).ready(function(){
+    var newOrPublic = document.createElement("div");
+    var aPublic = document.createElement("a");
+    var aNew = document.createElement("a");
+    var strongOr = document.createElement("strong");
+
+    $(aPublic)
+        .attr("onclick","showPublicItemTypes()")
+        .html("Ajouter un type d'objet pr&eacute;d&eacute;fini");
+
+    $(strongOr).html("<br/>OU<br/>");
+
+    $(aNew)
+        .attr("onclick","showItemTypeCreation()")
+        .html("Cr&eacute;er un nouveau type d'objet");
+
+    $(newOrPublic)
+        .attr("id","newOrPublic")
+        .attr("class","wizardBox")
+        .append(aPublic)
+        .append(strongOr)
+        .append(aNew);
+
+    $("div#appender").append(newOrPublic);
+});
+}
+
+function showPublicItemTypes(){
+$(document).ready(function(){
+    $("div#appender").append($("div#dummy table#publicIT").clone())
+});
+}
+
+function showItemTypeCreation(){
+$(document).ready(function(){
+    
+});
+}
 </script>
+<c:if test="${empty coll}">
+    <script type="text/javascript">
+        showNewCollection();
+    </script>
+</c:if>
