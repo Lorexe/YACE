@@ -18,7 +18,14 @@ function addAlbum(album)
         "<li>Image : <img width=150 src=\"" + album.cover + "\"/></li>" +
         "<li>Artist : " + album.artist + "</li>" +
         "<li>Album : " + album.name + "</li>" +
-        "</ul>");
+        "</ul>" +
+        "<h3>Tracks</h3><ol>"
+        );
+        
+    for (var i = 0; i < album.tracklist.length; i++){
+        $("#content").append("<li>" + album.tracklist[i].name + " time : " + album.tracklist[i].duration + "</li>");
+    }
+    $("#content").append("</ol>");
 }
 
 function searchAlbumStarted()
@@ -60,8 +67,6 @@ function searchLastfmArtist(name)
         url:url,
         dataType:"jsonp",
         success: function(data){
-            console.log("-ARTIST SEARCH-");
-            console.log(data);
 
             var keeper = data.results.artistmatches.artist.length;			
             for (var i = 0; i < keeper; i++)
@@ -84,8 +89,6 @@ function getLastfmArtistAlbums(mbid)
         url:url,
         dataType:"jsonp",
         success: function(data){
-            console.log("-ARTIST's ALBUMS SEARCH-");
-            console.log(data);
             
             var keeper = data.topalbums.album.length;
             if (keeper == undefined)
@@ -101,7 +104,7 @@ function getLastfmArtistAlbums(mbid)
             {
                 for (var i = 0; i < keeper; i++)
                 {
-                    var mbid = data.topalbums.album[i].mbid;
+                    mbid = data.topalbums.album[i].mbid;
                     console.log(mbid);
                     if (mbid != "")
                         getLastfmAlbum(mbid);
@@ -120,8 +123,6 @@ function searchLastfmAlbum(name)
         url:url,
         dataType:"jsonp",
         success: function(data){
-            console.log("-ALBUM SEARCH-");
-            console.log(data);
             
             var keeper = data.results.albummatches.album.length;
             if (keeper == undefined)
@@ -137,7 +138,7 @@ function searchLastfmAlbum(name)
             {
                 for (var i = 0; i < keeper; i++)
                 {
-                    var mbid = data.results.albummatches.album[i].mbid;
+                    mbid = data.results.albummatches.album[i].mbid;
                     if (mbid != "")
                         getLastfmAlbum(mbid);
                 }
@@ -160,12 +161,27 @@ function getLastfmAlbum(mbid)
             console.log("-ALBUM GETINFO-");
             console.log(data);
             
+            var tracklist = [];
+            if (data.album.tracks.track != undefined)
+            {
+                var keeper = data.album.tracks.track.length;
+                for (var i = 0; i < keeper; i++) {
+                    var name = data.album.tracks.track[i].name;
+                    var duration = data.album.tracks.track[i].duration;
+                    tracklist.push({
+                        "name":name,
+                        "duration":duration
+                    });
+                }
+            }
+            
             var album = {
                 provider: "lastfm",
                 artist: data.album.artist,
                 name: data.album.name,
                 released: data.album.releasedate,
-                cover: data.album.image[4]['#text']
+                cover: data.album.image[4]['#text'],
+                tracklist: tracklist
             };
 			
             addAlbum(album);
