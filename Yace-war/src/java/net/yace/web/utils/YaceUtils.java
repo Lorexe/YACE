@@ -106,7 +106,7 @@ public class YaceUtils {
     
     public static boolean isValidEmail(String email)
     {
-        String expr = "^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z{2,4}$";
+        String expr = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
         CharSequence input = email;
         Pattern pattern = Pattern.compile(expr, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(input);

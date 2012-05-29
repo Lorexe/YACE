@@ -62,7 +62,7 @@ public class Yuser implements Serializable {
     @JoinColumn(name = "rank", referencedColumnName = "idYRANK")
     @ManyToOne
     private Yrank rank;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", orphanRemoval = true)
     private Collection<Ycollection> ycollectionCollection;
 
     public Yuser() {
