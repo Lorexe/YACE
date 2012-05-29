@@ -5,6 +5,7 @@
 package net.yace.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -32,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Yitem.findAll", query = "SELECT y FROM Yitem y"),
-    @NamedQuery(name = "Yitem.findByIdYITEM", query = "SELECT y FROM Yitem y WHERE y.idYITEM = :idYITEM")})
+    @NamedQuery(name = "Yitem.findByIdYITEM", query = "SELECT y FROM Yitem y WHERE y.idYITEM = :idYITEM"),
+    @NamedQuery(name = "Yitem.findAllAttrValues", query = "SELECT av FROM Yitem y JOIN y.yattributevalueCollection av JOIN av.attribute a WHERE y.idYITEM = :idYITEM")})
 public class Yitem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -73,6 +75,15 @@ public class Yitem implements Serializable {
 
     public void setYattributevalueCollection(Collection<Yattributevalue> yattributevalueCollection) {
         this.yattributevalueCollection = yattributevalueCollection;
+    }
+    
+    //ajoute un Yattributevalue 
+    //MANY to MANY
+    public void addYattributevalue(Yattributevalue val)
+    {
+        if(this.yattributevalueCollection == null)
+            this.yattributevalueCollection = new ArrayList<Yattributevalue>();
+        this.yattributevalueCollection.add(val);
     }
 
     public Yitemtype getType() {
