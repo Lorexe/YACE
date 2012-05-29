@@ -67,7 +67,7 @@ public class ServletRegister extends HttpServlet {
         if (pseudo == null || pseudo.isEmpty()) {
             request.setAttribute("error", "Vous devez choisir<br/>un pseudo !");
             request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
-        } else if (email == null || email.isEmpty() || !Pattern.matches("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", email)) {
+        } else if (email == null || email.isEmpty() || !YaceUtils.isValidEmail(email)) {
             request.setAttribute("error", "Vous devez indiquer<br/>un email valide !");
             request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else if (pass == null || passVerif == null || pass.isEmpty() || passVerif.isEmpty() || !pass.equals(passVerif)) {
