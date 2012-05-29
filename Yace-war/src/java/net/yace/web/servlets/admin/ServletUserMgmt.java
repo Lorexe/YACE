@@ -67,56 +67,52 @@ public class ServletUserMgmt extends HttpServlet {
 
         if (state == YaceUtils.SessionState.admin) {
             String mode = request.getParameter("mode");
-            String id = request.getParameter("id");
-            String name = request.getParameter("name");
+            String id = request.getParameter("idYUSER");
+            String pseudo = request.getParameter("pseudo");
             String email = request.getParameter("email");
             String rank = request.getParameter("rank");
 
             YuserFacade userFacade = ServicesLocator.getUserFacade();
             YrankFacade rankFacade = ServicesLocator.getRankFacade();
 
-            if (name.length() == 0 || name.length() > 254) {
+            if (pseudo.length() == 0 || pseudo.length() > 254) {
                 request.setAttribute("footDebug", "User name cannot exceed 254 characters or be empty");
             } else if (email.length() == 0 || email.length() > 254) {
                 request.setAttribute("footDebug", "User email cannot exceed 254 characters or be empty");
             } else if (! YaceUtils.isValidEmail(email) ){
                 request.setAttribute("footDebug", "User email : Wrong format");
             } else {
-
-                if (mode.equals("add")) {
-                    //Test données uniques
-                    Yuser usermail = userFacade.findUser(email);
-                    Yuser userpseudo = userFacade.findUser(name);
-                    if (usermail == null && userpseudo == null) {
-                        Yuser user = new Yuser();
-                        user.setPseudo(name);
-                        user.setEmail(email);
-
-                        Yrank entrank = rankFacade.find(Integer.parseInt(rank));
-                        user.setRank(entrank);
-
-                        userFacade.create(user);
-                    } else {
-                        request.setAttribute("error", "Pseudo ou e-mail déjà utilisé");
-                    }
-                } else if (mode.equals("edit")) {
-                    Yuser user = new Yuser();
+                if (mode.equals("edit")) {
                     try {
                         int userid = Integer.parseInt(id);
-                        user.setIdYUSER(userid);
-                        user.setPseudo(name);
-                        user.setEmail(email);
+                        
+                        //Test données uniques
+                        Yuser usermail = userFacade.findUser(email);
+                        Yuser userpseudo = userFacade.findUser(pseudo);
 
-                        Yrank entrank = rankFacade.find(Integer.parseInt(rank));
-                        user.setRank(entrank);
+                        if((usermail!=null && usermail.getIdYUSER()!=userid) || (userpseudo!=null && userpseudo.getIdYUSER()!=userid)) {
+                            request.setAttribute("footDebug", "Pseudo ou e-mail déjà utilisé");
+                        } else {
+                            Yuser user = userFacade.find(userid);
+                            
+                            user.setPseudo(pseudo);
+                            user.setEmail(email);
 
-                        userFacade.edit(user);
+                            Yrank entrank = rankFacade.find(Integer.parseInt(rank));
+                            user.setRank(entrank);
+                            
+                            userFacade.edit(user);
+                        }
                     } catch (NumberFormatException e) {
                         request.setAttribute("footDebug", "Wrong user ID");
                     }
                 } else if (mode.equals("delete")) {
-                    Yuser user = userFacade.find(Integer.parseInt(id));
-                    userFacade.remove(user);
+                    try {
+                        Yuser user = userFacade.find(Integer.parseInt(id));
+                        userFacade.remove(user);
+                    } catch (NumberFormatException e) {
+                        request.setAttribute("footDebug", "Wrong user ID");
+                    }
                 }
             }
         }

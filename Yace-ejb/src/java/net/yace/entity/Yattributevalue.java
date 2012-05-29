@@ -131,14 +131,14 @@ public class Yattributevalue implements Serializable {
         this.yitemCollection = yitemCollection;
     }
     
-    /*
+    
     //ajoute un yitem
-    //don't use it now, need some tests
+    //MANY to MANY
     public void addYitem(Yitem item) {
         if(this.yitemCollection == null)
             this.yitemCollection = new ArrayList<Yitem>();
         this.yitemCollection.add(item);
-    }*/
+    }
 
     public Yattribute getAttribute() {
         return attribute;
