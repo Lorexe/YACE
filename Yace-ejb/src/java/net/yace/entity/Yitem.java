@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Yitem.findAll", query = "SELECT y FROM Yitem y"),
     @NamedQuery(name = "Yitem.findByIdYITEM", query = "SELECT y FROM Yitem y WHERE y.idYITEM = :idYITEM"),
-    @NamedQuery(name = "Yitem.findAllAttrValues", query = "SELECT av FROM Yitem y JOIN y.yattributevalueCollection av JOIN av.attribute a WHERE y.idYITEM = :idYITEM")})
+    @NamedQuery(name = "Yitem.findAllAttrValues", query = "SELECT av FROM Yitem y JOIN y.yattributevalueCollection av JOIN av.attribute a WHERE y.idYITEM = :idYITEM ORDER BY a.noOrder")})
 public class Yitem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
