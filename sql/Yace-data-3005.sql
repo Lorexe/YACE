@@ -11,9 +11,9 @@ INSERT INTO `yrank` (`idYRANK`, `description`, `nb_max_item`, `is_admin`) VALUES
 --
 
 INSERT INTO `yuser` (`idYUSER`, `email`, `password_hash`, `pseudo`, `rank`) VALUES
-(1, 'user@yace.com', 'ee11cbb19052e40b07aac0ca060c23ee', 'user', 2),
-(2, 'admin@yace.com', '21232f297a57a5a743894a0e4a801fc3', 'admin', 1);
-
+(1, 'user@yace.com', 'ee11cbb19052e4b7aac0ca6c23ee', 'user', 2),
+(2, 'admin@yace.com', '21232f297a57a5a743894ae4a801fc3', 'admin', 1);
+					   
 --
 -- Contenu de la table `yitemtype`
 --
