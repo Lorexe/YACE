@@ -155,10 +155,35 @@
             <sql:param value="${it.idYITEMTYPE}"/>
         </sql:query>
         <br/><strong>Remplissez les donn&eacute;es requises pour le type d'objet "${it.name}" ci-dessous</strong><br/><br/>
-        <c:forEach var="attr" items="${attributes.rows}">
-            <label for="attr-${it.idYITEMTYPE}-${attr.no_order}">${attr.name} (${attr.type})</label> : <input type="text" name="attr-${it.idYITEMTYPE}-${attr.no_order}" id="attr-${it.idYITEMTYPE}-${attr.no_order}"/><br/>
+        <table class="y-table y-table-form y-table-center">
+            <thead>
+                <tr>
+                    <th>Nom de l'attribut</th>
+                    <th>Valeur de l'attribut</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr <c:if test="${attributes.rowCount % 2 == 0}">class="odd"</c:if>>
+                    <td collspan="3">
+                        <button class="y-button y-button-white" onclick="verifNewItem(${it.idYITEMTYPE})">Je valide et je continue !</button>
+                    </td>
+                </tr>
+            </tfoot>
+            <tbody>
+        <c:forEach var="attr" items="${attributes.rows}" varStatus="counter">
+            <tr <c:if test="${counter.count % 2 != 0}">class="odd"</c:if>>
+                <td><label for="attr-${it.idYITEMTYPE}-${attr.no_order}">${attr.name} (${attr.type})</label></td>
+                <td><input type="text" name="attr-${it.idYITEMTYPE}-${attr.no_order}" id="attr-${it.idYITEMTYPE}-${attr.no_order}"/></td>
+                <td>
+                    <c:if test="${attr.many}">
+                        <img class="moreicon" src="./theme/default/img/img_trans.gif" alt="Ajouter" title="Ajouter" onclick="addAttr('${it.idYITEMTYPE}-${attr.no_order}')" style="margin-bottom: -4px;"/><strong>${attr.name}</strong>
+                    </c:if>
+                </td>
+            </tr>
         </c:forEach>
-        <br/><button class="y-button y-button-white" onclick="verifNewItem(${it.idYITEMTYPE})">Je valide et je continue !</button>
+            </tbody>
+        </table>
     </div>
 </c:forEach>
 
