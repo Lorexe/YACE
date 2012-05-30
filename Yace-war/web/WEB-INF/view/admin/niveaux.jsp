@@ -40,8 +40,8 @@
                 </tr>
             </tfoot>
             <tbody>
-            <c:forEach var="rank" items="${ranks.rows}">
-                <tr id="rank${rank.idYRANK}" <c:if test="${rank.idYRANK % 2 != 0}">class="odd"</c:if>>
+            <c:forEach var="rank" items="${ranks.rows}" varStatus="counter">
+                <tr id="rank${rank.idYRANK}" <c:if test="${counter.count % 2 != 0}">class="odd"</c:if>>
                     <td>
                         ${rank.idYRANK}
                         <input type="hidden" name="idYRANK" value="${rank.idYRANK}" />

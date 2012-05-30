@@ -34,7 +34,7 @@
 <div id="dummy">
 <%-- TABLE D'AFFICHAGE DES ITEMTYPES DE LA COLLECTION --%>
     <sql:query var="itemtypes" dataSource="Yacedb">
-        SELECT * FROM yitemtype JOIN yitem ON yitemtype.idYITEMTYPE = yitem.type
+        SELECT DISTINCT idYITEMTYPE, name FROM yitemtype yit JOIN yitem y ON yit.idYITEMTYPE = y.type
     </sql:query>
     <table id="itemtypes" class="y-table y-table-form y-table-center">
         <thead>
@@ -50,8 +50,8 @@
             </tr>
         </tfoot>
         <tbody>
-        <c:forEach var="itemtype" items="${itemtypes.rows}">
-            <tr <c:if test="${itemtype.idYITEMTYPE % 2 != 0}">class="odd"</c:if>>
+        <c:forEach var="itemtype" items="${itemtypes.rows}" varStatus="counter">
+            <tr <c:if test="${counter.count % 2 != 0}">class="odd"</c:if>>
                 <td>${itemtype.name}</td>
                 <td>
                     <c:choose>
@@ -69,7 +69,7 @@
                 <td>
                     <div class="mgmtIcons">
                         <img class='editicon' src='./theme/default/img/img_trans.gif' alt='Editer' title='Editer' onclick='edit("itemtype${itemtype.idYITEMTYPE}")' />
-                        <%-- <img class='deleteicon' src='./theme/default/img/img_trans.gif' alt='Supprimer' title='Supprimer' onclick='del("rank${rank.idYRANK}")' /> --%>
+                        <img class='deleteicon' src='./theme/default/img/img_trans.gif' alt='Supprimer' title='Supprimer' onclick='del("rank${rank.idYRANK}")' />
                     </div>
                     <div class="mgmtIcons">
                         <img class='undoicon' src='./theme/default/img/img_trans.gif' alt='Annuler' title='Annuler' onclick='undo("itemtype${itemtype.idYITEMTYPE}")' style='display: none;' />
@@ -84,9 +84,9 @@
 <%-- ECRAN ITEMTYPE PREDEFINI --%>
     <sql:query var="publicIT" dataSource="Yacedb">
         <%-- Changer la requête pour ne pas prendre en compte les itemtypes déjà dans la collection --%>
-        SELECT * FROM yitemtype y WHERE y.is_public = 1
+        SELECT * FROM yitemtype yit WHERE yit.is_public = 1
     </sql:query>
-    <table id="publicIT" class="y-table y-table-form">
+    <table id="publicIT" class="y-table y-table-form y-table-center">
         <thead>
             <tr>
                 <th></th>
@@ -103,9 +103,9 @@
             </tr>
         </tfoot>
         <tbody>
-        <c:forEach var="it" items="${publicIT.rows}">
-            <tr id="itemtype${it.idYITEMTYPE}" <c:if test="${it.idYITEMTYPE % 2 != 0}">class="odd"</c:if>>
-                <td><input type="radio" name="itPublic" id="itPublic${it.idYITEMTYPE}"/></td>
+        <c:forEach var="it" items="${publicIT.rows}" varStatus="counter">
+            <tr id="itemtype${it.idYITEMTYPE}" <c:if test="${counter.count % 2 != 0}">class="odd"</c:if>>
+                <td><input type="radio" name="itPublic" id="itPublic${it.idYITEMTYPE}" value="${it.idYITEMTYPE}"/></td>
                 <td><label for="itPublic${it.idYITEMTYPE}">${it.name}</label></td>
                 <%-- <td><img class='eyeicon' src='./theme/default/img/img_trans.gif' alt='Voir' title='Voir les d&eacute;tails' onclick='see("itemtype${it.idYITEMTYPE}")' /></td> --%>
             </tr>
@@ -114,16 +114,27 @@
     </table>
 
 <%-- ECRAN CREATION ITEMTYPE --%>
-    
+<table id="createIT" class="y-table y-table-form y-table-center">
+    <thead>
+        <tr>
+            <th>Ordre</th>
+            <th>Nom de l'attribut</th>
+            <th>Type d'attribut</th>
+            <th>Multiple ?</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                <button class="y-button y-button-white" onclick="addNewAttribute()">J'ajoute un nouvel attribut !</button>
+            </td>
+        </tr>
+    </tfoot>
+    <tbody></tbody>
+</table>
 </div> 
 
 <script type="text/javascript">
-function showItemTypes(){
-$(document).ready(function(){
-    $("div#appender").append($("div#dummy table#itemtypes").clone())
-});
-}
-
 function valid() {
 $(document).ready(function(){
     var saveButton = document.createElement("button");
@@ -219,15 +230,55 @@ $(document).ready(function(){
 });
 }
 
+function showItemTypes(){
+$(document).ready(function(){
+    if(!$("div#appender table#itemtypes").length) {
+        $("div#appender").append($("div#dummy table#itemtypes").clone())
+    }
+});
+}
+
 function showPublicItemTypes(){
 $(document).ready(function(){
-    $("div#appender").append($("div#dummy table#publicIT").clone())
+    if(!$("div#appender table#publicIT").length){
+        $("div#appender").append($("div#dummy table#publicIT").clone())
+    }
 });
 }
 
 function showItemTypeCreation(){
 $(document).ready(function(){
-    
+    if(!$("div#appender table#createIT").length){
+        var newItemType = document.createElement("div");
+        var labelTheme = document.createElement("label");
+        var inputTheme = document.createElement("input");
+        var continueButton = document.createElement("button");
+
+        $(continueButton)
+            .attr("class","y-button y-button-white")
+            .attr("onclick","itemtypeNameVerif()")
+            .html("Je continue !");
+
+        $(inputTheme)
+            .attr("type","text")
+            .attr("id","name")
+            .attr("name","name")
+            .attr("required","required");
+
+        $(labelTheme)
+            .attr("for","theme")
+            .html("Entrez le nom du nouveau <strong>type d'objets</strong> : ");
+
+        $(newItemType)
+            .attr("id","newItemType")
+            .attr("class","wizardBox")
+            .append(labelTheme)
+            .append(inputTheme)
+            .append(continueButton)
+            .append($("div#dummy table#createIT").clone());
+            
+        $("div#appender").append(newItemType);
+    }
 });
 }
 </script>
