@@ -25,7 +25,7 @@
     <div id="appender"></div>
 
     <form name="wizardcollection" method="POST" action="#"></form>
-    <button class="y-button y-button-white" onclick="valid()">Je valide !</button>
+    <%-- <button class="y-button y-button-white" onclick="valid()">Je valide !</button> --%>
     
 </section>
 
@@ -132,6 +132,36 @@
     </tfoot>
     <tbody></tbody>
 </table>
+
+<%-- SELECT ITEMTYPE PREDEFINIS --%>
+<div id="choiceIT">
+    <br/>
+    <label for="selectIT"><strong>De quel type sera votre nouvel objet ?</strong></label>
+    <br/><br/>
+    <select id="selectIT" name="selectIT">
+        <c:forEach var="it" items="${publicIT.rows}">
+            <option value="${it.idYITEMTYPE}">${it.name}</option>
+        </c:forEach>
+    </select>
+</div>
+
+<%-- REMPLIR ITEMTYPE PREDEFINIS --%>
+<c:forEach var="it" items="${publicIT.rows}">
+    <div id="fillerIT${it.idYITEMTYPE}" class="wizardBox">
+        <sql:query var="attributes" dataSource="Yacedb">
+            SELECT * FROM yattribute yat
+            WHERE yat.itemtype = ?
+            ORDER BY yat.no_order ASC
+            <sql:param value="${it.idYITEMTYPE}"/>
+        </sql:query>
+        <br/><strong>Remplissez les donn&eacute;es requises pour le type d'objet "${it.name}" ci-dessous</strong><br/><br/>
+        <c:forEach var="attr" items="${attributes.rows}">
+            <label for="attr-${it.idYITEMTYPE}-${attr.no_order}">${attr.name} (${attr.type})</label> : <input type="text" name="attr-${it.idYITEMTYPE}-${attr.no_order}" id="attr-${it.idYITEMTYPE}-${attr.no_order}"/><br/>
+        </c:forEach>
+        <br/><button class="y-button y-button-white" onclick="verifNewItem(${it.idYITEMTYPE})">Je valide et je continue !</button>
+    </div>
+</c:forEach>
+
 </div> 
 
 <script type="text/javascript">
@@ -157,7 +187,7 @@ $(document).ready(function(){
     $(continueButton)
         .attr("class","y-button y-button-white")
         .attr("onclick","collectionNameVerif()")
-        .html("Je continue !");
+        .html("Je valide et je continue !");
 
     $(inputTheme)
         .attr("type","text")
@@ -167,12 +197,14 @@ $(document).ready(function(){
 
     $(labelTheme)
         .attr("for","theme")
-        .html("Entrez la th&eacute;matique de la nouvelle collection : ");
+        .html("<strong>Quel sera le th&ecirc;me de votre nouvelle collection ?</strong>");
 
     $(newCollection)
         .attr("id","newCollection")
         .attr("class","wizardBox")
+        .append("<br/>")
         .append(labelTheme)
+        .append("<br/><br/>")
         .append(inputTheme)
         .append(continueButton);
 
@@ -187,7 +219,7 @@ $(document).ready(function(){
     theme = theme.trim();
     
     if(!theme || theme.length === 0 || (/^\s*$/).test(theme)) {
-        alert("Oh noooon !");
+        alert("Veuillez entrer un thème pour la collection");
     } else {
         var collectionName = document.createElement("input");
         $(collectionName)
@@ -196,8 +228,10 @@ $(document).ready(function(){
             .attr("value",theme);
         $("form[name='wizardcollection']").append(collectionName);
 
-        $("section.content div#newCollection").remove();
-        showNewOrPublic();
+        $("section.content div#newCollection input").attr("disabled","disabled");
+        $("section.content div#newCollection button").remove();
+        //showNewOrPublic();
+        showAddNewItem();
     }
 });
 }
@@ -279,6 +313,51 @@ $(document).ready(function(){
             
         $("div#appender").append(newItemType);
     }
+});
+}
+
+function showAddNewItem(){
+$(document).ready(function(){
+    if(!$("div#appender #newItem").length){
+        var newItem = document.createElement("div");
+        var continueButton = document.createElement("button");
+
+        $(continueButton)
+            .attr("class","y-button y-button-white")
+            .attr("onclick","selectedIT()")
+            .html("Je valide et je continue !");
+        
+        $(newItem)
+            .attr("id","newItem")
+            .attr("class","wizardBox")
+            .append($("div#choiceIT").clone().append(continueButton))
+            .append("<br/>");
+            
+        $("div#appender").append(newItem);
+    }
+});
+}
+
+function selectedIT(){
+$(document).ready(function(){
+    var choice = $("section.content div#newItem select").val();
+    var itemtype = document.createElement("input");
+    $(itemtype)
+        .attr("type","hidden")
+        .attr("name","chosenIT")
+        .attr("value",choice);
+    $("form[name='wizardcollection']").append(itemtype);
+
+    $("section.content div#newItem select").attr("disabled","disabled");
+    $("section.content div#newItem button").remove();
+    
+    $("div#appender").append($("div#dummy div#fillerIT"+choice).clone())
+});
+}
+
+function verifNewItem(idIT) {
+$(document).ready(function(){
+    
 });
 }
 </script>

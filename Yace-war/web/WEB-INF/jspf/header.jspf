@@ -75,7 +75,7 @@
             
             <nav id="collview">
                 <h2>Mes collections</h2>
-                <input type="button" class="y-button y-button-white" value="Nouvelle collection" name="newColl" />
+                <button class="y-button y-button-white" name="newColl"><a href="wizard">Nouvelle collection</a></button>
 
                 <ul class="collsList">
 
