@@ -38,7 +38,7 @@
                             <input type="hidden" name="idYUSER" value="${user.idYUSER}" />
                             <input type="hidden" name="mode" value="edit" />
                         </td>
-                        <td><input type="text" name="pseudo" size="50" value="${user.pseudo}" required disabled="disabled" /></td>
+                        <td><input type="text" name="pseudo" size="20" value="${user.pseudo}" required disabled="disabled" /></td>
                         <td><input type="text" name="email" size="50" value="${user.email}" required disabled="disabled" /></td>
                         <td>
                             <select name="rank" disabled="disabled">
