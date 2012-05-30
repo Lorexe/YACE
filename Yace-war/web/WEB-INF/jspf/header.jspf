@@ -88,15 +88,15 @@
                         <c:forEach var="coll" items="${collections.rows}">
                             <li>
                                 <a href="#"><strong>${coll.theme}</strong></a>
-                                <sql:query var="items" dataSource="Yacedb">
+                                <sql:query var="itemtypes" dataSource="Yacedb">
                                     SELECT DISTINCT idYITEMTYPE, name FROM yitemtype yit
                                     JOIN yitem y ON yit.idYITEMTYPE = y.type
                                     WHERE y.collection = ?
                                     <sql:param value="${coll.idYCOLLECTION}"/>
                                 </sql:query>
                                 <ul>
-                                    <c:forEach var="item" items="${items.rows}">
-                                        <li><a href="#">${item.name}</a></li>
+                                    <c:forEach var="itemtype" items="${itemtypes.rows}">
+                                        <li><a href="#">${itemtype.name}</a></li>
                                     </c:forEach>
                                 </ul>
                             </li>
@@ -115,7 +115,6 @@
                     <li class="squarecol" style="color: green;">Vase fran&ccedil;ais</li>
                     <li class="squarecol" style="color: green;">Vase zoulou</li>
                 </ul>
-
             </nav>
 <% } else { %>
             <header>

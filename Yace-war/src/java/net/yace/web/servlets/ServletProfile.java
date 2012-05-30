@@ -28,7 +28,6 @@ public class ServletProfile extends HttpServlet {
     
     private final static String VUE_PRESENTATION = "welcome.jsp";
     private final static String VUE_USER_PROFILE = "WEB-INF/view/user/user-profil.jsp";
-    private final static String ERROR_PAGE = "WEB-INF/view/user/errorpage.jsp";
     
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -61,8 +60,9 @@ public class ServletProfile extends HttpServlet {
                 List<String> infoBoxes = new ArrayList<String>();
                 List<String> tipBoxes = new ArrayList<String>();
 
-                infoBoxes.add("En cours de rédaction");
-                tipBoxes.add("En cours de rédaction");
+                infoBoxes.add("Sur cette page, vous pouvez redéfinir vos informations de connexion à Ya<em class='CE'>ce</em>.");
+                tipBoxes.add("Renforcez votre mot de passe en y faisant figurer des caractères accentués ou spéciaux (p. ex. $£µ*%<>./+-).");
+                tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous avez une suggestion à nous transmettre.");
 
                 asideHelp.put("tip", tipBoxes);
                 asideHelp.put("info", infoBoxes);
@@ -124,19 +124,14 @@ public class ServletProfile extends HttpServlet {
                     Yuser usermail = userFacade.findUser(email);
                     Yuser userpseudo = userFacade.findUser(pseudo);
                     if ((usermail!=null && usermail.getIdYUSER()!=yuser.getIdYUSER()) || (userpseudo!=null && userpseudo.getIdYUSER()!=yuser.getIdYUSER())) { // Utilisateur existant !
-                        request.setAttribute("error", "Email déjà utilisé. Veuillez en indiquer un autre.");
-                    } else {
-                        usermail = userFacade.findUser(pseudo);
-                        if (usermail != null) { // Utilisateur existant !
-                            request.setAttribute("error", "Pseudo déjà pris. Veuillez en choisir un autre.");
-                        } else { // Tout est OK pour l'enregistrement
-                            yuser.setEmail(email);
-                            yuser.setPseudo(pseudo);
-                            if(newPass != null && newPassVerif != null && !newPass.isEmpty() && !newPassVerif.isEmpty() && newPass.equals(newPassVerif)){
-                                yuser.setPasswordHash(YaceUtils.digestMD5(newPass));
-                            }
-                            userFacade.edit(yuser);
+                        request.setAttribute("error", "Email ou pseudo déjà utilisé. Veuillez en indiquer un autre.");
+                    } else { // Tout est OK pour l'enregistrement
+                        yuser.setEmail(email);
+                        yuser.setPseudo(pseudo);
+                        if(newPass != null && newPassVerif != null && !newPass.isEmpty() && !newPassVerif.isEmpty() && newPass.equals(newPassVerif)){
+                            yuser.setPasswordHash(YaceUtils.digestMD5(newPass));
                         }
+                        userFacade.edit(yuser);
                     }
                 }
                 
