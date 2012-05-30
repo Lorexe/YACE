@@ -121,12 +121,13 @@ public class ServletProfile extends HttpServlet {
                 } else {
                     // Reste à tester que les infos ne sont pas déjà utilisées par un autre user
                     YuserFacade userFacade = ServicesLocator.getUserFacade();
-                    Yuser userTest = userFacade.findUser(email);
-                    if (userTest != null) { // Utilisateur existant !
+                    Yuser usermail = userFacade.findUser(email);
+                    Yuser userpseudo = userFacade.findUser(pseudo);
+                    if ((usermail!=null && usermail.getIdYUSER()!=yuser.getIdYUSER()) || (userpseudo!=null && userpseudo.getIdYUSER()!=yuser.getIdYUSER())) { // Utilisateur existant !
                         request.setAttribute("error", "Email déjà utilisé. Veuillez en indiquer un autre.");
                     } else {
-                        userTest = userFacade.findUser(pseudo);
-                        if (userTest != null) { // Utilisateur existant !
+                        usermail = userFacade.findUser(pseudo);
+                        if (usermail != null) { // Utilisateur existant !
                             request.setAttribute("error", "Pseudo déjà pris. Veuillez en choisir un autre.");
                         } else { // Tout est OK pour l'enregistrement
                             yuser.setEmail(email);
