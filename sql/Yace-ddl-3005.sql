@@ -140,12 +140,12 @@ CREATE TABLE IF NOT EXISTS `link_attr_item` (
 
 DROP TABLE IF EXISTS `ysetting`;
 CREATE TABLE IF NOT EXISTS `ysetting` (
-  `idYSETTING` int(11) NOT NULL,
+  `idYSETTING` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `val` varchar(255) NOT NULL,
   PRIMARY KEY (`idYSETTING`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Contraintes pour les tables exportées
