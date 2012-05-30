@@ -36,7 +36,47 @@ INSERT INTO `link_attr_item` (`item`, `value`) VALUES
 (6, 12),
 (5, 13),
 (6, 14),
-(6, 15);
+(6, 15),
+(8, 16),
+(8, 17),
+(8, 18),
+(8, 19),
+(8, 20),
+(8, 21),
+(8, 22),
+(8, 23),
+(9, 24),
+(9, 25),
+(9, 26),
+(9, 27),
+(9, 28),
+(9, 29),
+(9, 30),
+(9, 31),
+(10, 32),
+(10, 33),
+(10, 34),
+(10, 35),
+(10, 36),
+(10, 37),
+(10, 38),
+(10, 39),
+(11, 40),
+(11, 41),
+(11, 42),
+(11, 43),
+(11, 44),
+(11, 45),
+(11, 46),
+(11, 47),
+(12, 48),
+(12, 49),
+(12, 50),
+(12, 51),
+(12, 52),
+(12, 53),
+(12, 54),
+(12, 55);
 
 -- --------------------------------------------------------
 
@@ -68,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `yattribute` (
   `itemtype` int(11) DEFAULT NULL,
   PRIMARY KEY (`idYATTRIBUTE`),
   KEY `itemtype` (`itemtype`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Contenu de la table `yattribute`
@@ -80,7 +120,15 @@ INSERT INTO `yattribute` (`idYATTRIBUTE`, `name`, `type`, `no_order`, `many`, `i
 (9, 'Nom', 'String', 1, 1, 4),
 (10, 'Type', 'String', 2, 1, 5),
 (11, 'Auteur', 'String', 2, 1, 4),
-(12, 'Pays', 'String', 3, 0, 4);
+(12, 'Pays', 'String', 3, 0, 4),
+(13, 'Auteur', 'String', 2, 1, 6),
+(14, 'Genre', 'String', 4, 0, 6),
+(15, 'Langue', 'String', 6, 0, 6),
+(16, 'ISBN', 'String', 8, 0, 6),
+(17, 'Description', 'String', 3, 0, 6),
+(18, 'Titre', 'String', 1, 1, 6),
+(19, 'Parution', 'Date', 7, 0, 6),
+(20, 'Editeur', 'String', 5, 0, 6);
 
 -- --------------------------------------------------------
 
@@ -99,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `yattributevalue` (
   `attribute` int(11) DEFAULT NULL,
   PRIMARY KEY (`idYATTRIBUTEVALUE`),
   KEY `attribute` (`attribute`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
 
 --
 -- Contenu de la table `yattributevalue`
@@ -114,7 +162,47 @@ INSERT INTO `yattributevalue` (`idYATTRIBUTEVALUE`, `val_str`, `val_int`, `val_f
 (12, 'argile blanche', NULL, NULL, NULL, NULL, 10),
 (13, 'Vase ancienne argile', NULL, NULL, NULL, NULL, 7),
 (14, 'Moderne', NULL, NULL, NULL, NULL, 8),
-(15, 'Vase moderne en argile', NULL, NULL, NULL, NULL, 7);
+(15, 'Vase moderne en argile', NULL, NULL, NULL, NULL, 7),
+(16, NULL, NULL, NULL, '2002-09-18 00:00:00', NULL, 19),
+(17, 'Avec ses nombreux combats et ses rebondissements romanesques, Les Trois Mousquetaires est l''exemple type du roman de cape et d''épée', NULL, NULL, NULL, NULL, 17),
+(18, '978-2253008880', NULL, NULL, NULL, NULL, 16),
+(19, 'Roman Historique', NULL, NULL, NULL, NULL, 14),
+(20, 'Français', NULL, NULL, NULL, NULL, 15),
+(21, 'Alexandre Dumas', NULL, NULL, NULL, NULL, 13),
+(22, 'Les Trois mousquetaires', NULL, NULL, NULL, NULL, 18),
+(23, 'Le Livre de Poche', NULL, NULL, NULL, NULL, 20),
+(24, 'Avec ses nombreux combats et ses rebondissements romanesques, Les Trois Mousquetaires est l''exemple type du roman de cape et d''épée', NULL, NULL, NULL, NULL, 17),
+(25, 'Gallimard', NULL, NULL, NULL, NULL, 20),
+(26, '978-2070101801', NULL, NULL, NULL, NULL, 16),
+(27, 'Français', NULL, NULL, NULL, NULL, 15),
+(28, 'Roman Historique', NULL, NULL, NULL, NULL, 14),
+(29, 'Alexandre Dumas', NULL, NULL, NULL, NULL, 13),
+(30, NULL, NULL, NULL, '1962-05-28 00:00:00', NULL, 19),
+(31, 'Les Trois Mousquetaires - Vingt ans après', NULL, NULL, NULL, NULL, 18),
+(32, 'Emile Zola', NULL, NULL, NULL, NULL, 13),
+(33, 'Français', NULL, NULL, NULL, NULL, 15),
+(34, 'Germinal', NULL, NULL, NULL, NULL, 18),
+(35, 'Le Livre de Poche', NULL, NULL, NULL, NULL, 20),
+(36, NULL, NULL, NULL, '1971-11-08 00:00:00', NULL, 19),
+(37, 'Roman Historique', NULL, NULL, NULL, NULL, 14),
+(38, 'Le roman de la lutte des classes et de la misère ouvrière', NULL, NULL, NULL, NULL, 17),
+(39, '978-2253004226', NULL, NULL, NULL, NULL, 16),
+(40, '978-2070345830', NULL, NULL, NULL, NULL, 16),
+(41, 'Broché', NULL, NULL, NULL, NULL, 20),
+(42, 'Notre-Dame de Paris', NULL, NULL, NULL, NULL, 18),
+(43, 'Français', NULL, NULL, NULL, NULL, 15),
+(44, 'Autour de Notre-Dame, dans la cité médiévale de Paris, s''agite une kyrielle de personnages très différents: Quasimodo, le bossu sonneur de cloches; Gringoire, le poète; Frollo, le sinistre archidiacre; Phoebus, le capitaine des archers du roi. Ils sont tous fascinés par la belle bohémienne Esméralda...', NULL, NULL, NULL, NULL, 17),
+(45, 'Roman Historique', NULL, NULL, NULL, NULL, 14),
+(46, NULL, NULL, NULL, '2009-03-26 00:00:00', NULL, 19),
+(47, 'Victor Hugo', NULL, NULL, NULL, NULL, 13),
+(48, 'L''oeuvre phare de Victor Hugo', NULL, NULL, NULL, NULL, 17),
+(49, 'Roman Historique', NULL, NULL, NULL, NULL, 14),
+(50, 'Victor Hugo', NULL, NULL, NULL, NULL, 13),
+(51, 'Ecole des loisirs', NULL, NULL, NULL, NULL, 20),
+(52, NULL, NULL, NULL, '1996-10-15 00:00:00', NULL, 19),
+(53, 'Français', NULL, NULL, NULL, NULL, 15),
+(54, 'Les Misérables', NULL, NULL, NULL, NULL, 18),
+(55, '978-2211041997', NULL, NULL, NULL, NULL, 16);
 
 -- --------------------------------------------------------
 
@@ -130,14 +218,15 @@ CREATE TABLE IF NOT EXISTS `ycollection` (
   `owner` int(11) DEFAULT NULL,
   PRIMARY KEY (`idYCOLLECTION`),
   KEY `owner` (`owner`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Contenu de la table `ycollection`
 --
 
 INSERT INTO `ycollection` (`idYCOLLECTION`, `theme`, `is_public`, `owner`) VALUES
-(6, 'Vases', 1, 12);
+(6, 'Vases', 1, 12),
+(7, 'Romans', 1, 8);
 
 -- --------------------------------------------------------
 
@@ -153,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `yitem` (
   PRIMARY KEY (`idYITEM`),
   KEY `collection` (`collection`),
   KEY `type` (`type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Contenu de la table `yitem`
@@ -162,7 +251,12 @@ CREATE TABLE IF NOT EXISTS `yitem` (
 INSERT INTO `yitem` (`idYITEM`, `collection`, `type`) VALUES
 (4, 6, 4),
 (5, 6, 5),
-(6, 6, 5);
+(6, 6, 5),
+(8, 7, 6),
+(9, 7, 6),
+(10, 7, 6),
+(11, 7, 6),
+(12, 7, 6);
 
 -- --------------------------------------------------------
 
@@ -176,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `yitemtype` (
   `name` varchar(255) NOT NULL,
   `is_public` BOOLEAN NOT NULL,
   PRIMARY KEY (`idYITEMTYPE`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Contenu de la table `yitemtype`
@@ -184,7 +278,8 @@ CREATE TABLE IF NOT EXISTS `yitemtype` (
 
 INSERT INTO `yitemtype` (`idYITEMTYPE`, `name`, `is_public`) VALUES
 (4, 'Vase bronze', 1),
-(5, 'Vase argile', 1);
+(5, 'Vase argile', 1),
+(6, 'Livre', 1);
 
 -- --------------------------------------------------------
 
@@ -253,19 +348,13 @@ CREATE TABLE IF NOT EXISTS `yuser` (
 --
 
 INSERT INTO `yuser` (`idYUSER`, `email`, `password_hash`, `pseudo`, `rank`) VALUES
-(1, 'mabigboy.bb@gmail.com', 'ab4f63f9ac65152575886860dde480a1', 'bruno', 1),
-(2, 'coucou@gmail.com', 'ab4f63f9ac65152575886860dde480a1', 'solacin', 1),
-(3, 'alessandrodaviera111@hotmail.com', 'ab4f63f9ac65152575886860dde480a1', 'aless', 1),
-(4, 'azerty@azerty.azerty', 'ab4f63f9ac65152575886860dde480a1', 'azerty', 1),
-(5, 'b@b.b', '92eb5ffee6ae2fec3ad71c777531578f', 'b', 1),
-(6, 'c@c.c', '4a8a8f09d37b73795649038408b5f33', 'c', 1),
-(7, 'test@test.be', '10272a50ec98dffc53d8359c8aacc79', 'test', 1),
+(7, 'test@test.be', '10272a50ec98dffc53d8359c8aacc79', 'test', 0),
 (8, 'admin@yace.com', '21232f297a57a5a743894ae4a801fc3', 'admin', 1),
-(9, 'pegazz@yace.com', 'cc175b9c0f1b6a831c399e269772661', 'pegazz', 1),
-(10, 'lorexe@yace.com', 'cc175b9c0f1b6a831c399e269772661', 'lorexe', 1),
-(11, 'bru@yace.com', 'cc175b9c0f1b6a831c399e269772661', 'bru', 1),
-(12, 'user@user.com', 'ee11cbb19052e4b7aac0ca6c23ee', 'user', 1),
-(13, 'mkp@yace.com', 'cc175b9c0f1b6a831c399e269772661', 'mkp', 1);
+(9, 'pegazz@yace.com', 'cc175b9c0f1b6a831c399e269772661', 'pegazz', 0),
+(10, 'lorexe@yace.com', 'cc175b9c0f1b6a831c399e269772661', 'lorexe', 0),
+(11, 'bru@yace.com', 'cc175b9c0f1b6a831c399e269772661', 'bru', 0),
+(12, 'user@user.com', 'ee11cbb19052e4b7aac0ca6c23ee', 'user', 0),
+(13, 'mkp@yace.com', 'cc175b9c0f1b6a831c399e269772661', 'mkp', 0);
 
 --
 -- Contraintes pour les tables exportées
