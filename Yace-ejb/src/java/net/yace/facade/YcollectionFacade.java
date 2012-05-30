@@ -157,4 +157,21 @@ public class YcollectionFacade extends AbstractFacade<Ycollection> {
         return cList;
     }
     
+    //recherche des collections dont les yattributevalue des items contiennent le terme recherché
+    public List<Ycollection> findAllByAttrValues(String search)
+    {
+        List<Ycollection> cList = null;//liste à retourner
+        Query query;
+        query = em.createNamedQuery("Ycollection.findAllByAttrValues");
+        query.setParameter("search", "%"+search+"%");
+        
+        try 
+        {
+            cList = query.getResultList();
+        }catch(NoResultException e){
+        }
+        
+        return cList;
+    }
+    
 }

@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ycollection.findAllPublicFromUser", query = "SELECT y FROM Ycollection y JOIN y.owner u WHERE u.idYUSER = :idYUSER AND y.isPublic = true"),
     @NamedQuery(name = "Ycollection.findAllFromUser", query = "SELECT y FROM Ycollection y JOIN y.owner u WHERE u.idYUSER = :idYUSER"),
     @NamedQuery(name = "Ycollection.findAllPublicByItemType", query = "SELECT y FROM Ycollection y JOIN y.yitemCollection i JOIN i.type it WHERE it.name LIKE :name AND y.isPublic = true"),
-    @NamedQuery(name = "Ycollection.findPubFromUserByYIT", query = "SELECT y FROM Ycollection y JOIN y.owner u JOIN y.yitemCollection i JOIN i.type it WHERE (it.name LIKE :name) AND (u.idYUSER = :idYUSER) AND (y.isPublic = true)")})
+    @NamedQuery(name = "Ycollection.findPubFromUserByYIT", query = "SELECT y FROM Ycollection y JOIN y.owner u JOIN y.yitemCollection i JOIN i.type it WHERE (it.name LIKE :name) AND (u.idYUSER = :idYUSER) AND (y.isPublic = true)"),
+    @NamedQuery(name = "Ycollection.findAllByAttrValues", query = "SELECT DISTINCT y FROM Ycollection y JOIN y.yitemCollection yt JOIN yt.yattributevalueCollection av WHERE y.isPublic = true AND LOWER(av.valStr) LIKE :search")})
 public class Ycollection implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
