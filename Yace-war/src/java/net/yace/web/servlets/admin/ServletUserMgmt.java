@@ -3,10 +3,12 @@ package net.yace.web.servlets.admin;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.yace.entity.Yrank;
 import net.yace.entity.Yuser;
+import net.yace.facade.YcollectionFacade;
 import net.yace.facade.YrankFacade;
 import net.yace.facade.YuserFacade;
 import net.yace.web.utils.ServicesLocator;
@@ -73,34 +75,34 @@ public class ServletUserMgmt extends HttpServlet {
             String rank = request.getParameter("rank");
 
             YuserFacade userFacade = ServicesLocator.getUserFacade();
-            YrankFacade rankFacade = ServicesLocator.getRankFacade();
+            YrankFacade rankFacade = ServicesLocator.getRankFacade();            
 
             if (pseudo.length() == 0 || pseudo.length() > 254) {
                 request.setAttribute("footDebug", "User name cannot exceed 254 characters or be empty");
             } else if (email.length() == 0 || email.length() > 254) {
                 request.setAttribute("footDebug", "User email cannot exceed 254 characters or be empty");
-            } else if (! YaceUtils.isValidEmail(email) ){
+            } else if (!YaceUtils.isValidEmail(email)) {
                 request.setAttribute("footDebug", "User email : Wrong format");
             } else {
                 if (mode.equals("edit")) {
                     try {
                         int userid = Integer.parseInt(id);
-                        
+
                         //Test données uniques
                         Yuser usermail = userFacade.findUser(email);
                         Yuser userpseudo = userFacade.findUser(pseudo);
 
-                        if((usermail!=null && usermail.getIdYUSER()!=userid) || (userpseudo!=null && userpseudo.getIdYUSER()!=userid)) {
+                        if ((usermail != null && usermail.getIdYUSER() != userid) || (userpseudo != null && userpseudo.getIdYUSER() != userid)) {
                             request.setAttribute("footDebug", "Pseudo ou e-mail déjà utilisé");
                         } else {
                             Yuser user = userFacade.find(userid);
-                            
+
                             user.setPseudo(pseudo);
                             user.setEmail(email);
 
                             Yrank entrank = rankFacade.find(Integer.parseInt(rank));
                             user.setRank(entrank);
-                            
+
                             userFacade.edit(user);
                         }
                     } catch (NumberFormatException e) {
@@ -109,7 +111,17 @@ public class ServletUserMgmt extends HttpServlet {
                 } else if (mode.equals("delete")) {
                     try {
                         Yuser user = userFacade.find(Integer.parseInt(id));
-                        userFacade.remove(user);
+                        HttpSession session = request.getSession(false);
+                        Yuser u = (Yuser) session.getAttribute("user");
+                        YcollectionFacade collFacade = ServicesLocator.getCollectionFacade();
+
+                        if (u.getIdYUSER() == user.getIdYUSER()) {
+                            request.setAttribute("footDebug", "One does not simply delete himself");
+                        } else if (collFacade.findAllFromUser(user.getIdYUSER()).size() > 0) {
+                            request.setAttribute("footDebug", "Guess who has a collection ?");                     
+                        } else {
+                            userFacade.remove(user);
+                        }
                     } catch (NumberFormatException e) {
                         request.setAttribute("footDebug", "Wrong user ID");
                     }
