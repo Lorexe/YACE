@@ -75,39 +75,34 @@
             
             <nav id="collview">
                 <h2>Mes collections</h2>
+                
                 <button class="y-button y-button-white" name="newColl"><a href="wizard">Nouvelle collection</a></button>
-
-                <ul class="collsList">
-
-                    <li class="closedList">
-                        <a href="#">+</a> Jeux Vid&eacute;os
-                        <ul class="none">
-                            <li><a href="#">Jeux PS3</a></li>
-                            <li><a href="#">Jeux Wii</a></li>
-                            <li><a href="#">Jeux X360</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="closedList">
-                        <a href="#">+</a> Tintin
-                        <ul class="none">
-                            <li><a href="#">Affiches</a></li>
-                            <li><a href="#">Bandes dessin&eacute;es</a></li>
-                            <li><a href="#">Dessins anim&eacute;s</a></li>
-                            <li><a href="#">Figurines</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="openedList">
-                        <a href="#">-</a> Vases
-                        <ul>
-                            <li><a href="#">Argiles</a></li>
-                            <li><a href="#">Cuivres</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-
+                
+                <sql:query var="collections" dataSource="Yacedb">
+                    SELECT * FROM ycollection yco
+                    WHERE yco.owner = ?
+                    <sql:param value="${user.idYUSER}"/>
+                </sql:query>
+                <c:if test="${!empty collections}">
+                    <ul class="collsList">
+                        <c:forEach var="coll" items="${collections.rows}">
+                            <li>
+                                <a href="#"><strong>${coll.theme}</strong></a>
+                                <sql:query var="itemtypes" dataSource="Yacedb">
+                                    SELECT DISTINCT idYITEMTYPE, name FROM yitemtype yit
+                                    JOIN yitem y ON yit.idYITEMTYPE = y.type
+                                    WHERE y.collection = ?
+                                    <sql:param value="${coll.idYCOLLECTION}"/>
+                                </sql:query>
+                                <ul>
+                                    <c:forEach var="itemtype" items="${itemtypes.rows}">
+                                        <li><a href="#">${itemtype.name}</a></li>
+                                    </c:forEach>
+                                </ul>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </c:if>
             </nav>
 
             <nav id="detailview">
@@ -120,7 +115,6 @@
                     <li class="squarecol" style="color: green;">Vase fran&ccedil;ais</li>
                     <li class="squarecol" style="color: green;">Vase zoulou</li>
                 </ul>
-
             </nav>
 <% } else { %>
             <header>
