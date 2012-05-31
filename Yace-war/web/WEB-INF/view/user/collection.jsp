@@ -38,7 +38,7 @@
                 <sql:param value="${itemtype.idYITEMTYPE}"/>
             </sql:query>
 
-            <table  class="y-table">
+            <table class="y-table">
                 <tr>
                     <c:forEach var="tabheader" items="${tabheaders.rows}">
                         <td>${tabheader.name}</td>
