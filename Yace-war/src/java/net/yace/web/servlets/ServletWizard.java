@@ -27,8 +27,8 @@ import net.yace.web.utils.ServicesLocator;
 public class ServletWizard extends HttpServlet {
 
     private final static String VUE_PRESENTATION = "welcome.jsp";
-    private final static String VUE_WIZARD = "WEB-INF/view/user/wizard.jsp";
-    private final static String ERROR_PAGE = "WEB-INF/view/user/errorpage.jsp";
+    //private final static String VUE_WIZARD = "WEB-INF/view/user/wizard.jsp";
+    private final static String VUE_WIZARD = "WEB-INF/view/user/update-collection.jsp";
 
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -106,6 +106,7 @@ public class ServletWizard extends HttpServlet {
 
             String idCollection = request.getParameter("idCollection");
             String name = request.getParameter("name");
+            String isPublic = request.getParameter("isPublic");
 
             if (idCollection != null && !idCollection.isEmpty()) {
                 /*
@@ -117,39 +118,25 @@ public class ServletWizard extends HttpServlet {
                     /*
                      * Erreur: on essaie d'accéder à une collection inexistante
                      */
-                    // On défini l'erreur qui s'est produite
-                    request.setAttribute("errorMsg",
-                            "Nous sommes désolé, mais vous ne pouvez pas accéder à la collection demandée.<br/>"
-                            + "Référez-vous à l'aide contextuelle pour plus d'information.<br/>"
-                            + "Vous n'êtes pas satisfait ? <a href='about'>Contactez-nous</a> !");
-
-                    // Aide contextuelle
-                    Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
-
-                    List<String> infoBoxes = new ArrayList<String>();
-                    List<String> tipBoxes = new ArrayList<String>();
-
-                    infoBoxes.add("La collection qui est demandée est introuvable ou n'est pas en votre possession.");
-                    tipBoxes.add("Essayez d'accéder à une autre collection !");
-                    tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous pensez qu'il s'agit d'une erreur de notre part. N'oubliez pas de détailler les actions qui vous ont mené à cette page, merci.");
-
-                    asideHelp.put("tip", tipBoxes);
-                    asideHelp.put("info", infoBoxes);
-
-                    request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
-
-                    // On nomme et affiche la page
-                    request.setAttribute("pageTitle", "Collection introuvable");
-                    request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+                    YaceUtils.displayCollectionUnreachableError(request, response);
                 } else {
                     //édition du nom de la collection
                     collection.setTheme(name);
+                            
+                    if (isPublic.equals("true"))
+                        collection.setIsPublic(Boolean.TRUE);
+                    else
+                        collection.setIsPublic(Boolean.FALSE);
+                    
                     facColl.edit(collection);
                 }
             } else {
                 //ajout d'une nouvelle collection
                 Ycollection collection = new Ycollection();
-                collection.setIsPublic(Boolean.TRUE);
+                if (isPublic.equals("true"))
+                    collection.setIsPublic(Boolean.TRUE);
+                else
+                    collection.setIsPublic(Boolean.FALSE);
                 collection.setOwner(yuser);
                 collection.setTheme(name);
                 facColl.create(collection);
