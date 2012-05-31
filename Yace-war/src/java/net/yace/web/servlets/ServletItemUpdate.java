@@ -24,7 +24,7 @@ public class ServletItemUpdate extends HttpServlet {
 
     private final static String VUE_PRESENTATION = "welcome.jsp";
     //TODO mettre ta fucking jsp ici mec :p
-    private final static String VUE_ITEMS = "";
+    private final static String VUE_ITEMS = "WEB-INF/view/user/collection.jsp";
 
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -38,14 +38,13 @@ public class ServletItemUpdate extends HttpServlet {
             throws ServletException, IOException {
         YaceUtils.SessionState state = YaceUtils.getSessionState(request);
 
-        if (state == YaceUtils.SessionState.admin) {
+        if (state != YaceUtils.SessionState.noauth) {
             // On nomme et affiche la page
             request.setAttribute("pageTitle", "Édition des objets d'une collection");
+            request.setAttribute("idCollection", request.getParameter("coll"));
             request.getRequestDispatcher(VUE_ITEMS).forward(request, response);
-        } else if (state == YaceUtils.SessionState.noauth) {
-            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else {
-            YaceUtils.displayAdminError(request, response);
+            YaceUtils.displayUnknownUserError(request, response);
         }
     }
 
