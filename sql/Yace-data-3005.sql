@@ -48,17 +48,17 @@ INSERT INTO `yattribute` (`name`, `type`, `no_order`, `many`, `itemtype`) VALUES
 INSERT INTO `yattribute` (`name`, `type`, `no_order`, `many`, `itemtype`) VALUES
 ('cover', 'Image', 1, 0, 2),
 ('Artiste', 'String', 2, 0, 2),
-('Nom', 'String', 3, 1, 2),
-('Date de sortie', 'Date', 4, 0, 2),
-('Tracklist', 'String', 5, 1, 2),
+('Nom', 'String', 3, 0, 2),
+('Date de sortie', 'String', 4, 0, 2),
+('Tracklist', 'String', 5, 0, 2),
 ('Date de sortie', 'String', 6, 0, 2);
 
 --Livre
 INSERT INTO `yattribute` (`name`, `type`, `no_order`, `many`, `itemtype`) VALUES
 ('cover', 'Image', 1, 0, 3),
-('Auteur', 'String', 2, 0, 3),
-('Titre', 'String', 3, 1, 3),
-('Résumé', 'Date', 4, 1, 3),
+('Auteur', 'String', 2, 1, 3),
+('Titre', 'String', 3, 0, 3),
+('Résumé', 'String', 4, 0, 3),
 ('Editeur', 'String', 5, 0, 3),
 ('Date de sortie', 'String', 6, 0, 3),
 ('Nombre de pages', 'Int', 7, 0, 3);
@@ -92,7 +92,7 @@ INSERT INTO `yattributevalue` (`val_str`, `val_int`, `val_flt`, `val_date`, `val
 ('Au moins ça', NULL, NULL, NULL, NULL, 7),
 ('10', NULL, NULL, NULL, NULL, 8),
 ('Bizarre', NULL, NULL, NULL, NULL, 9),
-('Le plus beau jour', NULL, NULL, NULL, NULL, 10);
+('Someday', NULL, NULL, NULL, NULL, 10);
 
 --
 -- Contenu de la table `link_attr_item`
