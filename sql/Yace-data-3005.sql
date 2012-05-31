@@ -44,7 +44,10 @@ INSERT INTO `yattribute` (`name`, `type`, `no_order`, `many`, `itemtype`) VALUES
 ('Genre', 'String', 9, 1, 1),
 ('Date de sortie', 'String', 10, 0, 1);
 
---Musique
+--
+-- Musique
+--
+
 INSERT INTO `yattribute` (`name`, `type`, `no_order`, `many`, `itemtype`) VALUES
 ('cover', 'Image', 1, 0, 2),
 ('Artiste', 'String', 2, 0, 2),
@@ -53,7 +56,10 @@ INSERT INTO `yattribute` (`name`, `type`, `no_order`, `many`, `itemtype`) VALUES
 ('Tracklist', 'String', 5, 0, 2),
 ('Date de sortie', 'String', 6, 0, 2);
 
---Livre
+--
+-- Livre
+--
+
 INSERT INTO `yattribute` (`name`, `type`, `no_order`, `many`, `itemtype`) VALUES
 ('cover', 'Image', 1, 0, 3),
 ('Auteur', 'String', 2, 1, 3),
