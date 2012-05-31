@@ -6,45 +6,24 @@ package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.yace.entity.Yattributevalue;
+import net.yace.facade.YitemFacade;
+import net.yace.web.utils.ServicesLocator;
 
 /**
  *
  * @author Scohy Jérôme
  */
 public class ServletItemDetails extends HttpServlet {
+    
+    private final static String VUE_ITEM = "WEB-INF/view/user/item-attributevalues.jsp";
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletItemDetails</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletItemDetails at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-             */
-        } finally {            
-            out.close();
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    //url pattern : /details
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -55,20 +34,40 @@ public class ServletItemDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        YitemFacade itemFac = ServicesLocator.getItemFacade();
+        String idItem = "";
+        idItem = request.getParameter("it");
+        if(idItem == null || idItem.isEmpty())
+        {
+         //param invalide
+         //afficher message d'erreur ou rediriger l'user à l'accueil?
+        }
+        else
+        {
+            
+            int idIt = Integer.parseInt(idItem);
+            List<Yattributevalue> valList = itemFac.getItemsAttrValues(idIt);
+            if(valList !=null)
+            {
+                request.setAttribute("attributevalues", valList);
+            }
+            else
+            {
+                //error liste vide
+                //afficher message d'erreur
+            }
+        }
+        
+        request.setAttribute("pageTitle", "Les Attributs");//look for a title  
+        request.getRequestDispatcher(VUE_ITEM).forward(request, response);// GO jsp
     }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //actions : update un item, delete l'item ?
     }
 
     /** 
