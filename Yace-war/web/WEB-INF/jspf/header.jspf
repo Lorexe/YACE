@@ -78,23 +78,23 @@
                 
                 <button class="y-button y-button-white" name="newColl"><a href="wizard">Nouvelle collection</a></button>
                 
-                <sql:query var="collections" dataSource="Yacedb">
+                <sql:query var="colls" dataSource="Yacedb">
                     SELECT * FROM ycollection yco
                     WHERE yco.owner = ?
                     <sql:param value="${user.idYUSER}"/>
                 </sql:query>
-                <c:if test="${!empty collections}">
+                <c:if test="${!empty colls}">
                     <ul class="collsList">
-                        <c:forEach var="coll" items="${collections.rows}">
+                        <c:forEach var="coll" items="${colls.rows}">
                             <li>
                                 <a href="#"><strong>${coll.theme}</strong></a>
-                                <sql:query var="itemtypes" dataSource="Yacedb">
-                                    SELECT DISTINCT idYITEMTYPE, name FROM yitemtype yit
-                                    JOIN yitem y ON yit.idYITEMTYPE = y.type
-                                    WHERE y.collection = ?
-                                    <sql:param value="${coll.idYCOLLECTION}"/>
-                                </sql:query>
                                 <ul>
+                                    <sql:query var="itemtypes" dataSource="Yacedb">
+                                        SELECT DISTINCT idYITEMTYPE, name FROM yitemtype yit
+                                        JOIN yitem y ON yit.idYITEMTYPE = y.type
+                                        WHERE y.collection = ?
+                                        <sql:param value="${coll.idYCOLLECTION}"/>
+                                    </sql:query>
                                     <c:forEach var="itemtype" items="${itemtypes.rows}">
                                         <li><a href="#">${itemtype.name}</a></li>
                                     </c:forEach>
