@@ -5,11 +5,16 @@
 package net.yace.web.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import net.yace.entity.Ycollection;
+import net.yace.entity.Yuser;
+import net.yace.facade.YcollectionFacade;
+import net.yace.web.utils.ServicesLocator;
+import net.yace.web.utils.YaceUtils;
 
 /**
  *
@@ -17,34 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ServletItemUpdate extends HttpServlet {
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletItemUpdate</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletItemUpdate at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-             */
-        } finally {            
-            out.close();
-        }
-    }
+    private final static String VUE_PRESENTATION = "welcome.jsp";
+    //TODO mettre ta fucking jsp ici mec :p
+    private final static String VUE_ITEMS = "";
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -55,7 +36,17 @@ public class ServletItemUpdate extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        YaceUtils.SessionState state = YaceUtils.getSessionState(request);
+
+        if (state == YaceUtils.SessionState.admin) {
+            // On nomme et affiche la page
+            request.setAttribute("pageTitle", "Édition des objets d'une collection");
+            request.getRequestDispatcher(VUE_ITEMS).forward(request, response);
+        } else if (state == YaceUtils.SessionState.noauth) {
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+        } else {
+            YaceUtils.displayAdminError(request, response);
+        }
     }
 
     /** 
@@ -68,7 +59,33 @@ public class ServletItemUpdate extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        YaceUtils.SessionState state = YaceUtils.getSessionState(request);
+        if (state == YaceUtils.SessionState.noauth) {
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+        } else {
+            HttpSession session = request.getSession(false);
+            Yuser yuser = (Yuser) session.getAttribute("user");
+            /*
+             * Session valide: utilisateur connecté
+             */
+
+            YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
+
+            String idCollection = request.getParameter("idCollection");
+
+            if (idCollection != null && !idCollection.isEmpty()) {
+                //check collection owner and edit.
+                Ycollection collection = facColl.find(Integer.parseInt(idCollection));
+                if (collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
+                    //Tout est ok
+                } else {
+                    //Error
+                    request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+                }
+            } else {
+                request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+            }
+        }
     }
 
     /** 
@@ -77,6 +94,6 @@ public class ServletItemUpdate extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Ajout et édition d'un objet";
     }// </editor-fold>
 }
