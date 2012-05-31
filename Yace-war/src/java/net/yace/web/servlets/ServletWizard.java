@@ -102,13 +102,15 @@ public class ServletWizard extends HttpServlet {
              * Session valide: utilisateur connecté
              */
 
+            YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
+
             String idCollection = request.getParameter("idCollection");
+            String name = request.getParameter("name");
 
             if (idCollection != null && !idCollection.isEmpty()) {
                 /*
                  * On demande la modification d'une collection existante
                  */
-                YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
                 Ycollection collection = facColl.find(Integer.parseInt(idCollection));
 
                 if (collection == null || collection.getOwner().getIdYUSER() != yuser.getIdYUSER()) {
@@ -139,7 +141,18 @@ public class ServletWizard extends HttpServlet {
                     // On nomme et affiche la page
                     request.setAttribute("pageTitle", "Collection introuvable");
                     request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+                } else {
+                    //édition du nom de la collection
+                    collection.setTheme(name);
+                    facColl.edit(collection);
                 }
+            } else {
+                //ajout d'une nouvelle collection
+                Ycollection collection = new Ycollection();
+                collection.setIsPublic(Boolean.TRUE);
+                collection.setOwner(yuser);
+                collection.setTheme(name);
+                facColl.create(collection);
             }
 
 
