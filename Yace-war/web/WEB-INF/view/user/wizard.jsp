@@ -195,6 +195,7 @@
                 <td>
                     <c:if test="${attr.many}">
                         <img class="moreicon" src="./theme/default/img/img_trans.gif" alt="Ajouter" title="Ajouter" onclick="addAttr(${it.idYITEMTYPE},${attr.no_order},0)" style="margin-bottom: -4px;"/>
+                        <input type="hidden" role="counter" value="0"/>
                     </c:if>
                 </td>
             </tr>
@@ -438,13 +439,13 @@ $(document).ready(function(){
 });
 }
 
-function addAttr(idIT, numAttr, nbAttr) {
+function addAttr(idIT, attrOrder, nbAttr) {
 $(document).ready(function(){
-    var lastInput;
-    if(nbAttr != 0) {
-        lastInput = "#fillerIT"+idIT+" div#attr-"+idIT+"-"+numAttr+"-"+nbAttr;
+    var lastAttr;
+    if(nbAttr > 0) {
+        lastAttr = "#fillerIT"+idIT+" div#attr-"+idIT+"-"+attrOrder+"-"+nbAttr;
     } else {
-        lastInput = "#fillerIT"+idIT+" div#attr-"+idIT+"-"+numAttr;
+        lastAttr = "#fillerIT"+idIT+" div#attr-"+idIT+"-"+attrOrder;
     }
     
     (nbAttr++);
@@ -455,26 +456,41 @@ $(document).ready(function(){
         .attr("src","./theme/default/img/img_trans.gif")
         .attr("alt","Enlever")
         .attr("title","Enlever")
-        .attr("onclick","removeAttr("+idIT+","+numAttr+","+nbAttr+")")
+        .attr("onclick","removeAttr("+idIT+","+attrOrder+","+nbAttr+")")
         .attr("style","margin-bottom: -4px;");
     
     var newInput = document.createElement("input");
-    $(newInput).attr("type",$(lastInput+" input").attr("type"));
-    $(newInput).attr("name","attr-"+idIT+"-"+numAttr+"-"+nbAttr);
+    $(newInput).attr("type",$(lastAttr+" input").attr("type"));
+    $(newInput).attr("name","attr-"+idIT+"-"+attrOrder+"-"+nbAttr);
         
     var newAttr = document.createElement("div");
     $(newAttr)
-        .attr("id","attr-"+idIT+"-"+numAttr+"-"+nbAttr)
+        .attr("id","attr-"+idIT+"-"+attrOrder+"-"+nbAttr)
         .append(newInput)
-        .append(remover);
+        .append(remover)
+        .insertAfter(lastAttr);
         
-    $("#fillerIT"+idIT+" tr#"+idIT+"-"+numAttr+" img.moreicon")
-        .attr("onclick","addAttr("+idIT+","+numAttr+","+nbAttr+")");
+    $("#fillerIT"+idIT+" tr#"+idIT+"-"+attrOrder+" img.moreicon")
+        .attr("onclick","addAttr("+idIT+","+attrOrder+","+nbAttr+")");
+        
+    var test = parseInt($("#fillerIT"+idIT+" tr#"+idIT+"-"+attrOrder+" input[role='counter']").val());
+    $("#fillerIT"+idIT+" tr#"+idIT+"-"+attrOrder+" input[role='counter']").attr("value",test++);
 
 });
 }
 
-
+function removeAttr(idIT, attrOrder, nbAttr) {
+$(document).ready(function(){
+    $("#fillerIT"+idIT+" div#attr-"+idIT+"-"+attrOrder+"-"+nbAttr).remove();
+    if(nbAttr > 1) {
+        $("#fillerIT"+idIT+" tr#"+idIT+"-"+attrOrder+" img.moreicon")
+        .attr("onclick","addAttr("+idIT+","+attrOrder+","+nbAttr+")")
+    } else {
+        $("#fillerIT"+idIT+" tr#"+idIT+"-"+attrOrder+" img.moreicon")
+        .attr("onclick","addAttr("+idIT+","+attrOrder+","+nbAttr+")")
+    }
+});
+}
 
 </script>
 <c:if test="${empty coll}">
