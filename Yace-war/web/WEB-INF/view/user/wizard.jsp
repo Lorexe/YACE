@@ -138,7 +138,7 @@
     <br/>
     <label for="selectIT"><strong>De quel type sera votre nouvel objet ?</strong></label>
     <br/><br/>
-    <select id="selectIT" name="selectIT">
+    <select id="selectIT" name="selectIT" style="height:29px;">
         <c:forEach var="it" items="${publicIT.rows}">
             <option value="${it.idYITEMTYPE}">${it.name}</option>
         </c:forEach>
@@ -172,12 +172,29 @@
             </tfoot>
             <tbody>
         <c:forEach var="attr" items="${attributes.rows}" varStatus="counter">
-            <tr <c:if test="${counter.count % 2 != 0}">class="odd"</c:if>>
-                <td><label for="attr-${it.idYITEMTYPE}-${attr.no_order}">${attr.name} (${attr.type})</label></td>
-                <td><input type="text" name="attr-${it.idYITEMTYPE}-${attr.no_order}" id="attr-${it.idYITEMTYPE}-${attr.no_order}"/></td>
+            <tr id="${it.idYITEMTYPE}-${attr.no_order}" <c:if test="${counter.count % 2 != 0}">class="odd"</c:if>>
+                <td>${attr.name} (${attr.type})</td>
+                <td>
+                    <div id="attr-${it.idYITEMTYPE}-${attr.no_order}">
+                    <c:choose>
+                        <%-- Type Int ou Float --%>
+                        <c:when test="${attr.type == 'Int' || attr.type == 'Float'}">
+                            <input type="text" size="5" name="attr-${it.idYITEMTYPE}-${attr.no_order}"/>
+                        </c:when>
+                        <%-- Type Bool --%>
+                        <c:when test="${attr.type == 'Bool'}">
+                            <input type="checkbox" name="attr-${it.idYITEMTYPE}-${attr.no_order}"/>
+                        </c:when>
+                        <%-- Type String ou Date ou Image --%>
+                        <c:otherwise>
+                            <input type="text" size="20" name="attr-${it.idYITEMTYPE}-${attr.no_order}"/>
+                        </c:otherwise>
+                    </c:choose>
+                    </div>
+                </td>
                 <td>
                     <c:if test="${attr.many}">
-                        <img class="moreicon" src="./theme/default/img/img_trans.gif" alt="Ajouter" title="Ajouter" onclick="addAttr('${it.idYITEMTYPE}-${attr.no_order}')" style="margin-bottom: -4px;"/><strong>${attr.name}</strong>
+                        <img class="moreicon" src="./theme/default/img/img_trans.gif" alt="Ajouter" title="Ajouter" onclick="addAttr(${it.idYITEMTYPE},${attr.no_order},0)" style="margin-bottom: -4px;"/>
                     </c:if>
                 </td>
             </tr>
@@ -190,6 +207,12 @@
 </div> 
 
 <script type="text/javascript">
+$(document).ready(function(){
+    $("#isPrivate").click(function(){
+        
+    });
+});
+    
 function valid() {
 $(document).ready(function(){
     var saveButton = document.createElement("button");
@@ -208,6 +231,8 @@ $(document).ready(function(){
     var labelTheme = document.createElement("label");
     var inputTheme = document.createElement("input");
     var continueButton = document.createElement("button");
+    var labelPrivate = document.createElement("label");
+    var checkPrivate = document.createElement("input");
 
     $(continueButton)
         .attr("class","y-button y-button-white")
@@ -223,6 +248,17 @@ $(document).ready(function(){
     $(labelTheme)
         .attr("for","theme")
         .html("<strong>Quel sera le th&ecirc;me de votre nouvelle collection ?</strong>");
+        
+    $(checkPrivate)
+        .attr("type","checkbox")
+        .attr("id","isPrivate")
+        .attr("name","isPrivate")
+        .attr("checked","checked")
+        .attr("title","Décochez pour montrer votre collection aux visiteurs du site");
+        
+    $(labelPrivate)
+        .attr("for","isPrivate")
+        .html("Collection privée ? ");
 
     $(newCollection)
         .attr("id","newCollection")
@@ -231,6 +267,10 @@ $(document).ready(function(){
         .append(labelTheme)
         .append("<br/><br/>")
         .append(inputTheme)
+        .append("<br/><br/>")
+        .append(labelPrivate)
+        .append(checkPrivate)
+        .append("<br/><br/>")
         .append(continueButton);
 
     $("div#appender").append(newCollection);
@@ -251,7 +291,19 @@ $(document).ready(function(){
             .attr("type","hidden")
             .attr("name","collectionName")
             .attr("value",theme);
-        $("form[name='wizardcollection']").append(collectionName);
+        
+        var publicIndicator = document.createElement("input");
+        $(publicIndicator)
+            .attr("type","hidden")
+            .attr("name","isPublic")
+            .attr(
+                "value",
+                ($("#isPrivate").attr("checked") != 'checked')?"true":"false"
+            );
+        
+        $("form[name='wizardcollection']")
+            .append(collectionName)
+            .append(publicIndicator);
 
         $("section.content div#newCollection input").attr("disabled","disabled");
         $("section.content div#newCollection button").remove();
@@ -385,6 +437,45 @@ $(document).ready(function(){
     
 });
 }
+
+function addAttr(idIT, numAttr, nbAttr) {
+$(document).ready(function(){
+    var lastInput;
+    if(nbAttr != 0) {
+        lastInput = "#fillerIT"+idIT+" div#attr-"+idIT+"-"+numAttr+"-"+nbAttr;
+    } else {
+        lastInput = "#fillerIT"+idIT+" div#attr-"+idIT+"-"+numAttr;
+    }
+    
+    (nbAttr++);
+    
+    var remover = document.createElement("img");
+    $(remover)
+        .attr("class","deleteicon")
+        .attr("src","./theme/default/img/img_trans.gif")
+        .attr("alt","Enlever")
+        .attr("title","Enlever")
+        .attr("onclick","removeAttr("+idIT+","+numAttr+","+nbAttr+")")
+        .attr("style","margin-bottom: -4px;");
+    
+    var newInput = document.createElement("input");
+    $(newInput).attr("type",$(lastInput+" input").attr("type"));
+    $(newInput).attr("name","attr-"+idIT+"-"+numAttr+"-"+nbAttr);
+        
+    var newAttr = document.createElement("div");
+    $(newAttr)
+        .attr("id","attr-"+idIT+"-"+numAttr+"-"+nbAttr)
+        .append(newInput)
+        .append(remover);
+        
+    $("#fillerIT"+idIT+" tr#"+idIT+"-"+numAttr+" img.moreicon")
+        .attr("onclick","addAttr("+idIT+","+numAttr+","+nbAttr+")");
+
+});
+}
+
+
+
 </script>
 <c:if test="${empty coll}">
     <script type="text/javascript">
