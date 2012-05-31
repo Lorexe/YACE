@@ -55,7 +55,7 @@ public class ServletWizard extends HttpServlet {
             //On check pas, c'est déjà fait !
             Yuser user = (Yuser) session.getAttribute("user");
 
-            String strIdcoll = request.getParameter("collection");
+            String strIdcoll = request.getParameter("idCollection");
             //Collection définie en get ?
             if (strIdcoll != null) {
                 int idcoll = Integer.parseInt(strIdcoll);
