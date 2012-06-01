@@ -64,6 +64,22 @@ public class ServletWizard extends HttpServlet {
                     Yuser owner = collection.getOwner();
                     if (owner.equals(user)) {
                         //TODO on traite
+                        // Aide contextuelle
+                        Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+                        List<String> infoBoxes = new ArrayList<String>();
+                        List<String> tipBoxes = new ArrayList<String>();
+
+                        infoBoxes.add("Sur cette page, vous pouvez créer une nouvelle collection, ou éditer vos collections déjà existantes.");
+                        infoBoxes.add("Vous pouvez choisir de rendre vos collections publiques à tout moment.");
+                        tipBoxes.add("Pour partager vos collections avec vos amis, rendez-la publique. Il pourront ainsi la consulter sans être membre de Ya<em class='CE'>ce</em> !");
+
+                        asideHelp.put("tip", tipBoxes);
+                        asideHelp.put("info", infoBoxes);
+
+                        request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+                        
+                        request.setAttribute("pageTitle", "Assistant de création de collection");
                         request.getRequestDispatcher(VUE_WIZARD).forward(request, response);
                     } else {
                         request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
@@ -74,6 +90,22 @@ public class ServletWizard extends HttpServlet {
                     request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
                 }
             } else { //Collection non définie en get
+                // Aide contextuelle
+                Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+                List<String> infoBoxes = new ArrayList<String>();
+                List<String> tipBoxes = new ArrayList<String>();
+
+                infoBoxes.add("Sur cette page, vous pouvez créer une nouvelle collection, ou éditer vos collections déjà existantes.");
+                infoBoxes.add("Vous pouvez choisir de rendre vos collections publiques à tout moment.");
+                tipBoxes.add("Pour partager vos collections avec vos amis, rendez-la publique. Il pourront ainsi la consulter sans être membre de Ya<em class='CE'>ce</em> !");
+
+                asideHelp.put("tip", tipBoxes);
+                asideHelp.put("info", infoBoxes);
+
+                request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+
+                request.setAttribute("pageTitle", "Assistant de création de collection");
                 request.getRequestDispatcher(VUE_WIZARD).forward(request, response);
             }
         }
@@ -149,8 +181,9 @@ public class ServletWizard extends HttpServlet {
             List<String> infoBoxes = new ArrayList<String>();
             List<String> tipBoxes = new ArrayList<String>();
 
-            infoBoxes.add("En cours de rédaction");
-            tipBoxes.add("En cours de rédaction");
+            infoBoxes.add("Sur cette page, vous pouvez créer une nouvelle collection, ou éditer vos collections déjà existantes.");
+            infoBoxes.add("Vous pouvez choisir de rendre vos collections publiques à tout moment.");
+            tipBoxes.add("Pour partager vos collections avec vos amis, rendez-la publique. Il pourront ainsi la consulter sans être membre de Ya<em class='CE'>ce</em> !");
 
             asideHelp.put("tip", tipBoxes);
             asideHelp.put("info", infoBoxes);

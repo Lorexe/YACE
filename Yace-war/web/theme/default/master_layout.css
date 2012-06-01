@@ -1,6 +1,13 @@
 /**
  * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> IMAGES <<<<<<<<<<
  */
+.upicon {
+  background-image: url('./img/icon/up_32.png');
+  width: 32px;
+  height: 32px;
+  margin: 0;
+}
+
 .deleteicon {
   background-image: url('./img/icon/delete_16.png');
   width: 16px;
@@ -212,7 +219,7 @@ header[role="menu"] {
  */
 aside#explore {
     float: left;
-    min-width: 220px;
+    width: 220px;
     margin: 10px 10px 10px 0;
     /*position: fixed;*/
 }

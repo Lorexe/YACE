@@ -32,7 +32,7 @@
             </c:otherwise>
         </c:choose>
         <br><br><input type="text" id="theme" name="theme" <c:if test="${!empty coll}">value="${coll.rows[0].theme}"</c:if> required="required">
-        <br><br><label for="isPrivate">Collection privée ?</label> <input type="checkbox" id="isPrivate" name="isPrivate" <c:if test="${empty coll || !coll.rows[0].isPublic}">checked="checked"</c:if> title="Décochez pour montrer votre collection aux visiteurs du site">
+        <br><br><label for="isPrivate">Collection priv&eacute;e ?</label> <input type="checkbox" id="isPrivate" name="isPrivate" <c:if test="${!empty coll && !coll.rows[0].is_public}">checked="checked"</c:if> title="Décochez pour montrer votre collection aux visiteurs du site">
         <br><br><button class="y-button y-button-white" onclick="collectionNameVerif()">Je valide et j'enregistre !</button>
     </div>
 

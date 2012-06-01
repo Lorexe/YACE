@@ -22,6 +22,7 @@
         <script src="./theme/default/script/jq.mytoggletips.js"></script>
         <script src="./theme/default/script/jq.previewsplash.js"></script>
         <script src="./theme/default/script/jq.mymodals.js"></script>
+        <script src="./theme/default/script/mycaptcha.js"></script>
 
         <!--
                 Le script suivant permet de faire en sorte que les nouvelles balises HTML5 s'affichent correctement sur les anciennes versions d'Internet Explorer (IE6, IE7, IE8, IE9).
@@ -32,32 +33,41 @@
     </head>
     <body>
         <header role="menu" class="yace-logo">
-            <nav id="menu">
-                <div id="menubar">
-                    <a href="./"><img class="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" /></a>
-                    <a href="about"><img class="helpicon" alt="A propos" title="A propos de YaCE!" src="./theme/default/img/img_trans.gif" /></a>
-                    <form name="search" action="search" method="POST" id="searchbar" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
-                        <a href=""><img class="searchicon" src="./theme/default/img/img_trans.gif" /></a>
-                        <input type="text" id="keyword" />
-                        <select name="searchdomain">
-                            <option label="Cette collection" value="thiscoll" />
-                            <option label="Mes collections" value="all" />
-                        </select>
-                    </form>
-                </div>
-                <div id="accountbar">
-                    <span>${user.pseudo}</span>
-                    <a href="profile"><img name="profil" class="profileicon" alt="Votre compte" title="Modifiez vos informations personelles" src="./theme/default/img/img_trans.gif" /></a>
-                    <a href="logout"><img name="logout" class="exiticon" alt="D&eacute;connexion" title="D&eacute;connexion" src="./theme/default/img/img_trans.gif" /></a>
-                </div>
-            </nav>
+            <c:choose>
+                <c:when test="${!empty user}">
+                    <nav id="menu">
+                        <div id="menubar">
+                            <a href="./"><img class="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" /></a>
+                            <a href="about"><img class="helpicon" alt="A propos" title="A propos de YaCE!" src="./theme/default/img/img_trans.gif" /></a>
+                            <form name="search" action="search" method="POST" id="searchbar" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
+                                <a href=""><img class="searchicon" src="./theme/default/img/img_trans.gif" /></a>
+                                <input type="text" id="keyword" />
+                                <select name="searchdomain">
+                                    <option value="thiscoll">Cette collection</option>
+                                    <option value="all">Mes collections</option>
+                                </select>
+                            </form>
+                        </div>
+                        <div id="accountbar">
+                            <span>${user.pseudo}</span>
+                            <a href="profile"><img name="profil" class="profileicon" alt="Votre compte" title="Modifiez vos informations personelles" src="./theme/default/img/img_trans.gif" /></a>
+                            <a href="logout"><img name="logout" class="exiticon" alt="D&eacute;connexion" title="D&eacute;connexion" src="./theme/default/img/img_trans.gif" /></a>
+                        </div>
+                    </nav>
+                </c:when>
+                <c:otherwise>
+                    <p style="height:83px;margin:27px;">Première visite ? <a class="y-button y-button-white" href="./">Je veux en savoir plus !</a></p>
+                </c:otherwise>
+            </c:choose>
+
+            
         </header>
 
         <aside id="explore" class="whitebox"> <!-- left panel -->
-            <header>
-                <h1>Navigation</h1>
-            </header>
-
+            
+                    <c:choose>
+                        <c:when test="${!empty user}">
+                            <header><h1>Navigation</h1></header>
 <% if (!request.getRequestURL().toString().contains("/admin")) { %>
             <%-- BEGIN TEST MENU --%>
             <nav>
@@ -67,7 +77,10 @@
                         <a href="autocomplete">Test autocompl&eacute;tion</a>
                     </li>
                     <li>
-                        <a href="collections">Liste de mes collections</a>
+                        <a href="collections">Mes collections</a>
+                    </li>
+                    <li>
+                        <a href="collections?u=${user.idYUSER}">Mes collections publiques</a>
                     </li>
                 </ul>
             </nav>
@@ -76,35 +89,36 @@
             <nav id="collview">
                 <h2>Mes collections</h2>
                 
-                <button class="y-button y-button-white" name="newColl"><a href="wizard">Nouvelle collection</a></button>
+                <a class="y-button y-button-white" href="wizard">Nouvelle collection</a>
                 
                 <sql:query var="colls" dataSource="Yacedb">
                     SELECT * FROM ycollection yco
                     WHERE yco.owner = ?
                     <sql:param value="${user.idYUSER}"/>
                 </sql:query>
-                <c:if test="${!empty colls}">
-                    <ul class="collsList">
-                        <c:forEach var="coll" items="${colls.rows}">
-                            <li>
-                                <a href="#"><strong>${coll.theme}</strong></a>
-                                <ul>
-                                    <sql:query var="itemtypes" dataSource="Yacedb">
-                                        SELECT DISTINCT idYITEMTYPE, name FROM yitemtype yit
-                                        JOIN yitem y ON yit.idYITEMTYPE = y.type
-                                        WHERE y.collection = ?
-                                        <sql:param value="${coll.idYCOLLECTION}"/>
-                                    </sql:query>
-                                    <c:forEach var="itemtype" items="${itemtypes.rows}">
-                                        <li><a href="#">${itemtype.name}</a></li>
-                                    </c:forEach>
-                                </ul>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </c:if>
+                    
+                <c:choose>
+                    <c:when test="${colls.rowCount != 0}">
+                        <br/><br/>
+                        <ul class="collsList">
+                            <c:forEach var="coll" items="${colls.rows}">
+                                <li>
+                                    <a href="see?idCollection=${coll.idYCOLLECTION}" title='Voir votre collection "${coll.theme}"'><strong>${coll.theme}</strong></a> <a href="wizard?idCollection=${coll.idYCOLLECTION}">edit</a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </c:when>
+                    <c:otherwise>
+                        <div>
+                            <img class="upicon" src="./theme/default/img/img_trans.gif" />
+                            <p>Vous n'avez pas encore de collection ? Commencez par en ajouter une ci-dessus !</p>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+
             </nav>
 
+            <%--
             <nav id="detailview">
                 <h2>Liste de <strong>Vases</strong></h2>
                 <input type="button" class="y-button y-button-white" value="Nouvel objet" name="newItem" />
@@ -116,6 +130,7 @@
                     <li class="squarecol" style="color: green;">Vase zoulou</li>
                 </ul>
             </nav>
+            --%>
 <% } else { %>
             <header>
                 <h1>Menu admin</h1>
@@ -142,20 +157,54 @@
                 </ul>
             </nav>
 <% } %>
+                        </c:when>
+                        <c:otherwise>
+                            <header><h1>Inscription</h1></header>
+                            <sql:query var="subscribeOk" dataSource="Yacedb">
+                                SELECT * FROM ysetting WHERE ysetting.name = "subscribeOk" AND ysetting.val = "true"
+                            </sql:query>
+                                <c:choose>
+                                    <c:when test="${!empty subscribeOk.rows}">
+                                        <form name="inscription" action="register" method="post" autocomplete="off">
+                                            <input type="text" name="pseudo" placeholder="Nom d'utilisateur" required="required" />
+                                            <br />
+                                            <input type="text" name="email" placeholder="Email valide" required="required" />
+                                            <br />
+                                            <input type="password" name="pwd" placeholder="Mot de passe" required="required" />
+                                            <br />
+                                            <input type="password" name="pwd-verif" placeholder="Confirmation MDP" required="required" />
+                                            <br />
+                                            <script type="text/javascript">showCaptcha();</script>
+                                            <input type="button" class="y-button y-button-blue" value="Je m'enregistre" onclick="validateCaptcha()?submit():errorCaptcha()" />
+                                        </form>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p>Les inscriptions sont momentan&eacute;ment d&eacute;sactiv&eacute;es...</p>
+                                    </c:otherwise>
+                                </c:choose>
+
+                        </c:otherwise>
+                    </c:choose>
+
+                
+            
+            
+
+
         </aside>
 
         <aside id="guide" class="none whitebox"> <!-- aide et guide Ã  l'utilisation -->
             <header>
-                <h1>Utilisation</h1>
+                <h1>Guide et astuces</h1>
             </header>
 
             <c:if test="${!empty asideHelp}">
                 <section id="infotips">
-                    <header><h1>Guide et astuces</h1></header>
                     ${asideHelp}
                 </section>
             </c:if>
 
+            <%--
             <section id="legend"> <!-- je suis une légende :) -->
                 <header>
                     <h1>L&eacute;gende</h1>
@@ -169,4 +218,5 @@
                     </li>
                 </ul>
             </section>
+            --%>
         </aside>

@@ -19,7 +19,7 @@
                 <sql:param value="${param.u}"/>
             </sql:query>
     <form name="seecollection" method="GET" action="view">
-            <h1>Choisissez parmi les collections de <strong>${dbuser.rows[0].pseudo}</strong></h1>
+            <h1>Choisissez parmi les collections publiques de <strong>${dbuser.rows[0].pseudo}</strong></h1>
         </c:otherwise>
     </c:choose>
 
@@ -30,7 +30,7 @@
         <c:otherwise>
             <div class="radios">
             <c:forEach var="collection" items="${collections}">
-                <input type="radio" name="collection" id="collection${collection.idYCOLLECTION}" value="${collection.idYCOLLECTION}" required="required"/>
+                <input type="radio" name="idCollection" id="collection${collection.idYCOLLECTION}" value="${collection.idYCOLLECTION}" required="required"/>
                 <label for="collection${collection.idYCOLLECTION}">${collection.theme}</label>
                 <br/>
             </c:forEach>

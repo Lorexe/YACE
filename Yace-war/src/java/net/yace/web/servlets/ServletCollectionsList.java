@@ -5,7 +5,10 @@
 package net.yace.web.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,32 +40,46 @@ public class ServletCollectionsList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         SessionState state = YaceUtils.getSessionState(request);
-        if (state == YaceUtils.SessionState.noauth) {
-            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
-        } else {
-            String idUser = request.getParameter("u");
-            Yuser user = (Yuser) request.getSession(false).getAttribute("user");
-            
-            YcollectionFacade collFac = ServicesLocator.getCollectionFacade();
-            List<Ycollection> collections = null;
-            if (idUser == null || idUser.isEmpty()) {
+        String idUser = request.getParameter("u");
+        Yuser user = (Yuser) request.getSession().getAttribute("user");
+
+        YcollectionFacade collFac = ServicesLocator.getCollectionFacade();
+        List<Ycollection> collections = null;
+        if (idUser == null || idUser.isEmpty()) {
+            if (state == YaceUtils.SessionState.noauth) {
+                request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+            } else {
                 collections = collFac.findAllFromUser(user.getIdYUSER()); // lister ses propres collections
                 request.setAttribute("pageTitle", "Liste de mes collections");
+            }
+        } else {
+            Yuser u = ServicesLocator.getUserFacade().find(Integer.parseInt(idUser));
+            if (u == null) {
+                YaceUtils.displayUnknownUserError(request, response);
             } else {
                 collections = collFac.findAllPublicFromUser(Integer.parseInt(idUser)); // lister les collections publiques d'un autre user
-                Yuser u = ServicesLocator.getUserFacade().find(Integer.parseInt(idUser));
-                if (u == null) {
-                    YaceUtils.displayUnknownUserError(request, response);
-                } else {
-                    request.setAttribute("pageTitle", "Liste des collections de "+u.getPseudo());
-                }
+                request.setAttribute("pageTitle", "Liste des collections de " + u.getPseudo());
             }
-            
-            request.setAttribute("collections", collections);
-            
-            request.getRequestDispatcher(VUE_COLL_LIST).forward(request, response);
-            
         }
+
+        request.setAttribute("collections", collections);
+
+        // Aide contextuelle
+        Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+        List<String> infoBoxes = new ArrayList<String>();
+        List<String> tipBoxes = new ArrayList<String>();
+
+        infoBoxes.add("Sur cette page, vous choisissez une collection que vous souhaitez parcourir.");
+        infoBoxes.add("Vous pouvez voir la <a href='collections'>liste</a> de toutes vos collections.");
+        tipBoxes.add("C'est inutile d'être membre de Ya<em class='CE'>ce</em> pour voir cette page ! Vous pouvez donc partager le lien de cette page avec vos amis !");
+
+        asideHelp.put("tip", tipBoxes);
+        asideHelp.put("info", infoBoxes);
+
+        request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+        
+        request.getRequestDispatcher(VUE_COLL_LIST).forward(request, response);
     }
 
     /** 
