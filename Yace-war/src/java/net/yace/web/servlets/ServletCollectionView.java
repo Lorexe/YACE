@@ -48,7 +48,7 @@ public class ServletCollectionView extends HttpServlet {
             throws ServletException, IOException {
         boolean error = false;
 
-        String idCollection = request.getParameter("collid");
+        String idCollection = request.getParameter("idCollection");
         try {
             int collid = Integer.parseInt(idCollection);
 

@@ -87,7 +87,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletCollectionView</servlet-name>
-        <url-pattern>/viewcol</url-pattern>
+        <url-pattern>/see</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletAdminToggleSubscriptions</servlet-name>

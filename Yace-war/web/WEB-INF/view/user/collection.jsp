@@ -8,14 +8,14 @@
 
     <sql:query var="collname" dataSource="Yacedb">
         SELECT * FROM Ycollection WHERE ycollection.idYCOLLECTION = ?
-        <sql:param value="${idCollection}"/>
+        <sql:param value="${collection.getIdYCOLLECTION()}"/>
     </sql:query>
 
     <sql:query var="itemtypes" dataSource="Yacedb">
         SELECT DISTINCT idYITEMTYPE, name FROM yitemtype yit
         JOIN yitem y ON yit.idYITEMTYPE = y.type
         WHERE y.collection = ?
-        <sql:param value="${idCollection}"/>
+        <sql:param value="${collection.getIdYCOLLECTION()}"/>
     </sql:query>
 
 
@@ -49,7 +49,7 @@
                 
                 <sql:query var="objects" dataSource="Yacedb">
                     SELECT * FROM yitem yit WHERE collection = ? AND type = ?
-                    <sql:param value="${idCollection}"/>
+                    <sql:param value="${collection.getIdYCOLLECTION()}"/>
                     <sql:param value="${itemtype.idYITEMTYPE}"/>
                 </sql:query>
 
