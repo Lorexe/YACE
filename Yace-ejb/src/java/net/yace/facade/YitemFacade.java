@@ -4,9 +4,7 @@
  */
 package net.yace.facade;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
@@ -15,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import net.yace.entity.Yattributevalue;
 import net.yace.entity.Ycollection;
 import net.yace.entity.Yitem;
+import net.yace.entity.Yitemtype;
 
 /**
  *
@@ -48,6 +47,22 @@ public class YitemFacade extends AbstractFacade<Yitem> {
         }
         
         return cList;
+    }
+    
+    public List<Yitem> getItemsByCollectionAndType(Ycollection collection, Yitemtype type)
+    {
+        Query query = em.createQuery("SELECT yit FROM yitem yit WHERE collection = :collection AND type = :type");
+        List<Yitem> tList = null;
+        query.setParameter("collection", collection);
+        query.setParameter("type", type);
+        
+        try {
+            tList = query.getResultList();
+        } catch (NoResultException e) {
+            
+        }
+        
+        return tList;
     }
     
     //fonction de recherche de base sur les attributevalue

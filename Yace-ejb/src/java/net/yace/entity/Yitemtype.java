@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Yitemtype.findAll", query = "SELECT y FROM Yitemtype y"),
     @NamedQuery(name = "Yitemtype.findByIdYITEMTYPE", query = "SELECT y FROM Yitemtype y WHERE y.idYITEMTYPE = :idYITEMTYPE"),
     @NamedQuery(name = "Yitemtype.findByName", query = "SELECT y FROM Yitemtype y WHERE y.name = :name"),
-    @NamedQuery(name = "Yitemtype.findAllTypesLike", query = "SELECT y FROM Yitemtype y WHERE y.name LIKE :name")})
+    @NamedQuery(name = "Yitemtype.findAllTypesLike", query = "SELECT y FROM Yitemtype y WHERE y.name LIKE :name"),
+    @NamedQuery(name = "Yitemtype.findAllInCollection", query = "SELECT DISTINCT yit FROM yitemtype yit JOIN yitem y ON yit.idYITEMTYPE = y.type WHERE y.collection = :collection")})
 public class Yitemtype implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
