@@ -64,8 +64,8 @@ public class YitemtypeFacade extends AbstractFacade<Yitemtype> {
     public List<Yitemtype> findItemtypesInCollection(Ycollection collection) {
         List<Yitemtype> tList = null;
         Query query;
-        query = em.createNamedQuery("Yitemtypes.findAllInCollection");
-        query.setParameter("collection", collection);
+        query = em.createNamedQuery("Yitemtype.findAllInCollection");
+        query.setParameter("idYCOLLECTION", collection.getIdYCOLLECTION());
 
         try {
             tList = query.getResultList();

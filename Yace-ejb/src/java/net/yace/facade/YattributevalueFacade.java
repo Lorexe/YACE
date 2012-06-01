@@ -32,11 +32,12 @@ public class YattributevalueFacade extends AbstractFacade<Yattributevalue> {
         super(Yattributevalue.class);
     }
 
-    public List<Yattributevalue> findAllValuesForItem(Yitemtype itemtype, Yitem item) {
+    public List<Yattributevalue> findAllValuesForItem(Yitem item) {
         List<Yattributevalue> tList = null;
-        Query query = em.createQuery("SELECT yatv FROM yattributevalue yatv WHERE yatv.attribute IN (SELECT idYATTRIBUTE FROM yattribute yat WHERE itemtype = :itemtype) AND yatv.idYATTRIBUTEVALUE IN (SELECT lnk.value FROM link_attr_item lnk WHERE lnk.item = :item)");
-        query.setParameter("itemtype", itemtype);
-        query.setParameter("item", item);
+        Query query = em.createQuery("SELECT av FROM Yitem y JOIN y.yattributevalueCollection av JOIN av.attribute a WHERE y.idYITEM = :idYITEM ORDER BY a.noOrder");
+        //SELECT yatv FROM Yattributevalue yatv WHERE yatv.attribute IN (SELECT idYATTRIBUTE FROM Yattribute yat WHERE itemtype = :itemtype) AND yatv.idYATTRIBUTEVALUE IN (SELECT lnk.value FROM link_attr_item lnk WHERE lnk.item = :item)
+        //query.setParameter("itemtype", itemtype);//yitemtype inutile ici
+        query.setParameter("idYITEM", item.getIdYITEM());
 
         try {
             tList = query.getResultList();

@@ -51,7 +51,7 @@ public class YitemFacade extends AbstractFacade<Yitem> {
     
     public List<Yitem> getItemsByCollectionAndType(Ycollection collection, Yitemtype type)
     {
-        Query query = em.createQuery("SELECT yit FROM yitem yit WHERE collection = :collection AND type = :type");
+        Query query = em.createQuery("SELECT yit FROM Yitem yit JOIN yit.type yt WHERE yit.collection = :collection AND yt = :type");
         List<Yitem> tList = null;
         query.setParameter("collection", collection);
         query.setParameter("type", type);

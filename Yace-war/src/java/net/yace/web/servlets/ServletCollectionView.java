@@ -76,7 +76,7 @@ public class ServletCollectionView extends HttpServlet {
                     List<Yitem> items = ifac.getItemsByCollectionAndType(coll, itemtypes.get(i));
                     values.add(new ArrayList<List<Yattributevalue>>());
                     for (int j = 0; j < items.size(); j++) {
-                        values.get(i).add(yatvfac.findAllValuesForItem(itemtypes.get(i), items.get(j)));
+                        values.get(i).add(yatvfac.findAllValuesForItem(items.get(j)));
                     }
                 }
                 
