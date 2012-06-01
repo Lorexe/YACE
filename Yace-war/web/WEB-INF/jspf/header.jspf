@@ -40,8 +40,8 @@
                         <a href=""><img class="searchicon" src="./theme/default/img/img_trans.gif" /></a>
                         <input type="text" id="keyword" />
                         <select name="searchdomain">
-                            <option label="Cette collection" value="thiscoll" />
-                            <option label="Mes collections" value="all" />
+                            <option value="thiscoll">Cette collection</option>
+                            <option value="all">Mes collections</option>
                         </select>
                     </form>
                 </div>
@@ -76,7 +76,7 @@
             <nav id="collview">
                 <h2>Mes collections</h2>
                 
-                <button class="y-button y-button-white" name="newColl"><a href="wizard">Nouvelle collection</a></button>
+                <a class="y-button y-button-white" href="wizard">Nouvelle collection</a><br/><br/>
                 
                 <sql:query var="colls" dataSource="Yacedb">
                     SELECT * FROM ycollection yco
@@ -87,24 +87,14 @@
                     <ul class="collsList">
                         <c:forEach var="coll" items="${colls.rows}">
                             <li>
-                                <a href="#"><strong>${coll.theme}</strong></a>
-                                <ul>
-                                    <sql:query var="itemtypes" dataSource="Yacedb">
-                                        SELECT DISTINCT idYITEMTYPE, name FROM yitemtype yit
-                                        JOIN yitem y ON yit.idYITEMTYPE = y.type
-                                        WHERE y.collection = ?
-                                        <sql:param value="${coll.idYCOLLECTION}"/>
-                                    </sql:query>
-                                    <c:forEach var="itemtype" items="${itemtypes.rows}">
-                                        <li><a href="#">${itemtype.name}</a></li>
-                                    </c:forEach>
-                                </ul>
+                                <a href="see?idCollection=${coll.idYCOLLECTION}" title='Voir votre collection "${coll.theme}"'><strong>${coll.theme}</strong></a> <a href="wizard?idCollection=${coll.idYCOLLECTION}">edit</a>
                             </li>
                         </c:forEach>
                     </ul>
                 </c:if>
             </nav>
 
+            <%--
             <nav id="detailview">
                 <h2>Liste de <strong>Vases</strong></h2>
                 <input type="button" class="y-button y-button-white" value="Nouvel objet" name="newItem" />
@@ -116,6 +106,7 @@
                     <li class="squarecol" style="color: green;">Vase zoulou</li>
                 </ul>
             </nav>
+            --%>
 <% } else { %>
             <header>
                 <h1>Menu admin</h1>
@@ -146,16 +137,16 @@
 
         <aside id="guide" class="none whitebox"> <!-- aide et guide Ã  l'utilisation -->
             <header>
-                <h1>Utilisation</h1>
+                <h1>Guide et astuces</h1>
             </header>
 
             <c:if test="${!empty asideHelp}">
                 <section id="infotips">
-                    <header><h1>Guide et astuces</h1></header>
                     ${asideHelp}
                 </section>
             </c:if>
 
+            <%--
             <section id="legend"> <!-- je suis une légende :) -->
                 <header>
                     <h1>L&eacute;gende</h1>
@@ -169,4 +160,5 @@
                     </li>
                 </ul>
             </section>
+            --%>
         </aside>

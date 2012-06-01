@@ -10,9 +10,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.yace.entity.Yattributevalue;
+import net.yace.entity.Yitem;
+import net.yace.entity.Yuser;
 import net.yace.facade.YitemFacade;
 import net.yace.web.utils.ServicesLocator;
+import net.yace.web.utils.YaceUtils;
 
 /**
  *
@@ -34,9 +38,13 @@ public class ServletItemDetails extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        //droits d'acces de l'utilisateur à l'item
+        //cas user proprietaire item privé
+        //cas consultation item publique
+        
         YitemFacade itemFac = ServicesLocator.getItemFacade();
         String idItem = "";
-        idItem = request.getParameter("it");
+        idItem = request.getParameter("item");
         if(idItem == null || idItem.isEmpty())
         {
          //param invalide
@@ -46,15 +54,33 @@ public class ServletItemDetails extends HttpServlet {
         {
             
             int idIt = Integer.parseInt(idItem);
-            List<Yattributevalue> valList = itemFac.getItemsAttrValues(idIt);
-            if(valList !=null)
+            
+            //gestion permission : public ou privé
+            //savoir deja si l'item existe
+            Yitem item = itemFac.find(idIt);
+            
+            YaceUtils.SessionState state = YaceUtils.getSessionState(request);
+            
+            HttpSession session = request.getSession(false);
+            Yuser yuser = (Yuser)session.getAttribute("user");
+             
+            if(YaceUtils.CanDisplayItem(item, yuser))
             {
-                request.setAttribute("attributevalues", valList);
+                //liste des attributs de l'item
+                List<Yattributevalue> valList = itemFac.getItemsAttrValues(idIt);
+                if(valList !=null)
+                {
+                    request.setAttribute("attributevalues", valList);
+                }
+                else
+                {
+                    //error liste vide
+                    //afficher message d'erreur
+                }
             }
             else
             {
-                //error liste vide
-                //afficher message d'erreur
+                //error item non disponible
             }
         }
         
