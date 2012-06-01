@@ -2,7 +2,7 @@
 <output id="out1" class="hidden"></output>
         <footer class="clearfix">
             <p id="copyright">
-                &copy; Ya<em class="CE">ce</em>!<br/>
+                &copy; Ya<em class="CE">ce</em>! (<a href="about">&agrave; propos</a>)<br/>
                 C'est "yes" mais avec "yeah" dedans.               
             </p>
             <c:if test="${user.rank.isAdmin}">
