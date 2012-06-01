@@ -24,9 +24,31 @@
                 
                 -only attribute valStr, URL et Image
                 
-                -navigation dans la liste des items publiques? de cette même colelction
+                -navigation dans la liste des items publiques? de cette même collection
                 
                 -->
+            <p>
+                <label for="colid${curItem.collection.idYCOLLECTION}">Collection : ${curItem.collection.theme}</label><br/>
+                <label >Type d'objet  : ${curItem.type.name}</label><br/>
+                <c:choose>
+                    <c:when test="${prevIt ne -1}">
+                        <a href="details?item=${prevIt}">Precedent</a>
+                    </c:when>
+                    <c:otherwise>
+                        <label>|</label>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${nextIt ne -1}">
+                        <a href="details?item=${nextIt}">Suivant</a>
+                    </c:when>
+                    <c:otherwise>
+                        <label>|</label>
+                    </c:otherwise>
+                </c:choose>
+                <br/>
+                <h3>Les Caractéristiques</h3><br/><br/>
+            </p>   
             <c:forEach var="attval" items="${attributevalues}">
                 <label >${attval.attribute.name}</label>&nbsp;&nbsp;
                 <c:choose>

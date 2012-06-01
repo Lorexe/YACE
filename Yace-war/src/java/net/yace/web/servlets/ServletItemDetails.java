@@ -62,7 +62,9 @@ public class ServletItemDetails extends HttpServlet {
             YaceUtils.SessionState state = YaceUtils.getSessionState(request);
             
             HttpSession session = request.getSession(false);
-            Yuser yuser = (Yuser)session.getAttribute("user");
+            Yuser yuser = null;
+            if(session != null)
+                yuser = (Yuser)session.getAttribute("user");
              
             if(YaceUtils.CanDisplayItem(item, yuser))
             {
@@ -70,7 +72,10 @@ public class ServletItemDetails extends HttpServlet {
                 List<Yattributevalue> valList = itemFac.getItemsAttrValues(idIt);
                 if(valList !=null)
                 {
+                    request.setAttribute("curItem", item);
                     request.setAttribute("attributevalues", valList);
+                    request.setAttribute("prevIt", YaceUtils.getPrevItemId(item));
+                    request.setAttribute("nextIt", YaceUtils.getNextItemId(item));
                 }
                 else
                 {

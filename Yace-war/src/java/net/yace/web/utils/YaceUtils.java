@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -252,5 +253,37 @@ public class YaceUtils {
         }
         
         return result;
+    }
+    
+    //id de l'Yitem precedent de la collection
+    //-1 si n'existe pas
+    public static int getPrevItemId(Yitem item)
+    {
+        int x = -1;
+        
+        ArrayList<Yitem> itemList = new ArrayList<Yitem>(item.getCollection().getYitemCollection());
+        x = itemList.indexOf(item);//indes de l'item courant
+        if(x>0)
+            x = itemList.get(x-1).getIdYITEM();
+        else
+            x=-1;
+        
+        return x;
+    }
+    
+    //id de l'Yitem suivant de la collection
+    //-1 si n'existe pas
+    public static int getNextItemId(Yitem item)
+    {
+        int x = -1;
+        
+        ArrayList<Yitem> itemList = new ArrayList<Yitem>(item.getCollection().getYitemCollection());
+        x = itemList.indexOf(item);//indes de l'item courant
+        if(x<itemList.size()-1)
+            x = itemList.get(x+1).getIdYITEM();
+        else
+            x=-1;
+        
+        return x;
     }
 }
