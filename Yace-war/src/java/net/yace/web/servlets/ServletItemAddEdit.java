@@ -114,13 +114,10 @@ public class ServletItemAddEdit extends HttpServlet {
                     
                     // Récupération des attributs
                     List<Yattribute> listAttributes = new ArrayList<Yattribute>();
-                    //listAttributes = attrFacade.findAttributesByItem(idType);
-                    listAttributes = attrFacade.findAll();
+                    listAttributes = attrFacade.findAttributesByItem(itemtype);
                     
                     // Remplissage des attributeValue
                     for(Yattribute attr : listAttributes) {
-                        if(attr.getItemtype().getIdYITEMTYPE() != Integer.parseInt(idType)) continue;
-                        
                         Yattributevalue av = new Yattributevalue();
                         av.setAttribute(attr);
                         

@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import net.yace.entity.Yattribute;
+import net.yace.entity.Yitemtype;
 
 /**
  *
@@ -79,11 +80,10 @@ public class YattributeFacade extends AbstractFacade<Yattribute> {
     }
     
     // Liste les attributs d'un type d'objet
-    public List<Yattribute> findAttributesByItem(String idItemtype) {
-        Query query = em.createQuery("SELECT ya FROM Yattribute ya WHERE itemtype = :itemtype");
-        query.setParameter("itemtype", idItemtype);
+    public List<Yattribute> findAttributesByItem(Yitemtype itemtype) {
+        Query query = em.createQuery("SELECT ya FROM Yattribute ya WHERE ya.itemtype = :itemtype");
+        query.setParameter("itemtype", itemtype);
         
         return query.getResultList();
     }
-    
 }
