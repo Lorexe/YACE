@@ -26,8 +26,8 @@
         <servlet-class>net.yace.web.servlets.ServletWizard</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletItemUpdate</servlet-name>
-        <servlet-class>net.yace.web.servlets.ServletItemUpdate</servlet-class>
+        <servlet-name>ServletCollectionView</servlet-name>
+        <servlet-class>net.yace.web.servlets.ServletCollectionView</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletAdminToggleSubscriptions</servlet-name>
@@ -82,8 +82,8 @@
         <url-pattern>/wizard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletItemUpdate</servlet-name>
-        <url-pattern>/itemupdate</url-pattern>
+        <servlet-name>ServletCollectionView</servlet-name>
+        <url-pattern>/viewcol</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletAdminToggleSubscriptions</servlet-name>
