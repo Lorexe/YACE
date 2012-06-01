@@ -235,10 +235,18 @@ public class YaceUtils {
             {
                 //item privé
                 //voir si l'user est le proprietaire de collection
-                if((usr != null) && (item.getCollection().getOwner().getIdYUSER() == usr.getIdYUSER()))
+                if(usr != null)
                 {
-                    //item appartient à l'user
-                    result=true;
+                    if(usr.getRank().isAdmin() )
+                    {
+                        //l'admin a l'accès total
+                        result=true;
+                    }
+                    else if(item.getCollection().getOwner().equals(usr))
+                    {
+                        //item appartient à l'user
+                        result=true;
+                    }     
                 }
             }
         }
