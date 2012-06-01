@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.yace.entity.Ycollection;
+import net.yace.entity.Yitem;
 import net.yace.entity.Yuser;
 
 /**
@@ -216,5 +217,32 @@ public class YaceUtils {
         // On nomme et affiche la page
         request.setAttribute("pageTitle", "Collection introuvable");
         request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+    }
+    
+    //vérifie si item peut être consulté par user
+    public static boolean CanDisplayItem(Yitem item, Yuser usr)
+    {
+        Boolean result = false;//faux par defaut
+        
+        if(item != null)
+        {
+            if(item.getCollection().isPublic())
+            {
+                //item publique
+                result=true;
+            }
+            else
+            {
+                //item privé
+                //voir si l'user est le proprietaire de collection
+                if((usr != null) && (item.getCollection().getOwner().getIdYUSER() == usr.getIdYUSER()))
+                {
+                    //item appartient à l'user
+                    result=true;
+                }
+            }
+        }
+        
+        return result;
     }
 }

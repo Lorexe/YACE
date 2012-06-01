@@ -67,7 +67,7 @@ INSERT INTO `yattribute` (`name`, `type`, `no_order`, `many`, `itemtype`) VALUES
 ('Résumé', 'String', 4, 0, 3),
 ('Editeur', 'String', 5, 0, 3),
 ('Date de sortie', 'String', 6, 0, 3),
-('Nombre de pages', 'Int', 7, 0, 3);
+('Nombre de pages', 'String', 7, 0, 3);
 
 --
 -- Contenu de la table `ycollection`
@@ -113,8 +113,7 @@ INSERT INTO `link_attr_item` (`item`, `value`) VALUES
 (1, 7),
 (1, 8),
 (1, 9),
-(1, 10),
-(1, 11);
+(1, 10);
 
 
 --
@@ -148,35 +147,35 @@ INSERT INTO `yitem` (`collection`, `type`) VALUES
 
 
 INSERT INTO `yattributevalue` (`val_str`, `val_int`, `val_flt`, `val_date`, `val_bool`, `attribute`) VALUES
-('', NULL, NULL, NULL, NULL, 17),
+('http://bks3.books.google.com/books?id=E6IGAAAAQAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api', NULL, NULL, NULL, NULL, 17),
 ('Alexandre Dumas', NULL, NULL, NULL, NULL, 18),
 ('Les Trois mousquetaires', NULL, NULL, NULL, NULL, 19),
 ('Avec ses nombreux combats et ses rebondissements romanesques, Les Trois Mousquetaires est l''exemple type du roman de cape et d''épée', NULL, NULL, NULL, NULL, 20),
 ('Le Livre de Poche', NULL, NULL, NULL, NULL, 21),
 ('2002-09-18', NULL, NULL, NULL, NULL, 22),
 ('888', 888, NULL, NULL, NULL, 23),
-('', NULL, NULL, NULL, NULL, 17),
+('http://bks3.books.google.com/books?id=cWxNAAAAYAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api', NULL, NULL, NULL, NULL, 17),
 ('Alexandre Dumas', NULL, NULL, NULL, NULL, 18),
 ('Les Trois Mousquetaires - Vingt ans après', NULL, NULL, NULL, NULL, 19),
 ('Avec ses nombreux combats et ses rebondissements romanesques, Les Trois Mousquetaires est l''exemple type du roman de cape et d''épée', NULL, NULL, NULL, NULL, 20),
 ('Gallimard', NULL, NULL, NULL, NULL, 21),
 ('1962-05-28', NULL, NULL, NULL, NULL, 22),
 ('924', 924, NULL, NULL, NULL, 23),
-('', NULL, NULL, NULL, NULL, 17),
+('http://bks5.books.google.com/books?id=qI_LJIl-AC4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api', NULL, NULL, NULL, NULL, 17),
 ('Emile Zola', NULL, NULL, NULL, NULL, 18),
 ('Germinal', NULL, NULL, NULL, NULL, 19),
 ('Le roman de la lutte des classes et de la misère ouvrière', NULL, NULL, NULL, NULL, 20),
 ('Le Livre de Poche', NULL, NULL, NULL, NULL, 21),
 ('1971-11-08', NULL, NULL, NULL, NULL, 22),
 ('538', 538, NULL, NULL, NULL, 23),
-('', NULL, NULL, NULL, NULL, 17),
+('http://bks5.books.google.com/books?id=KOY4nj4me0cC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api', NULL, NULL, NULL, NULL, 17),
 ('Victor Hugo', NULL, NULL, NULL, NULL, 18),
 ('Notre-Dame de Paris', NULL, NULL, NULL, NULL, 19),
 ('Autour de Notre-Dame, dans la cité médiévale de Paris, s''agite une kyrielle de personnages très différents: Quasimodo, le bossu sonneur de cloches; Gringoire, le poète; Frollo, le sinistre archidiacre; Phoebus, le capitaine des archers du roi. Ils sont tous fascinés par la belle bohémienne Esméralda...', NULL, NULL, NULL, NULL, 20),
 ('Le Livre de Poche', NULL, NULL, NULL, NULL, 21),
 ('2009-03-26', NULL, NULL, NULL, NULL, 22),
 ('923', 923, NULL, NULL, NULL, 23),
-('', NULL, NULL, NULL, NULL, 17),
+('http://bks7.books.google.com/books?id=0r4yqAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', NULL, NULL, NULL, NULL, 17),
 ('Victor Hugo', NULL, NULL, NULL, NULL, 18),
 ('Les Misérables', NULL, NULL, NULL, NULL, 19),
 ('L''oeuvre phare de Victor Hugo', NULL, NULL, NULL, NULL, 20),

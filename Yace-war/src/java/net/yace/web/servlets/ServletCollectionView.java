@@ -20,7 +20,7 @@ import net.yace.web.utils.YaceUtils;
  *
  * @author MaBoy <bruno.boi@student.helha.be>
  */
-public class ServletItemUpdate extends HttpServlet {
+public class ServletCollectionView extends HttpServlet {
 
     private final static String VUE_PRESENTATION = "welcome.jsp";
     //TODO mettre ta fucking jsp ici mec :p
