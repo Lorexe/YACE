@@ -78,6 +78,12 @@ public class YattributeFacade extends AbstractFacade<Yattribute> {
         return attrList;
     }
     
-    
+    // Liste les attributs d'un type d'objet
+    public List<Yattribute> findAttributesByItem(String idItemtype) {
+        Query query = em.createQuery("SELECT ya FROM Yattribute ya WHERE itemtype = :itemtype");
+        query.setParameter("itemtype", idItemtype);
+        
+        return query.getResultList();
+    }
     
 }
