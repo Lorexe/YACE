@@ -118,7 +118,7 @@
         <url-pattern>/about</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>1800</session-timeout>
+        <session-timeout>2880</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>login</welcome-file>
