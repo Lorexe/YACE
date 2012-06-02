@@ -32,7 +32,7 @@ import net.yace.web.utils.YaceUtils;
  */
 public class ServletItemAddEdit extends HttpServlet {
 
-    private final static String VUE_COLLECTION = "/viewcol";
+    private final static String VUE_COLLECTION = "see?idCollection=";
     private final static String VUE_ITEM_ADDEDIT = "WEB-INF/view/user/item-addedit.jsp";
     
     /** 
@@ -60,11 +60,36 @@ public class ServletItemAddEdit extends HttpServlet {
                 Yitemtype itemtype = facItemtype.find(Integer.parseInt(idType));
                 // TODO : Vérifier si l'itemtype est associé à la collection
                 if (itemtype!=null && collection!=null && collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
-                    request.setAttribute("pageTitle", "Ajout d'un objet " + itemtype.getName() + " dans la collection " + collection.getTheme());
-                    request.setAttribute("pageHeaderTitle", "Ajout d'un objet <strong>" + itemtype.getName() + "</strong> dans la collection <strong>" + collection.getTheme() + "</strong>");
-                    request.setAttribute("idColl", idCollection);
-                    request.setAttribute("idType", idType);
-                    request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
+                    
+                    String editItem = request.getParameter("edit");
+                    if(editItem!=null && !editItem.isEmpty()) { // Si editItem, c'est l'édition
+                        YitemFacade facItem = ServicesLocator.getItemFacade();
+                        Yitem item = facItem.find(Integer.parseInt(editItem));
+                        
+                        if(item.getCollection().equals(collection)) {
+                            request.setAttribute("pageTitle", "Edition d'un objet " + itemtype.getName() + " de la collection " + collection.getTheme());
+                            request.setAttribute("pageHeaderTitle", "Edition d'un objet <strong>" + itemtype.getName() + "</strong> de la collection <strong>" + collection.getTheme() + "</strong>");
+                            request.setAttribute("idColl", idCollection);
+                            request.setAttribute("idType", idType);
+                            request.setAttribute("edit", editItem);
+                            
+                            // Ajout des valeurs de l'item
+                            YattributevalueFacade facAttrVal = ServicesLocator.getAttributeValueFacade();
+                            List<Yattributevalue> attrVals = new ArrayList<Yattributevalue>();
+                            attrVals = facAttrVal.findAllValuesForItem(item);
+                            request.setAttribute("itemValues", attrVals);
+                            
+                            request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
+                        } else {
+                            YaceUtils.displayCollectionUnreachableError(request, response);
+                        }
+                    } else { // Sinon l'ajout
+                        request.setAttribute("pageTitle", "Ajout d'un objet " + itemtype.getName() + " dans la collection " + collection.getTheme());
+                        request.setAttribute("pageHeaderTitle", "Ajout d'un objet <strong>" + itemtype.getName() + "</strong> dans la collection <strong>" + collection.getTheme() + "</strong>");
+                        request.setAttribute("idColl", idCollection);
+                        request.setAttribute("idType", idType);
+                        request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
+                    }
                 } else {
                     YaceUtils.displayCollectionUnreachableError(request, response);
                 }
@@ -86,6 +111,8 @@ public class ServletItemAddEdit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+        boolean redirect=false;
+        
         YaceUtils.SessionState state = YaceUtils.getSessionState(request);
         if (state != YaceUtils.SessionState.noauth) {
             HttpSession session = request.getSession(false);
@@ -106,44 +133,75 @@ public class ServletItemAddEdit extends HttpServlet {
                     YattributeFacade attrFacade = ServicesLocator.getAttributeFacade();
                     YattributevalueFacade attrValFacade = ServicesLocator.getAttributeValueFacade();
                     
-                    // Création de l'objet
-                    Yitem item = new Yitem();
-                    item.setType(itemtype);
-                    item.setCollection(collection);
-                    itemFacade.create(item);
-                    
-                    // Récupération des attributs
-                    List<Yattribute> listAttributes = new ArrayList<Yattribute>();
-                    listAttributes = attrFacade.findAttributesByItem(itemtype);
-                    
-                    // Remplissage des attributeValue
-                    for(Yattribute attr : listAttributes) {
-                        Yattributevalue av = new Yattributevalue();
-                        av.setAttribute(attr);
-                        
-                        // Gestion des types d'attributs
-                        if(attr.getType().equalsIgnoreCase("string")) {
-                            av.setValStr(request.getParameter("attr_" + attr.getName()));
-                        } else {
-                            av.setValStr(request.getParameter("attr_" + attr.getName()));
+                    String buttonAdd = request.getParameter("button_add");
+                    String buttonEdit = request.getParameter("button_edit");
+                    if(buttonAdd != null) {
+                        // Création de l'objet
+                        Yitem item = new Yitem();
+                        item.setType(itemtype);
+                        item.setCollection(collection);
+                        itemFacade.create(item);
+
+                        // Récupération des attributs
+                        List<Yattribute> listAttributes = new ArrayList<Yattribute>();
+                        listAttributes = attrFacade.findAttributesByItem(itemtype);
+
+                        // Remplissage des attributeValue
+                        for(Yattribute attr : listAttributes) {
+                            Yattributevalue av = new Yattributevalue();
+                            av.setAttribute(attr);
+
+                            // Gestion des types d'attributs
+                            if(attr.getType().equalsIgnoreCase("string")) {
+                                av.setValStr(request.getParameter("attr_" + attr.getName()));
+                            } else {
+                                av.setValStr(request.getParameter("attr_" + attr.getName()));
+                            }
+
+                            // Enregistrement de l'attributevalue
+                            attrValFacade.create(av);
+                            av.addYitem(item);
+                            item.addYattributevalue(av);
+                            itemFacade.edit(item);
+                            attrValFacade.edit(av);
                         }
+                    } else if(buttonEdit != null) {
+                        String itemId = request.getParameter("edit");
                         
-                        // Enregistrement de l'attributevalue
-                        attrValFacade.create(av);
-                        av.addYitem(item);
-                        item.addYattributevalue(av);
-                        itemFacade.edit(item);
-                        attrValFacade.edit(av);
+                        if(itemId != null && !itemId.isEmpty()) {
+                            // Recherche de l'objet, de ses valeurs et sa structure
+                            Yitem item = itemFacade.find(Integer.parseInt(itemId));
+                            List<Yattributevalue> attrVals = new ArrayList<Yattributevalue>();
+                            attrVals = attrValFacade.findAllValuesForItem(item);
+                            
+                            List<Yattribute> listAttributes = new ArrayList<Yattribute>();
+                            listAttributes = attrFacade.findAttributesByItem(itemtype);
+                        
+                            for(int i=0; i<attrVals.size(); i++) {
+                                Yattributevalue attrVal = attrVals.get(i);
+                                String attrName = listAttributes.get(i).getName();
+                                String attrType = listAttributes.get(i).getType();
+                                
+                                String newValue = request.getParameter("attr_" + attrName);
+                                if(attrType.equalsIgnoreCase("string")) {
+                                    attrVal.setValStr(newValue);
+                                } else {
+                                    attrVal.setValStr(newValue);
+                                }
+                                
+                                attrValFacade.edit(attrVal);
+                            }
+                        }
                     }
                     
-                    request.setAttribute("idColl", idCollection);
-                    request.setAttribute("idType", idType);
-                    request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
+                    redirect=true;
+                    response.sendRedirect(VUE_COLLECTION + idCollection);
                 }
             }
         }
         
-        doGet(request, response);
+        if(!redirect) // si pas d'ajout ou d'édition, on fait appel à l'affichage normal de la page
+            doGet(request, response);
     }
     
     @Override
