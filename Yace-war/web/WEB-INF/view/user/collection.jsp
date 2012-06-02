@@ -60,11 +60,31 @@
         <div role="preview" id="prev-item-${idit.count}-${idi.count}">
             <section class="splash whitebox">
                 <header>
-                    <h1>${values.get(idit.count-1).get(idi.count-1).get(1).valStr}</h1>
+                    <h1>Détails de l'élément</h1>
                 </header>
                 <section class="content">
-                    <h1>H&eacute; ouais</h1>
-                    oh yeah
+                    <h1>${values.get(idit.count-1).get(idi.count-1).get(1).valStr}</h1>
+                    <table class="y-table">
+                        <c:forEach var="attribut" items="${attributes.get(idit.count-1)}" varStatus="attrcount">
+                            <tr <c:if test="${attrcount.count % 2 == 0}">class="odd"</c:if>>
+                                <td>
+                                    ${values.get(idit.count-1).get(idi.count-1).get(attrcount.count-1).attribute.name}
+                                </td>
+                                <c:choose>
+                                    <c:when test="${values.get(idit.count-1).get(idi.count-1).get(attrcount.count-1).attribute.type == 'Image'}">
+                                        <td>
+                                            <img class="imgfix" src="${values.get(idit.count-1).get(idi.count-1).get(attrcount.count-1).valStr}"/>
+                                        </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>
+                                            ${values.get(idit.count-1).get(idi.count-1).get(attrcount.count-1).valStr}
+                                        </td>
+                                    </c:otherwise>
+                                </c:choose>
+                            </tr>
+                        </c:forEach>
+                    </table>
                 </section>
             </section>
         </div>

@@ -455,6 +455,11 @@ footer {
     padding: 7px;
 }
 
+.whitebox .imgfix {
+    max-width: 250px;
+    max-height: 150px;
+}
+
 /* :::: Contenu whitebox :::: */
 section.content {
     margin: 0;
