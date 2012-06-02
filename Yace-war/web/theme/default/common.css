@@ -330,3 +330,14 @@ strong {
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.attr-cover {
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.attr-longtext{
+    text-align:justify;
+    width: 75%;
+    max-width: 700px;
+}
