@@ -364,7 +364,7 @@ figure.cover {
     figure.cover figcaption {
         background: #069;
         color: #fff;
-        max-height: 2em;
+        max-height: 1.9em;
         padding: 3px 0;
         text-align: center;
         overflow: hidden;

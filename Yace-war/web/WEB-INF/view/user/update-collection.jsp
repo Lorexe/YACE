@@ -39,7 +39,11 @@
         </c:if>
     </div>
 
-    <form name="wizardcollection" method="POST" action="#"></form>
+    <form name="wizardcollection" method="POST" action="#">
+        <c:if test="${!empty coll}">
+            <input type="hidden" name="idCollection" value="${coll.rows[0].idYCOLLECTION}"/>
+        </c:if>
+    </form>
     <%-- <button class="y-button y-button-white" onclick="valid()">Je valide !</button> --%>
     
 </section>

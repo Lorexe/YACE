@@ -60,68 +60,68 @@
                 </c:otherwise>
             </c:choose>
 
-            
+
         </header>
 
         <aside id="explore" class="whitebox"> <!-- left panel -->
-            
-                    <c:choose>
-                        <c:when test="${!empty user}">
-                            <header><h1>Navigation</h1></header>
-<% if (!request.getRequestURL().toString().contains("/admin")) { %>
-            <%-- BEGIN TEST MENU --%>
-            <nav>
-                <h2>Test</h2>
-                <ul>
-                    <li>
-                        <a href="autocomplete">Test autocompl&eacute;tion</a>
-                    </li>
-                    <li>
-                        <a href="collections">Mes collections</a>
-                    </li>
-                    <li>
-                        <a href="collections?u=${user.idYUSER}">Mes collections publiques</a>
-                    </li>
-                </ul>
-            </nav>
-            <%-- END TEST MENU --%>
-            
-            <nav id="collview">
-                <h2>Mes collections</h2>
-                
-                <a class="y-button y-button-white" href="wizard">Nouvelle collection</a>
-                
-                <sql:query var="colls" dataSource="Yacedb">
-                    SELECT * FROM ycollection yco
-                    WHERE yco.owner = ?
-                    <sql:param value="${user.idYUSER}"/>
-                </sql:query>
-                    
-                <c:choose>
-                    <c:when test="${colls.rowCount != 0}">
-                        <br/><br/>
-                        <ul class="collsList">
-                            <c:forEach var="coll" items="${colls.rows}">
-                                <li>
-                                    <a href="see?idCollection=${coll.idYCOLLECTION}" title='Voir votre collection "${coll.theme}"'><strong>${coll.theme}</strong></a> <a href="wizard?idCollection=${coll.idYCOLLECTION}">edit</a>
-                                </li>
-                            </c:forEach>
+
+            <c:choose>
+                <c:when test="${!empty user}">
+                    <header><h1>Navigation</h1></header>
+                    <% if (!request.getRequestURL().toString().contains("/admin")) {%>
+                    <%-- BEGIN TEST MENU --%>
+                    <nav>
+                        <h2>Test</h2>
+                        <ul>
+                            <li>
+                                <a href="autocomplete">Test autocompl&eacute;tion</a>
+                            </li>
+                            <li>
+                                <a href="collections">Mes collections</a>
+                            </li>
+                            <li>
+                                <a href="collections?u=${user.idYUSER}">Mes collections publiques</a>
+                            </li>
                         </ul>
-                    </c:when>
-                    <c:otherwise>
-                        <div>
-                            <img class="upicon" src="./theme/default/img/img_trans.gif" />
-                            <p>Vous n'avez pas encore de collection ? Commencez par en ajouter une ci-dessus !</p>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
+                    </nav>
+                    <%-- END TEST MENU --%>
 
-            </nav>
+                    <nav id="collview">
+                        <h2>Mes collections</h2>
 
-            <%--
-            <nav id="detailview">
-                <h2>Liste de <strong>Vases</strong></h2>
-                <input type="button" class="y-button y-button-white" value="Nouvel objet" name="newItem" />
+                        <a class="y-button y-button-white" href="wizard">Nouvelle collection</a>
+
+                        <sql:query var="colls" dataSource="Yacedb">
+                            SELECT * FROM ycollection yco
+                            WHERE yco.owner = ?
+                            <sql:param value="${user.idYUSER}"/>
+                        </sql:query>
+
+                        <c:choose>
+                            <c:when test="${colls.rowCount != 0}">
+                                <br/><br/>
+                                <ul class="collsList">
+                                    <c:forEach var="coll" items="${colls.rows}">
+                                        <li>
+                                            <a href="see?idCollection=${coll.idYCOLLECTION}" title='Voir votre collection "${coll.theme}"'><strong>${coll.theme}</strong></a> <a href="wizard?idCollection=${coll.idYCOLLECTION}"><img class="editicon" alt="edit" title="Editez cette collection" src="./theme/default/img/img_trans.gif" /></a>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </c:when>
+                            <c:otherwise>
+                                <div>
+                                    <img class="upicon" src="./theme/default/img/img_trans.gif" />
+                                    <p>Vous n'avez pas encore de collection ? Commencez par en ajouter une ci-dessus !</p>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+
+                    </nav>
+
+                    <%--
+                    <nav id="detailview">
+                        <h2>Liste de <strong>Vases</strong></h2>
+                        <input type="button" class="y-button y-button-white" value="Nouvel objet" name="newItem" />
 
                 <ul id="itemlist">
                     <li class="squarecol" style="color: blue;">Vase ancien</li>
@@ -130,65 +130,75 @@
                     <li class="squarecol" style="color: green;">Vase zoulou</li>
                 </ul>
             </nav>
-            --%>
-<% } else { %>
-            <header>
-                <h1>Menu admin</h1>
-            </header>
+                    --%>
+                    <% } else {%>
+                    <header>
+                        <h1>Menu admin</h1>
+                    </header>
 
-            <nav>
-                <h2>Gestion du site</h2>
-                <ul>
-                    <li>
-                        <a href="yadmin-activate-subscriptions">G&eacute;rer les inscriptions</a>
-                    </li>
-                </ul>
-            </nav>
+                    <nav>
+                        <h2>Gestion du site</h2>
+                        <ul>
+                            <li>
+                                <a href="yadmin-activate-subscriptions">G&eacute;rer les inscriptions</a>
+                            </li>
+                        </ul>
+                    </nav>
 
-            <nav>
-                <h2>Gestion des utilisateurs</h2>
-                <ul>
-                    <li>
-                        <a href="yadmin-users">G&eacute;rer les utilisateurs</a>
-                    </li>
-                    <li>
-                        <a href="yadmin-ranks">G&eacute;rer les niveaux d'utilisateurs</a>
-                    </li>
-                </ul>
-            </nav>
-<% } %>
+                    <nav>
+                        <h2>Gestion des utilisateurs</h2>
+                        <ul>
+                            <li>
+                                <a href="yadmin-users">G&eacute;rer les utilisateurs</a>
+                            </li>
+                            <li>
+                                <a href="yadmin-ranks">G&eacute;rer les niveaux d'utilisateurs</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <% }%>
+                </c:when>
+                <c:otherwise>
+                    <header><h1>Formulaires</h1></header>
+                    <h1>Connexion</h1>
+                    <form name="connexion" action="login" method="post" autocomplete="on">
+                        <input type="text" name="pseudo" maxlength="200" placeholder="Pseudo ou email" required="required" />
+                        <br />
+                        <input type="password" name="pwd" maxlength="200" placeholder="Mot de passe" required="required" />
+                        <br />
+                        <input type="submit" class="y-button y-button-blue" value="Je me connecte" />
+                    </form>
+
+                    <h1>Inscription</h1>
+                    <sql:query var="subscribeOk" dataSource="Yacedb">
+                        SELECT * FROM ysetting WHERE ysetting.name = "subscribeOk" AND ysetting.val = "true"
+                    </sql:query>
+                    <c:choose>
+                        <c:when test="${!empty subscribeOk.rows}">
+                            <form name="inscription" action="register" method="post" autocomplete="off">
+                                <input type="text" name="pseudo" placeholder="Nom d'utilisateur" required="required" />
+                                <br />
+                                <input type="text" name="email" placeholder="Email valide" required="required" />
+                                <br />
+                                <input type="password" name="pwd" placeholder="Mot de passe" required="required" />
+                                <br />
+                                <input type="password" name="pwd-verif" placeholder="Confirmation MDP" required="required" />
+                                <br />
+                                <script type="text/javascript">showCaptcha();</script>
+                                <input type="button" class="y-button y-button-blue" value="Je m'enregistre" onclick="validateCaptcha()?submit():errorCaptcha()" />
+                            </form>
                         </c:when>
                         <c:otherwise>
-                            <header><h1>Inscription</h1></header>
-                            <sql:query var="subscribeOk" dataSource="Yacedb">
-                                SELECT * FROM ysetting WHERE ysetting.name = "subscribeOk" AND ysetting.val = "true"
-                            </sql:query>
-                                <c:choose>
-                                    <c:when test="${!empty subscribeOk.rows}">
-                                        <form name="inscription" action="register" method="post" autocomplete="off">
-                                            <input type="text" name="pseudo" placeholder="Nom d'utilisateur" required="required" />
-                                            <br />
-                                            <input type="text" name="email" placeholder="Email valide" required="required" />
-                                            <br />
-                                            <input type="password" name="pwd" placeholder="Mot de passe" required="required" />
-                                            <br />
-                                            <input type="password" name="pwd-verif" placeholder="Confirmation MDP" required="required" />
-                                            <br />
-                                            <script type="text/javascript">showCaptcha();</script>
-                                            <input type="button" class="y-button y-button-blue" value="Je m'enregistre" onclick="validateCaptcha()?submit():errorCaptcha()" />
-                                        </form>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <p>Les inscriptions sont momentan&eacute;ment d&eacute;sactiv&eacute;es...</p>
-                                    </c:otherwise>
-                                </c:choose>
-
+                            <p>Les inscriptions sont momentan&eacute;ment d&eacute;sactiv&eacute;es...</p>
                         </c:otherwise>
                     </c:choose>
 
-                
-            
-            
+                </c:otherwise>
+            </c:choose>
+
+
+
+
 
 
         </aside>
