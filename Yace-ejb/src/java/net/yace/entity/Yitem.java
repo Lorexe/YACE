@@ -47,7 +47,14 @@ import javax.xml.bind.annotation.XmlTransient;
         + "JOIN yc.yitemCollection yi "
         + "JOIN yi.yattributevalueCollection yav "
         + "JOIN yav.attribute ya "
-        + "WHERE y = :yuser AND (ya.type NOT IN ('Image','URL')) AND (LOWER(yav.valStr) LIKE :search)")})
+        + "WHERE y = :yuser AND (ya.type NOT IN ('Image','URL')) AND (LOWER(yav.valStr) LIKE :search)"),
+    @NamedQuery(name = "Yitem.findItemsInColl", 
+        query = "SELECT DISTINCT yi FROM Ycollection yc "
+        + "JOIN yc.owner y "
+        + "JOIN yc.yitemCollection yi "
+        + "JOIN yi.yattributevalueCollection yav "
+        + "JOIN yav.attribute ya "
+        + "WHERE yc = :coll AND (y = :yuser OR yc.isPublic = true) AND (ya.type NOT IN ('Image','URL')) AND (LOWER(yav.valStr) LIKE :search)")})
 public class Yitem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

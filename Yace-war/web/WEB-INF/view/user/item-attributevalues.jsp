@@ -9,6 +9,8 @@
     <h1>${pageTitle}</h1>
 </header>
 <section class="content">
+    <aside id="toggletips"><strong>A I D E</strong></aside>
+    
     <c:choose>
         <c:when test="${empty attributevalues}">
             <p>Aucune valeur disponible</p>

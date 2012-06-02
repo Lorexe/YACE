@@ -83,7 +83,7 @@ public class YitemFacade extends AbstractFacade<Yitem> {
     }
     
     //fonction de recherche de base sur les attributevalue
-    //retourne une liste des items publics dont les atributs contiennent "search"
+    //retourne une liste des items publics dont les atributevalues contiennent "search"
     public List<Yitem> getItemsByAttrValues(String search)
     {
         search = search.toLowerCase();
@@ -101,8 +101,8 @@ public class YitemFacade extends AbstractFacade<Yitem> {
         return cList;
     }
     
-    //fonction de recherche de base sur les attributevalue
-    //retourne une liste des items publics dont les atributs contiennent "search"
+    
+    //retourne une liste des items de yuser dont les atributevalues contiennent "search"
     public List<Yitem> getItemsSearchFromUser(String search, Yuser yuser)
     {
         search = search.toLowerCase();
@@ -110,6 +110,26 @@ public class YitemFacade extends AbstractFacade<Yitem> {
         Query query;
         query = em.createNamedQuery("Yitem.findItemsFromUser");
         query.setParameter("search", "%"+search+"%");
+        query.setParameter("yuser", yuser);
+        
+        try 
+        {
+            cList = query.getResultList();
+        }catch(NoResultException e){
+        }
+        
+        return cList;
+    }
+    
+    //retourne une liste des items de yuser dont les atributevalues contiennent "search"
+    public List<Yitem> getItemsInColl(String search, Ycollection coll, Yuser yuser)
+    {
+        search = search.toLowerCase();
+        List<Yitem> cList = null;//liste à retourner
+        Query query;
+        query = em.createNamedQuery("Yitem.findItemsInColl");
+        query.setParameter("search", "%"+search+"%");
+        query.setParameter("coll", coll);
         query.setParameter("yuser", yuser);
         
         try 
