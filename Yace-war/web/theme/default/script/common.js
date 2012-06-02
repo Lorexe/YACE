@@ -1,22 +1,3 @@
-/**
- * Test zone
- */
-
-function redirection(page) {
-    window.open(page, '_self');
-}
-
-$(document).ready(function() {
-
-    $('#editicon').click(function(){
-        redirection('./user-profil.html');
-    });
-    
-});
-
-/**
- *
- */
 function setInfo(idWhere, msg) {
     $(document).ready(function() {
         $(idWhere).removeClass()
