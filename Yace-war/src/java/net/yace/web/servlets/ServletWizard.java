@@ -163,16 +163,6 @@ public class ServletWizard extends HttpServlet {
                          * On demande la suppression totale de la collection
                          * items et tutti quanti
                          */
-                        YitemFacade facItem = ServicesLocator.getItemFacade();
-                        YattributevalueFacade facAtv = ServicesLocator.getAttributeValueFacade();
-                        Collection<Yitem> items = collection.getYitemCollection();
-                        //List<Yitem> items = facItem.findAll(collection);
-                        for (Yitem yitem : items) {
-                            Collection<Yattributevalue> atvs = yitem.getYattributevalueCollection();
-                            //List<Yattributevalue> atvs = facItem.getItemsAttrValues(yitem.getIdYITEM());
-                            for (Yattributevalue atv : atvs) facAtv.remove(atv);
-                            facItem.remove(yitem);
-                        }
 
                         facColl.remove(collection);
                     } else {

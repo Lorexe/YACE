@@ -58,7 +58,7 @@ public class Ycollection implements Serializable {
     @NotNull
     @Column(name = "is_public")
     private Boolean isPublic;
-    @OneToMany(mappedBy = "collection")
+    @OneToMany(mappedBy = "collection", orphanRemoval = true)
     private Collection<Yitem> yitemCollection;
     @JoinColumn(name = "owner", referencedColumnName = "idYUSER")
     @ManyToOne
