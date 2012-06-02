@@ -63,6 +63,8 @@ public class Ycollection implements Serializable {
     @JoinColumn(name = "owner", referencedColumnName = "idYUSER")
     @ManyToOne
     private Yuser owner;
+    @OneToMany(mappedBy = "collection", orphanRemoval = true)
+    private Collection<Yitemtype> yitemtypeCollection;
 
     public Ycollection() {
     }
@@ -112,6 +114,15 @@ public class Ycollection implements Serializable {
 
     public void setYitemCollection(Collection<Yitem> yitemCollection) {
         this.yitemCollection = yitemCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Yitemtype> getYitemtypeCollection() {
+        return yitemtypeCollection;
+    }
+    
+    public void setYitemtypeCollection(Collection<Yitemtype> yitemtypeCollection) {
+        this.yitemtypeCollection = yitemtypeCollection;
     }
 
     public Yuser getOwner() {
