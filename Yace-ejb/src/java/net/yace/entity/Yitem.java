@@ -7,7 +7,7 @@ package net.yace.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -46,7 +45,7 @@ public class Yitem implements Serializable {
     @JoinTable(name = "link_attr_item", joinColumns = {
         @JoinColumn(name = "item", referencedColumnName = "idYITEM")}, inverseJoinColumns = {
         @JoinColumn(name = "value", referencedColumnName = "idYATTRIBUTEVALUE")})
-    @ManyToMany
+    @ManyToMany(cascade={CascadeType.REMOVE})
     private Collection<Yattributevalue> yattributevalueCollection;
     @JoinColumn(name = "type", referencedColumnName = "idYITEMTYPE")
     @ManyToOne

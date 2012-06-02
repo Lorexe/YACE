@@ -7,6 +7,7 @@ package net.yace.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -62,7 +63,7 @@ public class Yuser implements Serializable {
     @JoinColumn(name = "rank", referencedColumnName = "idYRANK")
     @ManyToOne
     private Yrank rank;
-    @OneToMany(mappedBy = "owner", orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade={CascadeType.REMOVE})
     private Collection<Ycollection> ycollectionCollection;
 
     public Yuser() {
