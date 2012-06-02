@@ -20,7 +20,10 @@
 
         <c:forEach var="itemtype" items="${itemtypes}" varStatus="idit">
 
-            <h1>${itemtype.getName()}</h1>        
+            <h1>${itemtype.getName()} 
+                <a class="y-button y-button-white" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}">
+                    Nouvel objet 
+                </a></h1>        
 
             <c:forEach var="item" items="${values.get(idit.count - 1)}" varStatus="idi">
 
@@ -85,6 +88,11 @@
                             </tr>
                         </c:forEach>
                     </table>
+
+                    <a class="y-button y-button-white" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}&edit=${items.get(idit.count-1).get(idi.count-1).getIdYITEM()}">
+                        Éditer cet objet
+                    </a>
+
                 </section>
             </section>
         </div>
