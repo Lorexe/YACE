@@ -43,10 +43,22 @@
                                 <!--<a href=""><img class="searchicon" src="./theme/default/img/img_trans.gif" /></a>-->
                                 <input src="./theme/default/img/img_trans.gif" type="image" value="submit" class="searchicon"> 
                                 <input type="text" name = "searchword" id="keyword" />
+                                <!-- recherche dans une collection precise disponible uniquement
+                                    sur la page de consultation d'une collection
+                                -->
+                                <c:choose>
+                                        <c:when test="${not empty collection}">
+                                    <input type="hidden" name="searchcoll" value="${collection.getIdYCOLLECTION()}"/>
+                                        </c:when>
+                                    </c:choose>
                                 <select name="searchdomain">
                                     <option value="mycolls">Mes collections</option>
                                     <option value="all">Collections publiques</option>
+                                    <c:choose>
+                                        <c:when test="${not empty collection}">
                                     <option value="thiscoll">Cette collection</option>
+                                        </c:when>
+                                    </c:choose>
                                 </select>
                             </form>
                         </div>

@@ -11,23 +11,45 @@
 <section class="content">
     <aside id="toggletips"><strong>A I D E</strong></aside>
     
-    <h3>Les Résultats de recherche pour : <b>${searched}</b></h3>
+    <h3>Les Résultats de recherche pour : "<b>${searched}</b>"</h3>
     <br/>
-    <strong>${searchtype}</strong>
+    <c:choose>
+        <c:when test="${searchtype eq 'mycolls'}">
+            <strong>Mes collections</strong>
+        </c:when>
+        <c:when test="${searchtype eq 'all'}">
+            <strong>Collections publiques</strong>
+        </c:when>
+        <c:when test="${searchtype eq 'thiscoll'}">
+            <strong>Collection ${resultlist.get(0).collection.theme}</strong>
+        </c:when>
+    </c:choose>
     <br/><br/>
     <c:choose>
         <c:when test="${empty resultlist}">
             <p>Aucun objet trouvé</p>
         </c:when>
-        <c:otherwise>            
+        <c:otherwise>
+            <c:set var="colId" value="${resultlist.get(0).collection.getIdYCOLLECTION()}"/>
+            <a href="see?idCollection=${resultlist.get(0).collection.idYCOLLECTION}"><label><strong>${resultlist.get(0).collection.theme}</strong></label></a>
+            <br/><br/>
             <c:forEach var="item" items="${resultlist}">   
+                <c:choose>
+                    <c:when test="${colId ne item.collection.getIdYCOLLECTION()}">
+                        <c:set var="colId" value="${item.collection.getIdYCOLLECTION()}"/>
+                        <br/>
+                        <a href="see?idCollection=${item.collection.idYCOLLECTION}"><label><strong>${item.collection.theme}</strong></label></a>
+                        <br/><br/>
+                    </c:when>
+                </c:choose>
+                
+                
                 <figure class="cover" id="item-${item.type.getIdYITEMTYPE()}-${item.getIdYITEM()}">
                     <aside class="item-details">
                         <a href="details?item=${item.getIdYITEM()}">
                             <strong>Détails</strong>
                         </a>
                     </aside>
-
                     <c:choose>
                         <c:when test="${empty item.yattributevalueCollection.get(0).valStr}">
                             <img alt="" src="./theme/default/img/icon/image_128.png"/>
@@ -36,8 +58,6 @@
                             <img alt="" src="${item.yattributevalueCollection.get(0).valStr}"/>
                         </c:otherwise>
                     </c:choose>
-
-                    <!-- POUR LE FIGCAPTION SUIVANT ==> PREVOIR TAILLE CONTENU MAXIMALE -->
                     <figcaption title="${item.yattributevalueCollection.get(1).valStr}">
                         ${item.yattributevalueCollection.get(1).valStr}
                     </figcaption>

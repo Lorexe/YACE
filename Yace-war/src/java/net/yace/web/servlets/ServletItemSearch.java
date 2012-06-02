@@ -26,7 +26,7 @@ import net.yace.web.utils.ServicesLocator;
 public class ServletItemSearch extends HttpServlet {
 
     private final static String VUE_SEARCH = "WEB-INF/view/user/item-search.jsp";
-    private final static String VUE_HOME = "home.jsp";
+    private final static String VUE_HOME = "WEB-INF/view/user/home.jsp";
     
     // chemin /search
     /** 
@@ -91,7 +91,9 @@ public class ServletItemSearch extends HttpServlet {
             {
                 //recherche dans une collection donnée
                 //recuperer l'id de collection
-                Ycollection coll = collFac.find(2);
+                String colid = request.getParameter("searchcoll");
+                
+                Ycollection coll = collFac.find(Integer.parseInt(colid));
                         
                 //methode de recherche des items d'une collection donée
                 resultlist = itemFac.getItemsInColl(search, coll, yuser);
