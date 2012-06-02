@@ -6,6 +6,7 @@ package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.yace.entity.Yattributevalue;
 import net.yace.entity.Ycollection;
+import net.yace.entity.Yitem;
 import net.yace.entity.Yuser;
+import net.yace.facade.YattributevalueFacade;
 import net.yace.facade.YcollectionFacade;
+import net.yace.facade.YitemFacade;
 import net.yace.web.utils.YaceUtils;
 import net.yace.web.utils.ServicesLocator;
 
@@ -78,7 +83,7 @@ public class ServletWizard extends HttpServlet {
                         asideHelp.put("info", infoBoxes);
 
                         request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
-                        
+
                         request.setAttribute("pageTitle", "Assistant de création de collection");
                         request.getRequestDispatcher(VUE_WIZARD).forward(request, response);
                     } else {
@@ -139,6 +144,7 @@ public class ServletWizard extends HttpServlet {
             String idCollection = request.getParameter("idCollection");
             String name = request.getParameter("name");
             String isPublic = request.getParameter("isPublic");
+            String delete = request.getParameter("delete");
 
             if (idCollection != null && !idCollection.isEmpty()) {
                 /*
@@ -152,23 +158,46 @@ public class ServletWizard extends HttpServlet {
                      */
                     YaceUtils.displayCollectionUnreachableError(request, response);
                 } else {
-                    //édition du nom de la collection
-                    collection.setTheme(name);
-                            
-                    if (isPublic.equals("true"))
-                        collection.setIsPublic(Boolean.TRUE);
-                    else
-                        collection.setIsPublic(Boolean.FALSE);
-                    
-                    facColl.edit(collection);
+                    if (delete != null && delete.equals("delete")) {
+                        /*
+                         * On demande la suppression totale de la collection
+                         * items et tutti quanti
+                         */
+                        YitemFacade facItem = ServicesLocator.getItemFacade();
+                        YattributevalueFacade facAtv = ServicesLocator.getAttributeValueFacade();
+                        Collection<Yitem> items = collection.getYitemCollection();
+                        //List<Yitem> items = facItem.findAll(collection);
+                        for (Yitem yitem : items) {
+                            Collection<Yattributevalue> atvs = yitem.getYattributevalueCollection();
+                            //List<Yattributevalue> atvs = facItem.getItemsAttrValues(yitem.getIdYITEM());
+                            for (Yattributevalue atv : atvs) facAtv.remove(atv);
+                            facItem.remove(yitem);
+                        }
+
+                        facColl.remove(collection);
+                    } else {
+                        /*
+                         * On edite la collection
+                         */
+                        collection.setTheme(name);
+
+                        if (isPublic.equals("true")) {
+                            collection.setIsPublic(Boolean.TRUE);
+                        } else {
+                            collection.setIsPublic(Boolean.FALSE);
+                        }
+
+                        facColl.edit(collection);
+                    }
                 }
             } else {
                 //ajout d'une nouvelle collection
                 Ycollection collection = new Ycollection();
-                if (isPublic.equals("true"))
+                if (isPublic.equals("true")) {
                     collection.setIsPublic(Boolean.TRUE);
-                else
+                } else {
                     collection.setIsPublic(Boolean.FALSE);
+                }
                 collection.setOwner(yuser);
                 collection.setTheme(name);
                 facColl.create(collection);
@@ -202,6 +231,6 @@ public class ServletWizard extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Assistant de création de collection";
+        return "Assistant de création/édition/suppression de collection";
     }
 }

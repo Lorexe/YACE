@@ -10,8 +10,21 @@
  */
 $(document).ready(function(){
 
-// link le bouton pour afficher la modalbox
+// trigger pour les inscriptions
 var trigger = $('#toggleSubscribe').overlay({
+
+	mask: {
+		color: '#000033',
+		loadSpeed: 150,
+		opacity: 0.5
+	},
+
+	closeOnClick: false
+
+});
+
+// trigger pour la suppression d'une collection
+var trigger = $('#deleteCollection').overlay({
 
 	mask: {
 		color: '#000033',

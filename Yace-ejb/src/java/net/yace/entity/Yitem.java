@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Yitem.findAll", query = "SELECT y FROM Yitem y"),
+    @NamedQuery(name = "Yitem.findAllFromCollection", query = "SELECT y FROM Yitem y WHERE y.collection = :collection"),
     @NamedQuery(name = "Yitem.findByIdYITEM", query = "SELECT y FROM Yitem y WHERE y.idYITEM = :idYITEM"),
     @NamedQuery(name = "Yitem.findAllAttrValues", query = "SELECT av FROM Yitem y JOIN y.yattributevalueCollection av JOIN av.attribute a WHERE y.idYITEM = :idYITEM ORDER BY a.noOrder"),
     @NamedQuery(name = "Yitem.findItemsByAttrValues", query = "SELECT DISTINCT y FROM Yitem y JOIN y.collection col JOIN y.yattributevalueCollection av WHERE col.isPublic = true AND LOWER(av.valStr) LIKE :search")})

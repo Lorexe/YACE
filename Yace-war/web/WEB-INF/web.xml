@@ -65,6 +65,10 @@
         <servlet-name>ServletItemAddEdit</servlet-name>
         <servlet-class>net.yace.web.servlets.ServletItemAddEdit</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletLinkItemTypeCollection</servlet-name>
+        <servlet-class>net.yace.web.servlets.ServletLinkItemTypeCollection</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletRegister</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -124,6 +128,10 @@
     <servlet-mapping>
         <servlet-name>ServletItemAddEdit</servlet-name>
         <url-pattern>/itemmgmt</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletLinkItemTypeCollection</servlet-name>
+        <url-pattern>/update-collection</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>2880</session-timeout>

@@ -21,7 +21,6 @@
         <script src="./theme/default/script/common.js"></script>
         <script src="./theme/default/script/jq.mytoggletips.js"></script>
         <script src="./theme/default/script/jq.previewsplash.js"></script>
-        <script src="./theme/default/script/jq.mymodals.js"></script>
         <script src="./theme/default/script/mycaptcha.js"></script>
 
         <!--

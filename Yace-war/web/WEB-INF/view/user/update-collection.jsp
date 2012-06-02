@@ -34,6 +34,9 @@
         <br><br><input type="text" id="theme" name="theme" <c:if test="${!empty coll}">value="${coll.rows[0].theme}"</c:if> required="required">
         <br><br><label for="isPrivate">Collection priv&eacute;e ?</label> <input type="checkbox" id="isPrivate" name="isPrivate" <c:if test="${!empty coll && !coll.rows[0].is_public}">checked="checked"</c:if> title="Décochez pour montrer votre collection aux visiteurs du site">
         <br><br><button class="y-button y-button-white" onclick="collectionNameVerif()">Je valide et j'enregistre !</button>
+        <c:if test="${!empty coll}">
+            <br><br><button class="y-button y-button-red" id="deleteCollection" rel="#confirm">Supprimer d&eacute;finitivement</button>
+        </c:if>
     </div>
 
     <form name="wizardcollection" method="POST" action="#"></form>
@@ -76,4 +79,56 @@ $(document).ready(function(){
 });
 }
 
+</script>
+
+<!-- Modal dialogs -->
+<!-- confirm dialog -->
+<div class="modal modal-info whitebox" id="confirm">
+    <header>
+        <h1><strong>Confirmation</strong> attendue</h1>
+    </header>
+    <p>
+        Vous effectuez une <strong>action</strong> qui demande une <strong>confirmation</strong>. Si vous souhaitez continuer, <strong>tous les objets de la collection seront perdus</strong> !
+    </p>
+    
+    <p>
+        <button class="close y-button y-button-red confirm-yes"> oui </button>
+        <button class="close y-button y-button-blue"> non </button>
+    </p>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+// trigger pour la suppression d'une collection
+var trigger = $('#deleteCollection').overlay({
+
+	mask: {
+		color: '#000033',
+		loadSpeed: 150,
+		opacity: 0.5
+	},
+
+	closeOnClick: false
+
+});
+
+// link les boutons oui/non
+var yesnobuttons = $('#confirm button').click(function(e){
+	// récupère le bouton cliqué (le premier dans le flux)
+	var yes = yesnobuttons.index(this) === 0;
+	if(yes) {
+            var deletionIndicator = document.createElement("input");
+            $(deletionIndicator)
+                .attr("type","hidden")
+                .attr("name","delete")
+                .attr("value","delete");
+            $("form[name='wizardcollection']")
+                .append(deletionIndicator)
+                .submit();
+        }
+});
+
+// end of $(document).ready(function(){...
+});
 </script>

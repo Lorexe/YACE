@@ -65,6 +65,22 @@ public class YitemFacade extends AbstractFacade<Yitem> {
         return tList;
     }
     
+    public List<Yitem> findAll(Ycollection collection)
+    {
+        List<Yitem> cList = null;//liste à retourner
+        Query query;
+        query = em.createNamedQuery("Yitem.findAllFromCollection");
+        query.setParameter("collection", collection);
+        
+        try 
+        {
+            cList = query.getResultList();
+        }catch(NoResultException e){
+        }
+        
+        return cList;
+    }
+    
     //fonction de recherche de base sur les attributevalue
     //retourne une liste des items d'une collection publique, dont les atributs contiennent "search"
     public List<Yitem> getItemsByAttrValues(String search)
