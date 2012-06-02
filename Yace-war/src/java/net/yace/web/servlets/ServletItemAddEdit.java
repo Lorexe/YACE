@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets;
 
 import java.io.IOException;
@@ -32,7 +28,8 @@ import net.yace.web.utils.YaceUtils;
  */
 public class ServletItemAddEdit extends HttpServlet {
 
-    private final static String VUE_COLLECTION = "see?idCollection=";
+    private final static String VUE_PRESENTATION = "welcome.jsp";
+    private final static String VUE_COLLECTION = "see?idCollection="; // + add id
     private final static String VUE_ITEM_ADDEDIT = "WEB-INF/view/user/item-addedit.jsp";
     
     /** 
@@ -60,6 +57,22 @@ public class ServletItemAddEdit extends HttpServlet {
                 Yitemtype itemtype = facItemtype.find(Integer.parseInt(idType));
                 // TODO : Vérifier si l'itemtype est associé à la collection
                 if (itemtype!=null && collection!=null && collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
+                    
+                    // Vérifie si l'autocompletion doit etre prise en compte
+                    if(itemtype.isPublic()) {
+                        String name;
+                        if(itemtype.getName().equalsIgnoreCase("film"))
+                            name="film";
+                        else if(itemtype.getName().equalsIgnoreCase("musique"))
+                            name="music";
+                        else if(itemtype.getName().equalsIgnoreCase("livre"))
+                            name="book";
+                        else
+                            name="";
+                        
+                        if(!name.isEmpty())
+                            request.setAttribute("autocomplete", name);
+                    }
                     
                     String editItem = request.getParameter("edit");
                     if(editItem!=null && !editItem.isEmpty()) { // Si editItem, c'est l'édition
@@ -97,7 +110,7 @@ public class ServletItemAddEdit extends HttpServlet {
                 YaceUtils.displayCollectionUnreachableError(request, response);
             }
         } else {
-            YaceUtils.displayCollectionUnreachableError(request, response);
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         }
     }
 
