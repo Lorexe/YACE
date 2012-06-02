@@ -13,33 +13,40 @@
         </h1>
     </header>
 
+
+
     <section class="content"> <!-- contenu intéressant -->
         <aside id="toggletips"><strong>A I D E</strong></aside>
 
         <c:forEach var="itemtype" items="${itemtypes}" varStatus="idit">
 
-            <h1>${itemtype.getName()}</h1>         
+            <h1>${itemtype.getName()}</h1>        
 
-            <table class="y-table">
-                <%-- Noms des champs --%>
-                <tr>
-                    <c:forEach var="tabheader" items="${attributes.get(idit.count - 1)}">
-                        <td>${tabheader.name}</td>
-                    </c:forEach>
+            <c:forEach var="item" items="${values.get(idit.count - 1)}" varStatus="idi">
 
-                </tr>
-                <%-- Remplissage --%>
-                <c:forEach var="item" items="${values.get(idit.count - 1)}" varStatus="idi">
-                    <tr>
-                        <c:forEach var="val" items="${values.get(idit.count - 1).get(idi.count-1)}">
-                            <td>
-                                ${val.valStr}
-                            </td>
-                        </c:forEach>
-                    </tr>                    
-                </c:forEach>
+                <figure class="cover" id="item-${idit.count}-${idi.count}">
+                    <aside class="item-details">
+                        <a href="details?item=${items.get(idit.count-1).get(idi.count-1).getIdYITEM()}">
+                            <strong>D&eacute;tails</strong>
+                        </a>
+                    </aside>
 
-            </table>
+                    <c:choose>
+                        <c:when test="${empty values.get(idit.count - 1).get(idi.count-1).get(0).valStr}">
+                            <img alt="" src="./theme/default/img/icon/image_128.png"/>
+                        </c:when>
+                        <c:otherwise>
+                            <img alt="" src="${values.get(idit.count - 1).get(idi.count-1).get(0).valStr}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <!-- POUR LE FIGCAPTION SUIVANT ==> PREVOIR TAILLE CONTENU MAXIMALE -->
+                    <figcaption title="${values.get(idit.count-1).get(idi.count-1).get(1).valStr}">
+                        ${values.get(idit.count-1).get(idi.count-1).get(1).valStr}
+                    </figcaption>
+                </figure>
+
+            </c:forEach>
         </c:forEach>
 
     </section>
@@ -47,3 +54,19 @@
 </section>
 
 <div id="foreground"></div>
+
+<c:forEach var="itemtype" items="${itemtypes}" varStatus="idit">
+    <c:forEach var="item" items="${values.get(idit.count - 1)}" varStatus="idi">
+        <div role="preview" id="prev-item-${idit.count}-${idi.count}">
+            <section class="splash whitebox">
+                <header>
+                    <h1>${values.get(idit.count-1).get(idi.count-1).get(1).valStr}</h1>
+                </header>
+                <section class="content">
+                    <h1>H&eacute; ouais</h1>
+                    oh yeah
+                </section>
+            </section>
+        </div>
+    </c:forEach>
+</c:forEach>

@@ -67,6 +67,7 @@ public class ServletCollectionView extends HttpServlet {
                 YattributevalueFacade yatvfac = ServicesLocator.getAttributeValueFacade();
                
                 List<Yitemtype> itemtypes = itfac.findItemtypesInCollection(coll);
+                List<List<Yitem>> itemsByType = new ArrayList<List<Yitem>>();
                 List<List<Yattribute>> attributes = new ArrayList<List<Yattribute>>();
                 List<List<List<Yattributevalue>>> values = new ArrayList<List<List<Yattributevalue>>>();
                 
@@ -74,6 +75,7 @@ public class ServletCollectionView extends HttpServlet {
                     attributes.add(yatfac.findAttributesByItem(itemtypes.get(i)));
                     
                     List<Yitem> items = ifac.getItemsByCollectionAndType(coll, itemtypes.get(i));
+                    itemsByType.add(items);
                     values.add(new ArrayList<List<Yattributevalue>>());
                     for (int j = 0; j < items.size(); j++) {
                         values.get(i).add(yatvfac.findAllValuesForItem(items.get(j)));
@@ -83,6 +85,7 @@ public class ServletCollectionView extends HttpServlet {
                 request.setAttribute("itemtypes", itemtypes);
                 request.setAttribute("attributes", attributes);
                 request.setAttribute("values", values);
+                request.setAttribute("items", itemsByType);
                 
                 request.getRequestDispatcher(VUE_ITEMS).forward(request, response);
             } else {
