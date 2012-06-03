@@ -52,6 +52,12 @@ public class ServletItemDetails extends HttpServlet {
         }
         else
         {
+            String clrword = request.getParameter("clr");//parametre à surligner
+            if(clrword != null && !clrword.equals(""))
+            {
+                //passer le parametre à la jsp
+                request.setAttribute("clr", clrword);
+            }
             
             int idIt = Integer.parseInt(idItem);
             

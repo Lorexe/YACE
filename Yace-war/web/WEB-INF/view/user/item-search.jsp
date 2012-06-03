@@ -48,7 +48,7 @@
                 
                 <figure class="cover" id="item-${item.type.getIdYITEMTYPE()}-${item.getIdYITEM()}">
                     <aside class="item-details">
-                        <a href="details?item=${item.getIdYITEM()}">
+                        <a href="details?item=${item.getIdYITEM()}&clr=${searched}">
                             <strong>Détails</strong>
                         </a>
                     </aside>
@@ -68,7 +68,7 @@
             <br/><br/>
             <c:choose>
                 <c:when test="${totalsize > 1}">
-                <form name="searchNav" action="search" method="post" title="Navigation dans les Résultats">
+                <form name="searchNav" action="search" method="get" title="Navigation dans les Résultats">
                     <c:choose>
                         <c:when test="${searchpagenumber > 1}">
                             <input type="submit" name="searchprev" value="Page précedénte" class="y-button y-button-white" />
@@ -96,7 +96,7 @@
         </c:otherwise>
     </c:choose>
 </section>
-    
+   
 </section>
     
 <div id="foreground"></div>
