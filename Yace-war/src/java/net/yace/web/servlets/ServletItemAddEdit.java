@@ -112,7 +112,7 @@ public class ServletItemAddEdit extends HttpServlet {
                         int max_items = yuser.getRank().getNbMaxItem();
                         int nb_items = facItem.countNbItemsFromUuser(yuser);
                         if(max_items<0 || max_items>nb_items) {
-                            request.setAttribute("pageTitle", max_items + "/" + nb_items + " Ajout d'un objet " + itemtype.getName() + " dans la collection " + collection.getTheme());
+                            request.setAttribute("pageTitle", "Ajout d'un objet " + itemtype.getName() + " dans la collection " + collection.getTheme());
                             request.setAttribute("pageHeaderTitle", "Ajout d'un objet <strong>" + itemtype.getName() + "</strong> dans la collection <strong>" + collection.getTheme() + "</strong>");
                             request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
                         } else {
