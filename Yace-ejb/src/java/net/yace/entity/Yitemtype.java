@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -66,6 +67,9 @@ public class Yitemtype implements Serializable {
     private Collection<Yitem> yitemCollection;
     @OneToMany(mappedBy = "itemtype")
     private Collection<Yattribute> yattributeCollection;
+    @JoinColumn(name = "collection", referencedColumnName = "idYCOLLECTION")
+    @ManyToOne
+    private Ycollection collection;
 
     public Yitemtype() {
     }
@@ -144,6 +148,14 @@ public class Yitemtype implements Serializable {
 
     public void setYattributeCollection(Collection<Yattribute> yattributeCollection) {
         this.yattributeCollection = yattributeCollection;
+    }
+    
+    public Ycollection getCollection() {
+        return this.collection;
+    }
+    
+    public void setCollection(Ycollection collection) {
+        this.collection = collection;
     }
 
     @Override

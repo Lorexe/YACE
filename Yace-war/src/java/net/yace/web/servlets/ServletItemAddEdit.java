@@ -28,10 +28,9 @@ import net.yace.web.utils.YaceUtils;
  */
 public class ServletItemAddEdit extends HttpServlet {
 
-    private final static String VUE_PRESENTATION = "welcome.jsp";
-    private final static String VUE_COLLECTION = "see?idCollection="; // + add id
+    private final static String SVLT_COLLECTION = "see?idCollection=";
     private final static String VUE_ITEM_ADDEDIT = "WEB-INF/view/user/item-addedit.jsp";
-    
+
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -41,7 +40,7 @@ public class ServletItemAddEdit extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         YaceUtils.SessionState state = YaceUtils.getSessionState(request);
         if (state != YaceUtils.SessionState.noauth) {
             HttpSession session = request.getSession(false);
@@ -53,7 +52,7 @@ public class ServletItemAddEdit extends HttpServlet {
             
             String idCollection = request.getParameter("coll");
             String idType = request.getParameter("type");
-            if (idCollection!=null && !idCollection.isEmpty() && idType!=null && !idType.isEmpty()) {
+            if (idCollection != null && !idCollection.isEmpty() && idType != null && !idType.isEmpty()) {
                 Ycollection collection = facColl.find(Integer.parseInt(idCollection));
                 Yitemtype itemtype = facItemtype.find(Integer.parseInt(idType));
                 // TODO : Vérifier si l'itemtype est associé à la collection
@@ -87,21 +86,21 @@ public class ServletItemAddEdit extends HttpServlet {
                     request.setAttribute("idType", idType);
                     
                     String editItem = request.getParameter("edit");
-                    if(editItem!=null && !editItem.isEmpty()) { // Si editItem, c'est l'édition
+                    if (editItem != null && !editItem.isEmpty()) { // Si editItem, c'est l'édition
                         YitemFacade facItem = ServicesLocator.getItemFacade();
                         Yitem item = facItem.find(Integer.parseInt(editItem));
-                        
-                        if(item.getCollection().equals(collection)) {
+
+                        if (item.getCollection().equals(collection)) {
                             request.setAttribute("pageTitle", "Edition d'un objet " + itemtype.getName() + " de la collection " + collection.getTheme());
                             request.setAttribute("pageHeaderTitle", "Edition d'un objet <strong>" + itemtype.getName() + "</strong> de la collection <strong>" + collection.getTheme() + "</strong>");
                             request.setAttribute("edit", editItem);
-                            
+
                             // Ajout des valeurs de l'item
                             YattributevalueFacade facAttrVal = ServicesLocator.getAttributeValueFacade();
                             List<Yattributevalue> attrVals = new ArrayList<Yattributevalue>();
                             attrVals = facAttrVal.findAllValuesForItem(item);
                             request.setAttribute("itemValues", attrVals);
-                            
+
                             request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
                         } else {
                             YaceUtils.displayCollectionUnreachableError(request, response);
@@ -131,24 +130,24 @@ public class ServletItemAddEdit extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        boolean redirect=false;
-        
+
+        boolean redirect = false;
+
         YaceUtils.SessionState state = YaceUtils.getSessionState(request);
         if (state != YaceUtils.SessionState.noauth) {
             HttpSession session = request.getSession(false);
             Yuser yuser = (Yuser) session.getAttribute("user");
-            
+
             YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
             YitemtypeFacade facItemtype = ServicesLocator.getItemTypeFacade();
-            
+
             String idCollection = request.getParameter("coll");
             String idType = request.getParameter("type");
-            if (idCollection!=null && !idCollection.isEmpty() && idType!=null && !idType.isEmpty()) {
+            if (idCollection != null && !idCollection.isEmpty() && idType != null && !idType.isEmpty()) {
                 Ycollection collection = facColl.find(Integer.parseInt(idCollection));
                 Yitemtype itemtype = facItemtype.find(Integer.parseInt(idType));
                 // TODO : Vérifier si l'itemtype est associé à la collection
-                if (itemtype!=null && collection!=null && collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
+                if (itemtype != null && collection != null && collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
 
                     YitemFacade itemFacade = ServicesLocator.getItemFacade();
                     YattributeFacade attrFacade = ServicesLocator.getAttributeFacade();
@@ -163,7 +162,7 @@ public class ServletItemAddEdit extends HttpServlet {
                     
                     String buttonAdd = request.getParameter("button_add");
                     String buttonEdit = request.getParameter("button_edit");
-                    if(buttonAdd != null) {
+                    if (buttonAdd != null) {
                         // Création de l'objet
                         Yitem item = new Yitem();
                         item.setType(itemtype);
@@ -191,10 +190,10 @@ public class ServletItemAddEdit extends HttpServlet {
                             itemFacade.edit(item);
                             attrValFacade.edit(av);
                         }
-                    } else if(buttonEdit != null) {
+                    } else if (buttonEdit != null) {
                         String itemId = request.getParameter("edit");
-                        
-                        if(itemId != null && !itemId.isEmpty()) {
+
+                        if (itemId != null && !itemId.isEmpty()) {
                             // Recherche de l'objet, de ses valeurs et sa structure
                             Yitem item = itemFacade.find(Integer.parseInt(itemId));
                             List<Yattributevalue> attrVals = new ArrayList<Yattributevalue>();
@@ -204,29 +203,31 @@ public class ServletItemAddEdit extends HttpServlet {
                                 Yattributevalue attrVal = attrVals.get(i);
                                 String attrName = attrsName.get(i);
                                 String attrType = listAttributes.get(i).getType();
-                                
+
                                 String newValue = request.getParameter("attr_" + attrName);
-                                if(attrType.equalsIgnoreCase("string")) {
+                                if (attrType.equalsIgnoreCase("string")) {
                                     attrVal.setValStr(newValue);
                                 } else {
                                     attrVal.setValStr(newValue);
                                 }
-                                
+
                                 attrValFacade.edit(attrVal);
                             }
                         }
                     }
-                    
-                    redirect=true;
-                    response.sendRedirect(VUE_COLLECTION + idCollection);
+
+                    redirect = true;
+                    response.sendRedirect(SVLT_COLLECTION + idCollection);
                 }
             }
         }
-        
-        if(!redirect) // si pas d'ajout ou d'édition, on fait appel à l'affichage normal de la page
+
+        if (!redirect) // si pas d'ajout ou d'édition, on fait appel à l'affichage normal de la page
+        {
             doGet(request, response);
+        }
     }
-    
+
     @Override
     public String getServletInfo() {
         return "Gestion de l'ajout/edition d'objet à une collection.";

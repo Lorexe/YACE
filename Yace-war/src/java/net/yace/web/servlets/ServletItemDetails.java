@@ -89,7 +89,7 @@ public class ServletItemDetails extends HttpServlet {
             }
         }
         
-        request.setAttribute("pageTitle", "Les Attributs");//look for a title  
+        request.setAttribute("pageTitle", "Les Détails de l'objet");//look for a title  
         request.getRequestDispatcher(VUE_ITEM).forward(request, response);// GO jsp
     }
 
@@ -107,5 +107,5 @@ public class ServletItemDetails extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 }

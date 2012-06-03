@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import net.yace.entity.Yattribute;
 import net.yace.entity.Yattributevalue;
 import net.yace.entity.Ycollection;
@@ -32,9 +31,8 @@ import net.yace.web.utils.YaceUtils;
  */
 public class ServletCollectionView extends HttpServlet {
 
-    private final static String VUE_PRESENTATION = "welcome.jsp";
     //TODO mettre ta fucking jsp ici mec :p
-    private final static String VUE_ITEMS = "WEB-INF/view/user/collection.jsp";
+    private final static String VUE_COLL_VIEW = "WEB-INF/view/user/collection.jsp";
 
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -55,25 +53,22 @@ public class ServletCollectionView extends HttpServlet {
             YcollectionFacade collfac = ServicesLocator.getCollectionFacade();
             Ycollection coll = collfac.find(collid);
             Yuser owner = coll.getOwner();
-            Yuser user = (Yuser) request.getSession(false).getAttribute("user");
+            Yuser user = (Yuser) request.getSession().getAttribute("user");
 
-            if (coll.isPublic() || user.getIdYUSER() == owner.getIdYUSER()) {
-                request.setAttribute("pageTitle", "Objets dans la collection");
-                request.setAttribute("collection", coll);
-                
+            if (coll.isPublic() || (user != null && user.getIdYUSER() == owner.getIdYUSER())) {
                 YitemtypeFacade itfac = ServicesLocator.getItemTypeFacade();
                 YitemFacade ifac = ServicesLocator.getItemFacade();
                 YattributeFacade yatfac = ServicesLocator.getAttributeFacade();
                 YattributevalueFacade yatvfac = ServicesLocator.getAttributeValueFacade();
-               
+
                 List<Yitemtype> itemtypes = itfac.findItemtypesInCollection(coll);
                 List<List<Yitem>> itemsByType = new ArrayList<List<Yitem>>();
                 List<List<Yattribute>> attributes = new ArrayList<List<Yattribute>>();
                 List<List<List<Yattributevalue>>> values = new ArrayList<List<List<Yattributevalue>>>();
-                
+
                 for (int i = 0; i < itemtypes.size(); i++) {
                     attributes.add(yatfac.findAttributesByItem(itemtypes.get(i)));
-                    
+
                     List<Yitem> items = ifac.getItemsByCollectionAndType(coll, itemtypes.get(i));
                     itemsByType.add(items);
                     values.add(new ArrayList<List<Yattributevalue>>());
@@ -81,13 +76,13 @@ public class ServletCollectionView extends HttpServlet {
                         values.get(i).add(yatvfac.findAllValuesForItem(items.get(j)));
                     }
                 }
-                
+                request.setAttribute("collection", coll);
                 request.setAttribute("itemtypes", itemtypes);
                 request.setAttribute("attributes", attributes);
                 request.setAttribute("values", values);
                 request.setAttribute("items", itemsByType);
-                
-                request.getRequestDispatcher(VUE_ITEMS).forward(request, response);
+                request.setAttribute("pageTitle", "Objets dans la collection");
+                request.getRequestDispatcher(VUE_COLL_VIEW).forward(request, response);
             } else {
                 //ERROR
                 error = true;
@@ -95,10 +90,10 @@ public class ServletCollectionView extends HttpServlet {
         } catch (NumberFormatException e) {
             error = true;
         }
-        
+
         if (error) {
             YaceUtils.displayCollectionUnreachableError(request, response);
-        }            
+        }
     }
 
     /** 
@@ -113,30 +108,30 @@ public class ServletCollectionView extends HttpServlet {
             throws ServletException, IOException {/*
         YaceUtils.SessionState state = YaceUtils.getSessionState(request);
         if (state == YaceUtils.SessionState.noauth) {
-            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+        request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else {
-            HttpSession session = request.getSession(false);
-            Yuser yuser = (Yuser) session.getAttribute("user");
-            /*
-             * Session valide: utilisateur connecté
-             *
-
-            YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
-
-            String idCollection = request.getParameter("idCollection");
-
-            if (idCollection != null && !idCollection.isEmpty()) {
-                //check collection owner and edit.
-                Ycollection collection = facColl.find(Integer.parseInt(idCollection));
-                if (collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
-                    //Tout est ok
-                } else {
-                    //Error
-                    request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
-                }
-            } else {
-                request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
-            }
+        HttpSession session = request.getSession(false);
+        Yuser yuser = (Yuser) session.getAttribute("user");
+        /*
+         * Session valide: utilisateur connecté
+         *
+        
+        YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
+        
+        String idCollection = request.getParameter("idCollection");
+        
+        if (idCollection != null && !idCollection.isEmpty()) {
+        //check collection owner and edit.
+        Ycollection collection = facColl.find(Integer.parseInt(idCollection));
+        if (collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
+        //Tout est ok
+        } else {
+        //Error
+        request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+        }
+        } else {
+        request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+        }
         }*/
         doGet(request, response);
     }
@@ -148,5 +143,5 @@ public class ServletCollectionView extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Ajout et édition d'un objet";
-    }// </editor-fold>
+    }
 }

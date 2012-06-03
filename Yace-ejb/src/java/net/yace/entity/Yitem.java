@@ -7,7 +7,7 @@ package net.yace.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -36,7 +35,26 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Yitem.findAllFromCollection", query = "SELECT y FROM Yitem y WHERE y.collection = :collection"),
     @NamedQuery(name = "Yitem.findByIdYITEM", query = "SELECT y FROM Yitem y WHERE y.idYITEM = :idYITEM"),
     @NamedQuery(name = "Yitem.findAllAttrValues", query = "SELECT av FROM Yitem y JOIN y.yattributevalueCollection av JOIN av.attribute a WHERE y.idYITEM = :idYITEM ORDER BY a.noOrder"),
-    @NamedQuery(name = "Yitem.findItemsByAttrValues", query = "SELECT DISTINCT y FROM Yitem y JOIN y.collection col JOIN y.yattributevalueCollection av WHERE col.isPublic = true AND LOWER(av.valStr) LIKE :search")})
+    @NamedQuery(name = "Yitem.findItemsByAttrValues", 
+        query = "SELECT DISTINCT y FROM Yitem y "
+        + "JOIN y.collection col "
+        + "JOIN y.yattributevalueCollection av "
+        + "JOIN av.attribute ya "
+        + "WHERE (col.isPublic = true) AND (ya.type NOT IN ('Image','URL')) AND (LOWER(av.valStr) LIKE :search)"),
+    @NamedQuery(name = "Yitem.findItemsFromUser", 
+        query = "SELECT DISTINCT yi FROM Yuser y "
+        + "JOIN y.ycollectionCollection yc "
+        + "JOIN yc.yitemCollection yi "
+        + "JOIN yi.yattributevalueCollection yav "
+        + "JOIN yav.attribute ya "
+        + "WHERE y = :yuser AND (ya.type NOT IN ('Image','URL')) AND (LOWER(yav.valStr) LIKE :search)"),
+    @NamedQuery(name = "Yitem.findItemsInColl", 
+        query = "SELECT DISTINCT yi FROM Ycollection yc "
+        + "JOIN yc.owner y "
+        + "JOIN yc.yitemCollection yi "
+        + "JOIN yi.yattributevalueCollection yav "
+        + "JOIN yav.attribute ya "
+        + "WHERE yc = :coll AND (y = :yuser OR yc.isPublic = true) AND (ya.type NOT IN ('Image','URL')) AND (LOWER(yav.valStr) LIKE :search)")})
 public class Yitem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,7 +64,7 @@ public class Yitem implements Serializable {
     @JoinTable(name = "link_attr_item", joinColumns = {
         @JoinColumn(name = "item", referencedColumnName = "idYITEM")}, inverseJoinColumns = {
         @JoinColumn(name = "value", referencedColumnName = "idYATTRIBUTEVALUE")})
-    @ManyToMany
+    @ManyToMany(cascade={CascadeType.REMOVE})
     private Collection<Yattributevalue> yattributevalueCollection;
     @JoinColumn(name = "type", referencedColumnName = "idYITEMTYPE")
     @ManyToOne

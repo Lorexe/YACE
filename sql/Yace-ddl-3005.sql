@@ -60,7 +60,9 @@ CREATE TABLE IF NOT EXISTS `yitemtype` (
   `idYITEMTYPE` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `is_public` BOOLEAN NOT NULL,
-  PRIMARY KEY (`idYITEMTYPE`)
+  `collection` int(11),
+  PRIMARY KEY (`idYITEMTYPE`),
+  KEY `collection` (`collection`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
@@ -182,6 +184,12 @@ ALTER TABLE `yattributevalue`
 --
 ALTER TABLE `ycollection`
   ADD CONSTRAINT `owner` FOREIGN KEY (`owner`) REFERENCES `yuser` (`idYUSER`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  
+-- 
+-- Contraintes pour la table `yitemtype`
+--
+ALTER TABLE `yitemtype`
+  ADD CONSTRAINT `collection_itemtype` FOREIGN KEY (`collection`) REFERENCES `ycollection` (`idYCOLLECTION`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `yitem`

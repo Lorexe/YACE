@@ -9,6 +9,8 @@
     <h1>${pageTitle}</h1>
 </header>
 <section class="content">
+    <aside id="toggletips"><strong>A I D E</strong></aside>
+    
     <c:choose>
         <c:when test="${empty attributevalues}">
             <p>Aucune valeur disponible</p>
@@ -18,7 +20,7 @@
                 
             <p>
                 <a href="see?idCollection=${curItem.collection.idYCOLLECTION}"><label><strong> Collection : ${curItem.collection.theme}</strong></label></a><br/><br/>
-                <label >Type d'objet  : ${curItem.type.name}</label><br/>
+                <label ><strong>Type d'objet  : ${curItem.type.name}</strong></label><br/><br/>
                 <c:choose>
                     <c:when test="${prevIt ne -1}">
                         <a href="details?item=${prevIt}"><img alt="Précédent" src="./theme/default/img/icon/prev_24.png" title="Précédent"></a>

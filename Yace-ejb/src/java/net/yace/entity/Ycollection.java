@@ -7,13 +7,13 @@ package net.yace.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -58,11 +58,13 @@ public class Ycollection implements Serializable {
     @NotNull
     @Column(name = "is_public")
     private Boolean isPublic;
-    @OneToMany(mappedBy = "collection", orphanRemoval = true)
+    @OneToMany(mappedBy = "collection", orphanRemoval = true, cascade={CascadeType.ALL})
     private Collection<Yitem> yitemCollection;
     @JoinColumn(name = "owner", referencedColumnName = "idYUSER")
     @ManyToOne
     private Yuser owner;
+    @OneToMany(mappedBy = "collection", orphanRemoval = true)
+    private Collection<Yitemtype> yitemtypeCollection;
 
     public Ycollection() {
     }
@@ -112,6 +114,15 @@ public class Ycollection implements Serializable {
 
     public void setYitemCollection(Collection<Yitem> yitemCollection) {
         this.yitemCollection = yitemCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Yitemtype> getYitemtypeCollection() {
+        return yitemtypeCollection;
+    }
+    
+    public void setYitemtypeCollection(Collection<Yitemtype> yitemtypeCollection) {
+        this.yitemtypeCollection = yitemtypeCollection;
     }
 
     public Yuser getOwner() {

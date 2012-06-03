@@ -11,6 +11,11 @@
         </footer>
 <!-- BEGIN TESTZONE -->
 <div style="margin:auto;padding:5px;">${footDebug}</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#toggletips').click();
+});
+</script>
 <!-- END TESTZONE -->
     </body>
 </html>

@@ -13,10 +13,10 @@
         </h1>
     </header>
 
-
-
     <section class="content"> <!-- contenu intéressant -->
         <aside id="toggletips"><strong>A I D E</strong></aside>
+
+        <a class="y-button y-button-green" href="itemtypemgmt?coll=${collection.getIdYCOLLECTION()}">J'ajoute un type d'objet</a>
 
         <c:forEach var="itemtype" items="${itemtypes}" varStatus="idit">
 
@@ -70,7 +70,7 @@
                     <table class="y-table">
                         <c:forEach var="attribut" items="${attributes.get(idit.count-1)}" varStatus="attrcount">
                             <tr <c:if test="${attrcount.count % 2 == 0}">class="odd"</c:if>>
-                                <td>
+                                    <td>
                                     ${values.get(idit.count-1).get(idi.count-1).get(attrcount.count-1).attribute.name}
                                 </td>
                                 <c:choose>
