@@ -5,8 +5,10 @@ var basename = "";
 function getMovies(input_basename)
 {
     basename = input_basename;
-    var name = $("#" + input_basename + "titre").val();
+    var name = $("#search_input").val();
     $("#search_result").empty();
+    $("#search_result").html("<h2>R&eacute;sultats de la recherche</h2>");
+    
     getImdb(name);
     getTmdb(name);
 }
@@ -34,6 +36,10 @@ function addFilmToForm(cover, titre, realisateur, auteur, acteur, resume, duree,
     else                   $("#"+basename+"date_de_sortie").val(annee);
 }
 
+function escape_string(str) {
+    return (str+'').replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
 //Adds a film to the list (to be modified)
 function addFilm(film)
 {
@@ -43,15 +49,22 @@ function addFilm(film)
     var genres="";
     
     for (var i = 0; i < film.writers.length; i++)
-        writers += film.writers[i].name + ",";
-    for (i = 0; i < film.directors.length; i++)
-        directors += film.directors[i].name + ",";
-    for (i = 0; i < film.actors.length; i++)
-        actors += film.actors[i].name + ",";
-    for (i = 0; i < film.directors.length; i++)
-        genres += film.genres[i].name + ",";
+        writers += film.writers[i].name + ", ";
+    if(writers.length > 0) writers = writers.substr(0,writers.length-2);
     
-    $("#search_result").append("<div class='ac_box' onclick=\"addFilmToForm('"+film.poster+"', '"+film.title+"', '"+directors+"', '"+writers+"', '"+actors+"', '"+film.plot+"', '"+film.runtime+"', '"+film.rating+"', '"+genres+"', '"+film.released+"')\">" +
+    for (i = 0; i < film.directors.length; i++)
+        directors += film.directors[i].name + ", ";
+    if(directors.length > 0) directors = directors.substr(0,directors.length-2);
+    
+    for (i = 0; i < film.actors.length; i++)
+        actors += film.actors[i].name + ", ";
+    if(actors.length > 0) actors = actors.substr(0,actors.length-2);
+    
+    for (i = 0; i < film.directors.length; i++)
+        genres += film.genres[i].name + ", ";
+    if(genres.length > 0) genres = genres.substr(0,genres.length-2);
+    
+    $("#search_result").append("<div class='ac_box' onclick=\"addFilmToForm('"+film.poster+"', '"+escape_string(film.title)+"', '"+escape_string(directors)+"', '"+escape_string(writers)+"', '"+escape_string(actors)+"', '"+escape_string(film.plot)+"', '"+escape_string(film.runtime)+"', '"+escape_string(film.rating)+"', '"+escape_string(genres)+"', '"+escape_string(film.released)+"')\">" +
         "<img height='150' src='" + film.poster + "'/>" +
         "<ul><li>Titre: " + film.title + "</li>" +
         "<li>Auteur: " + writers + "</li>" +
@@ -93,7 +106,7 @@ function getImdb(name)
        type:"GET",
        url:uri,
        dataType:"jsonp",
-       error: function() { finishingFilmSearch();}, 
+       error: function() {finishingFilmSearch();}, 
        success: function(data){
             
             var writers = [];
@@ -150,7 +163,7 @@ function getTmdb(name)
        type:"GET",
        url:uri,
        dataType:"jsonp",
-       error: function() { finishingFilmSearch();}, 
+       error: function() {finishingFilmSearch();}, 
        success: function(data){
            for (var i = 0; i < data.length; i++)
            {
@@ -172,7 +185,7 @@ function getTmdbFilm(id, lang)
        type:"GET",
        url:uri,
        dataType:"jsonp",
-       error: function() { finishingFilmSearch();}, 
+       error: function() {finishingFilmSearch();}, 
        success: function(data){
             
             //We need the writer, actors, poster and genre

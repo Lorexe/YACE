@@ -7,8 +7,10 @@ var basename = "";
 function getBooks(input_basename, lang)
 {
     basename = input_basename;
-    var name = $("#" + input_basename + "titre").val();
+    var name = $("#search_input").val();
     $("#search_result").empty();
+    $("#search_result").html("<h2>R&eacute;sultats de la recherche</h2>");
+    
     searchGBook(name, lang);
 }
 
@@ -37,6 +39,7 @@ function addBook(book)
     var authorstr = "";
     for (var i = 0; i < book.authors.length; i++)
         authorstr += book.authors[i].name + ", ";
+    if(authorstr.length > 0) authorstr = authorstr.substr(0,authorstr.length-2);
     
     $("#search_result").append("<div class='ac_box' onclick=\"addBookToForm('"+book.cover+"', '"+book.title+"', '"+authorstr+"', '"+book.plot+"', '"+book.publisher+"', '"+book.released+"', '"+book.pageCount+"')\">" +
         "<img height='150' src='" + book.cover + "'/>" +

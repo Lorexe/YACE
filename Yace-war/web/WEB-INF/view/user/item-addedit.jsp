@@ -39,7 +39,7 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <td rowspan="3">
+                        <td colspan="3">
                             <c:choose>
                                 <c:when test="${empty edit}">
                                     <input type="submit" name="button_add" value="Ajouter l'objet" class="y-button y-button-white" />
@@ -58,27 +58,9 @@
                             <c:choose>
                                 <c:when test="${attr.type=='String'}">
                                     <td><input type="text" id="attr_${attrsName.get(counter.count-1)}" name="attr_${attrsName.get(counter.count-1)}" size="30" required <c:if test="${!empty edit}">value="${itemValues.get(counter.count-1).getValStr()}"</c:if> /></td>
-                                    <td>
-                                        <c:if test="${!empty autocomplete}">
-                                            <c:choose>
-                                                <c:when test="${autocomplete=='film' && attr.name=='Titre'}">
-                                                    <img class='eyeicon' src='./theme/default/img/eye_16.png' alt='Rechercher' title='Rechercher' onclick='getMovies("attr_")' />
-                                                </c:when>
-                                                <c:when test="${autocomplete=='music' && attr.name=='Nom'}">
-                                                    <img class='eyeicon' src='./theme/default/img/eye_16.png' alt='Rechercher' title='Rechercher' onclick='getAlbums("attr_")' />
-                                                </c:when>
-                                                <c:when test="${autocomplete=='book' && attr.name=='Titre'}">
-                                                    <img class='eyeicon' src='./theme/default/img/eye_16.png' alt='Rechercher en Francais' title='Rechercher en Francais' onclick='getBooks("attr_", "fr")' /> 
-                                                    <img class='eyeicon' src='./theme/default/img/eye_16.png' alt='Rechercher en Anglais' title='Rechercher en Anglais' onclick='getBooks("attr_", "en")' />
-                                                </c:when>
-                                            </c:choose>
-                                            <div id="searching"></div>
-                                        </c:if>
-                                    </td>
                                 </c:when>
                                 <c:otherwise>
                                     <td><input type="text" id="attr_${attrsName.get(counter.count-1)}" name="attr_${attrsName.get(counter.count-1)}" size="30" required <c:if test="${!empty edit}">value="${itemValues.get(counter.count-1).getValStr()}"</c:if> /></td>
-                                    <td></td>
                                 </c:otherwise>
                             </c:choose>
                         </tr>
@@ -86,6 +68,26 @@
                 </tbody>
             </table>
         </form>
+           
+        <c:if test="${!empty autocomplete}">
+            <div id="search_form">
+                Recherche <input type="text" name="search_input" id="search_input" />
+                <c:choose>
+                    <c:when test="${autocomplete=='film'}">
+                        <button type="button" onclick='getMovies("attr_")' class="y-button y-button-white">Rechercher</button>
+                    </c:when>
+                    <c:when test="${autocomplete=='music'}">
+                        <button type="button" onclick='getAlbums("attr_")' class="y-button y-button-white">Rechercher</button>
+                    </c:when>
+                    <c:when test="${autocomplete=='book'}">
+                        <br/>
+                        <button type="button" onclick='getBooks("attr_", "fr")' class="y-button y-button-white">Rechercher en Francais</button>
+                        <button type="button" onclick='getBooks("attr_", "en")' class="y-button y-button-white">Rechercher en Anglais</button>
+                    </c:when>
+                </c:choose>
+                <span id="searching">&nbsp;</span>
+            </div>
+        </c:if>
     </section>
 </section>
 <c:if test="${!empty autocomplete}">

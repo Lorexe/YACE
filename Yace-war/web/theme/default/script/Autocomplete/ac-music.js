@@ -9,8 +9,10 @@ function getAlbums(input_basename)
     //var apik = "c9aec14b6bfccf2883dbc1ad9e9adf6c";
     //var uri = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b25b959554ed76058ac220b7b2e0a026";
     basename = input_basename;
-    var name = $("#" + input_basename + "nom").val();
+    var name = $("#search_input").val();
     $("#search_result").empty();
+    $("#search_result").html("<h2>R&eacute;sultats de la recherche</h2>");
+    
     searchLastfm(name);
 }
 
@@ -30,9 +32,9 @@ function addAlbumToForm(cover, artist, name, released, tracks) {
 function addAlbum(album)
 {
     var tracks = "";
-    for (var i = 0; i < album.tracklist.length; i++){
+    for (var i = 0; i < album.tracklist.length; i++)
         tracks += album.tracklist[i].name + " (" + album.tracklist[i].duration + "), ";
-    }
+    if(tracks.length > 0) tracks = tracks.substr(0,tracks.length-2);
     
     $("#search_result").append("<div class='ac_box' onclick=\"addAlbumToForm('"+album.cover+"','"+album.artist+"','"+album.name+"','"+album.released+"','"+tracks+"')\"" +
         "<img height='150' src=\"" + album.cover + "\"/>" +
