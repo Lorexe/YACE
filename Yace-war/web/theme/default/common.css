@@ -336,8 +336,14 @@ strong {
     max-height: 300px;
 }
 
-.attr-longtext{
+.attr-longtext {
     text-align:justify;
     width: 75%;
     max-width: 700px;
+}
+
+.search-header {
+    border-bottom: 1px dotted #9cf;
+    margin-bottom: 20px;
+    padding-bottom: 6px;
 }

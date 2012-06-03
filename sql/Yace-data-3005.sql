@@ -218,8 +218,7 @@ INSERT INTO `link_attr_item` (`item`, `value`) VALUES
 (6, 42),
 (6, 43),
 (6, 44),
-(6, 45),
-(6, 46);
+(6, 45);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

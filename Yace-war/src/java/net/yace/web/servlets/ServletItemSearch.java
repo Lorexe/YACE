@@ -65,8 +65,13 @@ public class ServletItemSearch extends HttpServlet {
         String nextpage = request.getParameter("searchnext");
         String prevpage = request.getParameter("searchprev");
         
+        
         int firstres = Integer.parseInt(request.getParameter("firstres"));
         int resultsnumber = 3;//nombre des resultats à afficher sur une page
+        int totalsize = 0;
+        String totsize = request.getParameter("totalsize");
+        if(totsize != null)
+            totalsize = Integer.parseInt(totsize);//obtenir la taille totale
         
         //determiner le debut de la recherche
         if(prevpage != null)
@@ -92,6 +97,15 @@ public class ServletItemSearch extends HttpServlet {
             
             if(domain.equals("all"))
             {
+                //obtenir la taile totale lors du premier appel
+                if(totalsize == 0)
+                {
+                    totalsize = itemFac.getItemsByAttrValues(search,0,0).size();
+                    if(totalsize%resultsnumber ==0)
+                        totalsize = (totalsize/resultsnumber);
+                    else
+                        totalsize = (totalsize/resultsnumber)+1;
+                }
                 //recherche dans les collections publiques
                 resultlist = itemFac.getItemsByAttrValues(search,resultsnumber,firstres);
                 
@@ -99,6 +113,15 @@ public class ServletItemSearch extends HttpServlet {
             }
             else if(yuser != null && domain.equals("mycolls"))
             {
+                //obtenir la taile totale lors du premier appel
+                if(totalsize == 0)
+                {
+                    totalsize = itemFac.getItemsSearchFromUser(search, yuser,0,0).size();
+                    if(totalsize%resultsnumber ==0)
+                        totalsize = (totalsize/resultsnumber);
+                    else
+                        totalsize = (totalsize/resultsnumber)+1;
+                }
                 //recherche dans mes collections
                 resultlist = itemFac.getItemsSearchFromUser(search, yuser,resultsnumber,firstres);
                 
@@ -111,11 +134,21 @@ public class ServletItemSearch extends HttpServlet {
                 String colid = request.getParameter("searchcoll");
                 
                 Ycollection coll = collFac.find(Integer.parseInt(colid));
-                        
+                //obtenir la taile totale lors du premier appel
+                if(totalsize == 0)
+                {
+                    totalsize = itemFac.getItemsInColl(search, coll, yuser,0,0).size();
+                    if(totalsize%resultsnumber ==0)
+                        totalsize = (totalsize/resultsnumber);
+                    else
+                        totalsize = (totalsize/resultsnumber)+1;
+                }
                 //methode de recherche des items d'une collection donée
                 resultlist = itemFac.getItemsInColl(search, coll, yuser,resultsnumber,firstres);
                 
                 request.setAttribute("resultlist", resultlist);
+                // id de collection dans la quelle on effectue la recherche
+                request.setAttribute("searchcoll", colid);
                 
             }
             //encode des elements à afficher?
@@ -128,7 +161,7 @@ public class ServletItemSearch extends HttpServlet {
             {
                 request.setAttribute("sizeres", resultsnumber);
             }
-            
+            request.setAttribute("totalsize", totalsize);
             request.setAttribute("searchpagenumber", (firstres/resultsnumber)+1);//numéro de page
             request.setAttribute("firstres", firstres);//valeur pour le formulaire dynamique
             request.setAttribute("resultsnumber", resultsnumber);
