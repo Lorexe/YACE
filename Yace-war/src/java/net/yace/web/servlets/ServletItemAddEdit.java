@@ -50,6 +50,7 @@ public class ServletItemAddEdit extends HttpServlet {
             YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
             YitemtypeFacade facItemtype = ServicesLocator.getItemTypeFacade();
             YattributeFacade facAttribute = ServicesLocator.getAttributeFacade();
+            YitemFacade facItem = ServicesLocator.getItemFacade();
             
             String idCollection = request.getParameter("coll");
             String idType = request.getParameter("type");
@@ -88,7 +89,6 @@ public class ServletItemAddEdit extends HttpServlet {
                     
                     String editItem = request.getParameter("edit");
                     if (editItem != null && !editItem.isEmpty()) { // Si editItem, c'est l'édition
-                        YitemFacade facItem = ServicesLocator.getItemFacade();
                         Yitem item = facItem.find(Integer.parseInt(editItem));
 
                         if (item.getCollection().equals(collection)) {
@@ -107,9 +107,17 @@ public class ServletItemAddEdit extends HttpServlet {
                             YaceUtils.displayCollectionUnreachableError(request, response);
                         }
                     } else { // Sinon l'ajout
-                        request.setAttribute("pageTitle", "Ajout d'un objet " + itemtype.getName() + " dans la collection " + collection.getTheme());
-                        request.setAttribute("pageHeaderTitle", "Ajout d'un objet <strong>" + itemtype.getName() + "</strong> dans la collection <strong>" + collection.getTheme() + "</strong>");
-                        request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
+                        
+                        // Vérification du nombre max d'objet
+                        int max_items = yuser.getRank().getNbMaxItem();
+                        int nb_items = facItem.countNbItemsFromUuser(yuser);
+                        if(max_items<0 || max_items>nb_items) {
+                            request.setAttribute("pageTitle", max_items + "/" + nb_items + " Ajout d'un objet " + itemtype.getName() + " dans la collection " + collection.getTheme());
+                            request.setAttribute("pageHeaderTitle", "Ajout d'un objet <strong>" + itemtype.getName() + "</strong> dans la collection <strong>" + collection.getTheme() + "</strong>");
+                            request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
+                        } else {
+                            YaceUtils.displayMaxItemReachError(request, response);
+                        }
                     }
                 } else {
                     YaceUtils.displayCollectionUnreachableError(request, response);

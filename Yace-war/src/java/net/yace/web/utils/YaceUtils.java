@@ -221,6 +221,33 @@ public class YaceUtils {
         request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
     }
     
+        public static void displayMaxItemReachError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // On défini l'erreur qui s'est produite
+        request.setAttribute("errorMsg",
+                "Nous sommes désolé, mais vous ne pouvez pas ajouter de nouvel objet.<br/>"
+                + "Référez-vous à l'aide contextuelle pour plus d'information.<br/>"
+                + "Vous n'êtes pas satisfait ? <a href='about'>Contactez-nous</a> !");
+
+        // Aide contextuelle
+        Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+        List<String> infoBoxes = new ArrayList<String>();
+        List<String> tipBoxes = new ArrayList<String>();
+
+        infoBoxes.add("Vous avez atteint le nombre maximum d'objet que vous pouvez posséder dans vos collections.");
+        tipBoxes.add("Vous devriez demander une augmentation de la limite à un administrateur.");
+        tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous pensez qu'il s'agit d'une erreur de notre part. N'oubliez pas de détailler les actions qui vous ont mené à cette page, merci.");
+
+        asideHelp.put("tip", tipBoxes);
+        asideHelp.put("info", infoBoxes);
+
+        request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+
+        // On nomme et affiche la page
+        request.setAttribute("pageTitle", "Limite d'objet maximum atteinte");
+        request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+    }
+    
     //vérifie si item peut être consulté par user
     public static boolean CanDisplayItem(Yitem item, Yuser usr)
     {

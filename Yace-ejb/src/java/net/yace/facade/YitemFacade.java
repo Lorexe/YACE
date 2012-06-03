@@ -4,6 +4,7 @@
  */
 package net.yace.facade;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -137,6 +138,17 @@ public class YitemFacade extends AbstractFacade<Yitem> {
         }
         
         return cList;
+    }
+    
+    public int countNbItemsFromUuser(Yuser user) {
+        List<Yitem> listItems = new ArrayList<Yitem>();
+        
+        Query query = em.createNamedQuery("Yitem.findAllItemsFromUser");
+        query.setParameter("yuser", user);
+        
+        listItems = query.getResultList();
+        
+        return listItems.size();
     }
     
     //retourne une liste des items de yuser dont les atributevalues contiennent "search"

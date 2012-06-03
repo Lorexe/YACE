@@ -48,7 +48,7 @@ function addBook(book)
 
 function searchBookStarted()
 {
-    $("#searching").append("recherche...");
+    $("#searching").append("Recherche...");
 }
 
 function searchBookStopped()
