@@ -12,8 +12,8 @@
     <aside id="toggletips"><strong>A I D E</strong></aside>
     
     <h3>Les Résultats de recherche pour : "<b>${searched}</b>"</h3>
-    <h4>Page :  ${searchpagenumber}</h4>
-    <br/>
+    <h4>Page :  ${searchpagenumber} sur ${totalsize} page(s)</h4>
+    <p class="search-header">
     <c:choose>
         <c:when test="${searchtype eq 'mycolls'}">
             <strong>Mes collections</strong>
@@ -25,7 +25,8 @@
             <strong>Collection ${resultlist.get(0).collection.theme}</strong>
         </c:when>
     </c:choose>
-    <br/><br/>
+    </p>
+    <br/>
     <c:choose>
         <c:when test="${empty resultlist}">
             <p>Aucun objet trouvé</p>
@@ -66,15 +67,15 @@
             </c:forEach>
             <br/><br/>
             <c:choose>
-                <c:when test="${((firstres-resultsnumber) > -1) or sizeres ne -1}">
+                <c:when test="${totalsize > 1}">
                 <form name="searchNav" action="search" method="post" title="Navigation dans les Résultats">
                     <c:choose>
-                        <c:when test="${(firstres-resultsnumber) > -1}">
+                        <c:when test="${searchpagenumber > 1}">
                             <input type="submit" name="searchprev" value="Page précedénte" class="y-button y-button-white" />
                         </c:when>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${sizeres ne -1}">
+                        <c:when test="${searchpagenumber < totalsize}">
                             <input type="submit" name="searchnext" value="Page suivante" class="y-button y-button-white" />
                         </c:when>
                     </c:choose>
@@ -82,6 +83,13 @@
                     <input type="hidden" name="searchdomain" value="${searchtype}"/>
                     <!-- navigation parmi les résultats -->
                     <input type="hidden" name="firstres" value="${firstres}"/>
+                    <input type="hidden" name="totalsize" value="${totalsize}"/>
+                    <c:choose>
+                        <c:when test="${searchtype eq 'thiscoll'}">
+                            <input type="hidden" name="searchcoll" value="${searchcoll}"/>
+                        </c:when>
+                    </c:choose>
+                    
                 </form>
                 </c:when>
             </c:choose>      
