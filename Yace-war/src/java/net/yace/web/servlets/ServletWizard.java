@@ -140,7 +140,7 @@ public class ServletWizard extends HttpServlet {
                          * On demande la suppression totale de la collection
                          * items et tutti quanti
                          */
-
+                        request.setAttribute("deletionOK","La suppression de votre collection \"" + collection.getTheme() + "\" s'est bien déroulée.");
                         facColl.remove(collection);
                     } else {
                         /*

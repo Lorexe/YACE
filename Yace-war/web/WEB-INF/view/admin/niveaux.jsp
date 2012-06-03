@@ -13,6 +13,15 @@
         <sql:query var="ranks" dataSource="Yacedb">
             SELECT * FROM yrank
         </sql:query>
+            
+        <h1>Liste des <strong>niveaux</strong> d'utilisateurs</h1>
+        <% if (request.getAttribute("error") != null) {%>
+        <output id="out1" class="warning output"><%= request.getAttribute("error")%></output>
+        <% } else if (request.getAttribute("info") != null) {%>
+        <output id="out1" class="info output"><%= request.getAttribute("info")%></output>
+        <% } else {%>
+        <output id="out1" class="hidden"></output>
+        <% }%>
         <form name="rankModif" method="POST"></form>
         <table id="tabEdition" class="y-table y-table-form y-table-center">
             <thead>

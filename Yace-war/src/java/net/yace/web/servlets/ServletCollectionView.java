@@ -84,7 +84,6 @@ public class ServletCollectionView extends HttpServlet {
                 request.setAttribute("pageTitle", "Objets dans la collection");
                 request.getRequestDispatcher(VUE_COLL_VIEW).forward(request, response);
             } else {
-                //ERROR
                 error = true;
             }
         } catch (NumberFormatException e) {
@@ -105,34 +104,7 @@ public class ServletCollectionView extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {/*
-        YaceUtils.SessionState state = YaceUtils.getSessionState(request);
-        if (state == YaceUtils.SessionState.noauth) {
-        request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
-        } else {
-        HttpSession session = request.getSession(false);
-        Yuser yuser = (Yuser) session.getAttribute("user");
-        /*
-         * Session valide: utilisateur connecté
-         *
-        
-        YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
-        
-        String idCollection = request.getParameter("idCollection");
-        
-        if (idCollection != null && !idCollection.isEmpty()) {
-        //check collection owner and edit.
-        Ycollection collection = facColl.find(Integer.parseInt(idCollection));
-        if (collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
-        //Tout est ok
-        } else {
-        //Error
-        request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
-        }
-        } else {
-        request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
-        }
-        }*/
+            throws ServletException, IOException {
         doGet(request, response);
     }
 

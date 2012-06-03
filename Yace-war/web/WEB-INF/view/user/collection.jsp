@@ -16,14 +16,14 @@
     <section class="content"> <!-- contenu intéressant -->
         <aside id="toggletips"><strong>A I D E</strong></aside>
 
-        <a class="y-button y-button-green" href="itemtypemgmt?coll=${collection.getIdYCOLLECTION()}">J'ajoute un type d'objet</a>
+        <a class="y-button y-button-blue" href="itemtypemgmt?coll=${collection.getIdYCOLLECTION()}">J'ajoute un type d'objet</a><br/><br/>
 
         <c:forEach var="itemtype" items="${itemtypes}" varStatus="idit">
 
             <h1>${itemtype.getName()} 
-                <a class="y-button y-button-white" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}">
+                <a class="y-button y-button-green" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}">
                     Nouvel objet 
-                </a></h1>        
+                </a></h1>
 
             <c:forEach var="item" items="${values.get(idit.count - 1)}" varStatus="idi">
 

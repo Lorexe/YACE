@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.yace.web.servlets.admin;
+package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,20 +13,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.yace.entity.Ysetting;
-import net.yace.facade.YsettingFacade;
-import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
+import net.yace.web.utils.YaceUtils.SessionState;
 
 /**
  *
- * @author MaBoy <bruno.boi@student.helha.be>
+ * @author biddaputzese <biddaputzese@gmail.com>
  */
-public class ServletToggleSubscriptions extends HttpServlet {
-
+public class ServletItemTypeMgmt extends HttpServlet {
+    
     private final static String VUE_PRESENTATION = "welcome.jsp";
-    private final static String VUE_INSCRIPTIONS_ADMIN = "WEB-INF/view/admin/inscriptions.jsp";
-
+    private final static String VUE_MGMT_ITEMTYPE = "WEB-INF/view/user/about.jsp"; //TODO à modif
+    
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -37,18 +35,18 @@ public class ServletToggleSubscriptions extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        YaceUtils.SessionState state = YaceUtils.getSessionState(request);
-        
-        if (state == YaceUtils.SessionState.admin) {
-
+        SessionState state = YaceUtils.getSessionState(request);
+        if(state == YaceUtils.SessionState.noauth) {
+            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
+        } else {
             // Aide contextuelle
             Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
 
             List<String> infoBoxes = new ArrayList<String>();
             List<String> tipBoxes = new ArrayList<String>();
 
-            infoBoxes.add("Sur cette page, vous pouvez activer ou déactiver les nouvelles inscriptions à Ya<em class='CE'>ce</em>.");
-            tipBoxes.add("Bloquez provisoirement les inscriptions lorsque vous vous sentirez victime du succès de Ya<em class='CE'>ce</em> ! Vous aurez ainsi le temps de prendre des mesures pour élargir les capacités de vos serveurs.");
+            infoBoxes.add("En cours de rédaction.");
+            tipBoxes.add("En cours de rédaction.");
 
             asideHelp.put("tip", tipBoxes);
             asideHelp.put("info", infoBoxes);
@@ -56,13 +54,8 @@ public class ServletToggleSubscriptions extends HttpServlet {
             request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
 
             // On nomme et affiche la page
-            request.setAttribute("pageTitle", "Gestion des inscriptions - Administration du site");
-            request.getRequestDispatcher(VUE_INSCRIPTIONS_ADMIN).forward(request, response);
-
-        } else if (state == YaceUtils.SessionState.noauth) {
-            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
-        } else {
-            YaceUtils.displayAdminError(request, response);
+            request.setAttribute("pageTitle", "Gestion des types d'objet de la collection : ");
+            request.getRequestDispatcher(VUE_MGMT_ITEMTYPE).forward(request, response);
         }
     }
 
@@ -76,23 +69,6 @@ public class ServletToggleSubscriptions extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        YaceUtils.SessionState state = YaceUtils.getSessionState(request);
-
-        if (state == YaceUtils.SessionState.admin) {
-
-            YsettingFacade settingFac = ServicesLocator.getSettingFacade();
-            Ysetting setSubscriptions = settingFac.findByName("subscribeOk");
-
-            if (setSubscriptions.getVal().equals("true")) {
-                setSubscriptions.setVal("false");
-            } else {
-                setSubscriptions.setVal("true");
-            }
-
-            settingFac.edit(setSubscriptions);
-
-        }
-        
         doGet(request, response);
     }
 
@@ -102,6 +78,6 @@ public class ServletToggleSubscriptions extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "(Dés)activation des inscriptions";
+        return "Ajout/suppression d'un itemtype à une collection";
     }
 }

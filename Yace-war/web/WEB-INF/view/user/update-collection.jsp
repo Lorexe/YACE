@@ -11,7 +11,11 @@
     <input type="image" class="printicon" alt="Imprimer la page" title="Imprimer la page" src="./theme/default/img/img_trans.gif" />
     <c:choose>
         <c:when test="${!empty coll}">
-            <h1>Modification de <strong>${coll.rows[0].theme}</strong></h1>
+            <% if (request.getAttribute("deletionOK") == null) {%>
+                <h1>Modification de <strong>${coll.rows[0].theme}</strong></h1>
+            <% } else { %>
+                <h1>Suppression <strong>effectu&eacute;e</strong></h1>
+            <% } %>
         </c:when>
         <c:otherwise>
             <h1>${pageTitle}</h1>
@@ -21,7 +25,7 @@
 
 <section class="content"> <!-- contenu intéressant -->
     <aside id="toggletips"><strong>A I D E</strong></aside>
-
+<% if (request.getAttribute("deletionOK") == null) {%>
     <div class="wizardBox">
         <c:choose>
             <c:when test="${!empty coll}">
@@ -45,7 +49,9 @@
         </c:if>
     </form>
     <%-- <button class="y-button y-button-white" onclick="valid()">Je valide !</button> --%>
-    
+<% } else { %>
+    <p>${deletionOK}</p>
+<% } %>
 </section>
 
 </section>
