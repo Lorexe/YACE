@@ -43,6 +43,8 @@
                                 <!--<a href=""><img class="searchicon" src="./theme/default/img/img_trans.gif" /></a>-->
                                 <input src="./theme/default/img/img_trans.gif" type="image" value="submit" class="searchicon"> 
                                 <input type="text" name = "searchword" id="keyword" />
+                                <!-- ce formulaire de recherche fournit toujours les prémiers resultats -->
+                                <input type="hidden" name="firstres" value="0"/>
                                 <!-- recherche dans une collection precise disponible uniquement
                                     sur la page de consultation d'une collection
                                 -->

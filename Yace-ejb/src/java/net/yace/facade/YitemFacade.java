@@ -84,12 +84,21 @@ public class YitemFacade extends AbstractFacade<Yitem> {
     
     //fonction de recherche de base sur les attributevalue
     //retourne une liste des items publics dont les atributevalues contiennent "search"
-    public List<Yitem> getItemsByAttrValues(String search)
+    //pour désactiver la limitation sur le nombre des résultats mettre size à 0 
+    public List<Yitem> getItemsByAttrValues(String search, int size, int first)
     {
         search = search.toLowerCase();
         List<Yitem> cList = null;//liste à retourner
         Query query;
         query = em.createNamedQuery("Yitem.findItemsByAttrValues");
+        
+        //si on a passe un nombre des résultats à aficher correct
+        //sinon pas de limitation
+        if(size != 0)
+        {
+            query.setFirstResult(first);
+            query.setMaxResults(size);
+        }
         query.setParameter("search", "%"+search+"%");
         
         try 
@@ -103,12 +112,21 @@ public class YitemFacade extends AbstractFacade<Yitem> {
     
     
     //retourne une liste des items de yuser dont les atributevalues contiennent "search"
-    public List<Yitem> getItemsSearchFromUser(String search, Yuser yuser)
+    //pour désactiver la limitation sur le nombre des résultats mettre size à 0
+    public List<Yitem> getItemsSearchFromUser(String search, Yuser yuser, int size, int first)
     {
         search = search.toLowerCase();
         List<Yitem> cList = null;//liste à retourner
         Query query;
         query = em.createNamedQuery("Yitem.findItemsFromUser");
+        
+        //si on a passe un nombre des résultats à aficher correct
+        //sinon pas de limitation
+        if(size != 0)
+        {
+            query.setFirstResult(first);
+            query.setMaxResults(size);
+        }
         query.setParameter("search", "%"+search+"%");
         query.setParameter("yuser", yuser);
         
@@ -122,12 +140,22 @@ public class YitemFacade extends AbstractFacade<Yitem> {
     }
     
     //retourne une liste des items de yuser dont les atributevalues contiennent "search"
-    public List<Yitem> getItemsInColl(String search, Ycollection coll, Yuser yuser)
+    //pour désactiver la limitation sur le nombre des résultats mettre size à 0
+    public List<Yitem> getItemsInColl(String search, Ycollection coll, Yuser yuser, int size, int first)
     {
         search = search.toLowerCase();
         List<Yitem> cList = null;//liste à retourner
         Query query;
         query = em.createNamedQuery("Yitem.findItemsInColl");
+        
+        //si on a passe un nombre des résultats à aficher correct
+        //sinon pas de limitation
+        if(size != 0)
+        {
+            query.setFirstResult(first);
+            query.setMaxResults(size);
+        }
+        
         query.setParameter("search", "%"+search+"%");
         query.setParameter("coll", coll);
         query.setParameter("yuser", yuser);

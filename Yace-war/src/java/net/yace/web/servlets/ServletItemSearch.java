@@ -61,6 +61,23 @@ public class ServletItemSearch extends HttpServlet {
         
         String domain = request.getParameter("searchdomain");
         String search = request.getParameter("searchword");
+        
+        String nextpage = request.getParameter("searchnext");
+        String prevpage = request.getParameter("searchprev");
+        
+        int firstres = Integer.parseInt(request.getParameter("firstres"));
+        int resultsnumber = 3;//nombre des resultats à afficher sur une page
+        
+        //determiner le debut de la recherche
+        if(prevpage != null)
+        {
+            firstres = firstres-resultsnumber;
+        }
+        else if(nextpage != null)
+        {
+            firstres+=resultsnumber;
+        }
+        
         List<Yitem> resultlist = null;
         
         HttpSession session = request.getSession(false);
@@ -68,7 +85,7 @@ public class ServletItemSearch extends HttpServlet {
             if(session != null)
                 yuser = (Yuser)session.getAttribute("user");
         
-        if(search != null || !search.equals(""))
+        if(search != null || !search.equals(""))//changer || à && , ajouter limitation taille du search
         {
             request.setAttribute("searched", search);
             request.setAttribute("searchtype", domain);
@@ -76,18 +93,18 @@ public class ServletItemSearch extends HttpServlet {
             if(domain.equals("all"))
             {
                 //recherche dans les collections publiques
-                resultlist = itemFac.getItemsByAttrValues(search);
+                resultlist = itemFac.getItemsByAttrValues(search,resultsnumber,firstres);
                 
                 request.setAttribute("resultlist", resultlist);
             }
             else if(yuser != null && domain.equals("mycolls"))
             {
                 //recherche dans mes collections
-                resultlist = itemFac.getItemsSearchFromUser(search, yuser);
+                resultlist = itemFac.getItemsSearchFromUser(search, yuser,resultsnumber,firstres);
                 
                 request.setAttribute("resultlist", resultlist);
             }
-            else if(domain.equals("thiscoll"))
+            else//if (domain.equals("thiscoll"))
             {
                 //recherche dans une collection donnée
                 //recuperer l'id de collection
@@ -96,10 +113,25 @@ public class ServletItemSearch extends HttpServlet {
                 Ycollection coll = collFac.find(Integer.parseInt(colid));
                         
                 //methode de recherche des items d'une collection donée
-                resultlist = itemFac.getItemsInColl(search, coll, yuser);
+                resultlist = itemFac.getItemsInColl(search, coll, yuser,resultsnumber,firstres);
                 
                 request.setAttribute("resultlist", resultlist);
+                
             }
+            //encode des elements à afficher?
+            //si le nombre des results < taille de selection, non
+            if(resultsnumber > resultlist.size())
+            {
+                request.setAttribute("sizeres", -1);
+            }
+            else
+            {
+                request.setAttribute("sizeres", resultsnumber);
+            }
+            
+            request.setAttribute("searchpagenumber", (firstres/resultsnumber)+1);//numéro de page
+            request.setAttribute("firstres", firstres);//valeur pour le formulaire dynamique
+            request.setAttribute("resultsnumber", resultsnumber);
         }
         
         

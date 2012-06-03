@@ -12,6 +12,7 @@
     <aside id="toggletips"><strong>A I D E</strong></aside>
     
     <h3>Les Résultats de recherche pour : "<b>${searched}</b>"</h3>
+    <h4>Page :  ${searchpagenumber}</h4>
     <br/>
     <c:choose>
         <c:when test="${searchtype eq 'mycolls'}">
@@ -63,6 +64,27 @@
                     </figcaption>
                 </figure>        
             </c:forEach>
+            <br/><br/>
+            <c:choose>
+                <c:when test="${((firstres-resultsnumber) > -1) or sizeres ne -1}">
+                <form name="searchNav" action="search" method="post" title="Navigation dans les Résultats">
+                    <c:choose>
+                        <c:when test="${(firstres-resultsnumber) > -1}">
+                            <input type="submit" name="searchprev" value="Page précedénte" class="y-button y-button-white" />
+                        </c:when>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${sizeres ne -1}">
+                            <input type="submit" name="searchnext" value="Page suivante" class="y-button y-button-white" />
+                        </c:when>
+                    </c:choose>
+                    <input type="hidden" name="searchword" value="${searched}"/>
+                    <input type="hidden" name="searchdomain" value="${searchtype}"/>
+                    <!-- navigation parmi les résultats -->
+                    <input type="hidden" name="firstres" value="${firstres}"/>
+                </form>
+                </c:when>
+            </c:choose>      
         </c:otherwise>
     </c:choose>
 </section>
