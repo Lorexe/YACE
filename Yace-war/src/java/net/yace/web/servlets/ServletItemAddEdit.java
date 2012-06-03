@@ -28,6 +28,7 @@ import net.yace.web.utils.YaceUtils;
  */
 public class ServletItemAddEdit extends HttpServlet {
 
+    private final static String VUE_PRESENTATION = "welcome.jsp";
     private final static String SVLT_COLLECTION = "see?idCollection=";
     private final static String VUE_ITEM_ADDEDIT = "WEB-INF/view/user/item-addedit.jsp";
 

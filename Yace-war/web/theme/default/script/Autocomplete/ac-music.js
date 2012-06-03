@@ -35,22 +35,22 @@ function addAlbum(album)
     }
     
     $("#search_result").append("<div class='ac_box' onclick=\"addAlbumToForm('"+album.cover+"','"+album.artist+"','"+album.name+"','"+album.released+"','"+tracks+"')\"" +
-        "<img width=150 src=\"" + album.cover + "\"/>" +
-        "<ul><li>Artist : " + album.artist + "</li>" +
+        "<img height='150' src=\"" + album.cover + "\"/>" +
+        "<ul><li>Artiste : " + album.artist + "</li>" +
         "<li>Album : " + album.name + "</li>" +
         "</ul>" +
         "<h3>Tracks</h3><ol>"
         );
         
     for (var i = 0; i < album.tracklist.length; i++){
-        $("#content").append("<li>" + album.tracklist[i].name + " time : " + album.tracklist[i].duration + "</li>");
+        $("#content").append("<li>" + album.tracklist[i].name + " (" + album.tracklist[i].duration + ")</li>");
     }
-    $("#content").append("</ol></div>");
+    $("#content").append("</ol><div class='clear_image'></div></div>");
 }
 
 function searchAlbumStarted()
 {
-    $("#searching").append("Searching...");
+    $("#searching").append("Recherche...");
 }
 
 function searchAlbumStopped()
@@ -86,6 +86,7 @@ function searchLastfmArtist(name)
         type:"GET",
         url:url,
         dataType:"jsonp",
+        error: function() { finishingMusicSearch();}, 
         success: function(data){
 
             var keeper = data.results.artistmatches.artist.length;			
@@ -108,6 +109,7 @@ function getLastfmArtistAlbums(mbid)
         type:"GET",
         url:url,
         dataType:"jsonp",
+        error: function() { finishingMusicSearch();}, 
         success: function(data){
             
             var keeper = data.topalbums.album.length;
@@ -142,6 +144,7 @@ function searchLastfmAlbum(name)
         type:"GET",
         url:url,
         dataType:"jsonp",
+        error: function() { finishingMusicSearch();}, 
         success: function(data){
             
             var keeper = data.results.albummatches.album.length;
@@ -177,6 +180,7 @@ function getLastfmAlbum(mbid)
         type:"GET",
         url:url,
         dataType:"jsonp",
+        error: function() { finishingMusicSearch();}, 
         success: function(data){
             console.log("-ALBUM GETINFO-");
             console.log(data);

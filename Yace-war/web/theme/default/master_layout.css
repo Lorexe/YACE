@@ -410,6 +410,32 @@ footer {
 }
 
 /**
+ * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> AUTOCOMPLETE <<<<<<<<<<
+ */
+ aside#search_result {
+     float: right;
+     margin-right: 15px;
+     width: 700px;
+ }
+ 
+ aside#search_result .ac_box {
+     border: 1px solid gray;
+     border-radius: 15px;
+     margin-bottom: 10px;
+     padding: 10px;
+ }
+ 
+ aside#search_result .ac_box .clear_image {
+     clear: left;
+ }
+ 
+ aside#search_result img {
+     float: left;
+     margin-right: 5px;
+     margin-bottom: 5px;
+ }
+ 
+/**
  * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> CLASSES <<<<<<<<<<
  */
 /* :::: WHITEBOX :::: */

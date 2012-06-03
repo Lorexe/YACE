@@ -39,16 +39,16 @@ function addBook(book)
         authorstr += book.authors[i].name + ", ";
     
     $("#search_result").append("<div class='ac_box' onclick=\"addBookToForm('"+book.cover+"', '"+book.title+"', '"+authorstr+"', '"+book.plot+"', '"+book.publisher+"', '"+book.released+"', '"+book.pageCount+"')\">" +
-        "<img height=150 src='" + book.cover + "'/>" +
+        "<img height='150' src='" + book.cover + "'/>" +
         "<ul><li>Auteur : " + authorstr + "</li>" +
         "<li>Titre : " + book.title + "</li>" +
-        "<li>Résumé : " + book.plot + "</li></ul></div>"
+        "<li>R&eacute;sum&eacute; : " + book.plot + "</li></ul><div class='clear_image'></div></div>"
     );
 }
 
 function searchBookStarted()
 {
-    $("#searching").append("Searching...");
+    $("#searching").append("recherche...");
 }
 
 function searchBookStopped()
@@ -78,6 +78,7 @@ function searchGBook(name, lang)
         type:"GET",
         url:url,
         dataType:"jsonp",
+        error: function() { finishingBookSearch();}, 
         success: function(data){
 
             var keeper = data.items.length;
@@ -110,8 +111,4 @@ function searchGBook(name, lang)
             }
         }
     }); // ajax
-}
-
-function addslashes( str ) {
-    return (str+'').replace(/([\\"'])/g, "\\$1").replace(/\0/g, "\\0");
 }

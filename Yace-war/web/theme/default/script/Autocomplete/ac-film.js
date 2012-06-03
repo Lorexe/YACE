@@ -52,16 +52,16 @@ function addFilm(film)
         genres += film.genres[i].name + ",";
     
     $("#search_result").append("<div class='ac_box' onclick=\"addFilmToForm('"+film.poster+"', '"+film.title+"', '"+directors+"', '"+writers+"', '"+actors+"', '"+film.plot+"', '"+film.runtime+"', '"+film.rating+"', '"+genres+"', '"+film.released+"')\">" +
-        "<img height=150 src='" + film.poster + "'/>" +
+        "<img height='150' src='" + film.poster + "'/>" +
         "<ul><li>Titre: " + film.title + "</li>" +
         "<li>Auteur: " + writers + "</li>" +
-        "<li>Réalisateur: " + directors + "</li>" +
-        "<li>Résumé: " + film.plot + "</li></ul></div>");
+        "<li>R&eacute;alisateur: " + directors + "</li>" +
+        "<li>R&eacute;sum&eacute;: " + film.plot + "</li></ul><div class='clear_image'></div></div>");
 }
 
 function searchFilmStarted()
 {
-    $("#searching").append("Searching...");
+    $("#searching").append("Recherche...");
 }
 
 function searchFilmStopped()
@@ -93,6 +93,7 @@ function getImdb(name)
        type:"GET",
        url:uri,
        dataType:"jsonp",
+       error: function() { finishingFilmSearch();}, 
        success: function(data){
             
             var writers = [];
@@ -149,6 +150,7 @@ function getTmdb(name)
        type:"GET",
        url:uri,
        dataType:"jsonp",
+       error: function() { finishingFilmSearch();}, 
        success: function(data){
            for (var i = 0; i < data.length; i++)
            {
@@ -170,6 +172,7 @@ function getTmdbFilm(id, lang)
        type:"GET",
        url:uri,
        dataType:"jsonp",
+       error: function() { finishingFilmSearch();}, 
        success: function(data){
             
             //We need the writer, actors, poster and genre

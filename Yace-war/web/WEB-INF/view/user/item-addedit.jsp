@@ -21,6 +21,8 @@
             <sql:param value="${idType}"/>
         </sql:query>
         
+        <aside id="search_result"> </aside>
+            
         <form method="post" action="itemmgmt">
             <input type="hidden" name="coll" value="${idColl}"/>
             <input type="hidden" name="type" value="${idType}"/>
@@ -84,8 +86,6 @@
                 </tbody>
             </table>
         </form>
-        
-        <aside id="search_result"> </aside>
     </section>
 </section>
 <c:if test="${!empty autocomplete}">
