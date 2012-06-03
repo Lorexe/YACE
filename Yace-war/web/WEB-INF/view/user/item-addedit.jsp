@@ -1,3 +1,11 @@
+<%-- 
+    Document   : item-addedit
+    Created on : 01 juin 2012
+    Author     : Scohy Jérôme <scohy.jerome@gmail.com>
+--%>
+
+<%@ page import="net.yace.web.utils.YaceUtils" %>
+
 <section id="main" class="whitebox"> <!-- main panel -->
 
     <header>
@@ -5,14 +13,14 @@
         <h1>${pageHeaderTitle}</h1>
     </header>
 
-    <section class="content"> <!-- contenu intÃ©ressant -->
+    <section class="content"> <!-- contenu intéressant -->
         <aside id="toggletips"><strong>A I D E</strong></aside>
 
         <sql:query var="attributes" dataSource="Yacedb">
             SELECT * FROM Yattribute WHERE itemtype = ?
             <sql:param value="${idType}"/>
         </sql:query>
-
+        
         <form method="post" action="itemmgmt">
             <input type="hidden" name="coll" value="${idColl}"/>
             <input type="hidden" name="type" value="${idType}"/>
@@ -24,11 +32,12 @@
                     <tr>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <td rowspan="2">
+                        <td rowspan="3">
                             <c:choose>
                                 <c:when test="${empty edit}">
                                     <input type="submit" name="button_add" value="Ajouter l'objet" class="y-button y-button-white" />
@@ -37,7 +46,6 @@
                                     <input type="submit" name="button_edit" value="Editer l'objet" class="y-button y-button-white" />
                                 </c:otherwise>
                             </c:choose>
-                            
                         </td>
                     </tr>
                 </tfoot>
@@ -47,10 +55,28 @@
                             <td>${attr.name}</td>
                             <c:choose>
                                 <c:when test="${attr.type=='String'}">
-                                    <td><input type="text" name="attr_${attr.name}" size="30" required <c:if test="${!empty edit}">value="${itemValues.get(counter.count-1).getValStr()}"</c:if> /></td>
+                                    <td><input type="text" id="attr_${attrsName.get(counter.count-1)}" name="attr_${attrsName.get(counter.count-1)}" size="30" required <c:if test="${!empty edit}">value="${itemValues.get(counter.count-1).getValStr()}"</c:if> /></td>
+                                    <td>
+                                        <c:if test="${!empty autocomplete}">
+                                            <c:choose>
+                                                <c:when test="${autocomplete=='film' && attr.name=='Titre'}">
+                                                    <img class='eyeicon' src='./theme/default/img/eye_16.png' alt='Rechercher' title='Rechercher' onclick='getMovies("attr_")' />
+                                                </c:when>
+                                                <c:when test="${autocomplete=='music' && attr.name=='Nom'}">
+                                                    <img class='eyeicon' src='./theme/default/img/eye_16.png' alt='Rechercher' title='Rechercher' onclick='getAlbums("attr_")' />
+                                                </c:when>
+                                                <c:when test="${autocomplete=='book' && attr.name=='Titre'}">
+                                                    <img class='eyeicon' src='./theme/default/img/eye_16.png' alt='Rechercher en Francais' title='Rechercher en Francais' onclick='getBooks("attr_", "fr")' /> 
+                                                    <img class='eyeicon' src='./theme/default/img/eye_16.png' alt='Rechercher en Anglais' title='Rechercher en Anglais' onclick='getBooks("attr_", "en")' />
+                                                </c:when>
+                                            </c:choose>
+                                            <div id="searching"></div>
+                                        </c:if>
+                                    </td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><input type="text" name="attr_${attr.name}" size="30" required <c:if test="${!empty edit}">value="${itemValues.get(counter.count-1).getValStr()}"</c:if> /></td>
+                                    <td><input type="text" id="attr_${attrsName.get(counter.count-1)}" name="attr_${attrsName.get(counter.count-1)}" size="30" required <c:if test="${!empty edit}">value="${itemValues.get(counter.count-1).getValStr()}"</c:if> /></td>
+                                    <td></td>
                                 </c:otherwise>
                             </c:choose>
                         </tr>
@@ -58,5 +84,10 @@
                 </tbody>
             </table>
         </form>
+        
+        <aside id="search_result"> </aside>
     </section>
 </section>
+<c:if test="${!empty autocomplete}">
+    <script type="application/javascript" src="./theme/default/script/Autocomplete/ac-${autocomplete}.js"></script>
+</c:if>

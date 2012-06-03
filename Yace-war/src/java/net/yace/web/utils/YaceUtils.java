@@ -7,6 +7,7 @@ package net.yace.web.utils;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -286,4 +287,16 @@ public class YaceUtils {
         
         return x;
     }
+    
+    /*
+     * Permet d'enlever les accents, de remplacer les espaces par des underscore
+     * et de mettre en miniscule
+     */
+    public static String deAccent(String str) {
+        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD); 
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        nfdNormalizedString = pattern.matcher(nfdNormalizedString).replaceAll("");
+        return nfdNormalizedString.replaceAll(" ", "_").toLowerCase();
+    }
+
 }

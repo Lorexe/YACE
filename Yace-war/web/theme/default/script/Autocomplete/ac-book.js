@@ -2,12 +2,31 @@ var uri_book = "https://www.googleapis.com/books/v1/volumes";
 var append_book = "key=AIzaSyACxun2j0Wat4J9vtrBFDSgluDft7UI-mg&callback=?";
 
 var semabook = 0;
+var basename = "";
 
-function getBooks(lang)
+function getBooks(input_basename, lang)
 {
-    var name = $("#name").val();
-    $("#content").empty();
+    basename = input_basename;
+    var name = $("#" + input_basename + "titre").val();
+    $("#search_result").empty();
     searchGBook(name, lang);
+}
+
+function addBookToForm(cover, titre, auteur, resume, editeur, annee, nb_pages) {
+    if(cover=="undefined") $("#"+basename+"cover").val("");
+    else                   $("#"+basename+"cover").val(cover);
+    if(titre=="undefined") $("#"+basename+"titre").val("");
+    else                   $("#"+basename+"titre").val(titre);
+    if(auteur=="undefined") $("#"+basename+"auteur").val("");
+    else                    $("#"+basename+"auteur").val(auteur);
+    if(resume=="undefined") $("#"+basename+"resume").val("");
+    else                    $("#"+basename+"resume").val(resume);
+    if(editeur=="undefined") $("#"+basename+"editeur").val("");
+    else                     $("#"+basename+"editeur").val(editeur);
+    if(annee=="undefined") $("#"+basename+"date_de_sortie").val("");
+    else                   $("#"+basename+"date_de_sortie").val(annee);
+    if(nb_pages=="undefined") $("#"+basename+"nombre_de_pages").val("");
+    else                      $("#"+basename+"nombre_de_pages").val(nb_pages);
 }
 
 /*
@@ -18,12 +37,12 @@ function addBook(book)
     var authorstr = "";
     for (var i = 0; i < book.authors.length; i++)
         authorstr += book.authors[i].name + ", ";
-    $("#content").append("<h2>Results from Google</h2><ul>" +
-        "<li>Authors : " + authorstr + "</li>" +
-        "<li>Title : " + book.title + "</li>" +
-        "<li>Plot : " + book.plot + "</li>" +
-        "<li>Cover : <img width=150 src=\"" + book.cover + "\"/></li>" +
-        "</ul>"
+    
+    $("#search_result").append("<div class='ac_box' onclick=\"addBookToForm('"+book.cover+"', '"+book.title+"', '"+authorstr+"', '"+book.plot+"', '"+book.publisher+"', '"+book.released+"', '"+book.pageCount+"')\">" +
+        "<img height=150 src='" + book.cover + "'/>" +
+        "<ul><li>Auteur : " + authorstr + "</li>" +
+        "<li>Titre : " + book.title + "</li>" +
+        "<li>Résumé : " + book.plot + "</li></ul></div>"
     );
 }
 
@@ -91,4 +110,8 @@ function searchGBook(name, lang)
             }
         }
     }); // ajax
+}
+
+function addslashes( str ) {
+    return (str+'').replace(/([\\"'])/g, "\\$1").replace(/\0/g, "\\0");
 }

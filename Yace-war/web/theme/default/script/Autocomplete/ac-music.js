@@ -2,21 +2,41 @@ var append_album = "&api_key=c9aec14b6bfccf2883dbc1ad9e9adf6c&format=json&callba
 var uri_album = "http://ws.audioscrobbler.com/2.0/";
 
 var semamusic = 0;
+var basename = "";
 
-function getAlbums()
+function getAlbums(input_basename)
 {
     //var apik = "c9aec14b6bfccf2883dbc1ad9e9adf6c";
     //var uri = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b25b959554ed76058ac220b7b2e0a026";
-    var name = $("#name").val();
-    $("#content").empty();
+    basename = input_basename;
+    var name = $("#" + input_basename + "nom").val();
+    $("#search_result").empty();
     searchLastfm(name);
 }
- 
+
+function addAlbumToForm(cover, artist, name, released, tracks) {
+    if(cover=="undefined") $("#"+basename+"cover").val("");
+    else                   $("#"+basename+"cover").val(cover);
+    if(artist=="undefined") $("#"+basename+"artiste").val("");
+    else                    $("#"+basename+"artiste").val(artist);
+    if(name=="undefined") $("#"+basename+"nom").val("");
+    else                  $("#"+basename+"nom").val(name);
+    if(released=="undefined") $("#"+basename+"date_de_sortie").val("");
+    else                      $("#"+basename+"date_de_sortie").val(released);
+    if(tracks=="undefined") $("#"+basename+"tracklist").val("");
+    else                    $("#"+basename+"tracklist").val(tracks);
+}
+
 function addAlbum(album)
 {
-    $("#content").append("<h2>Results from last.fm</h2><ul>" +
-        "<li>Image : <img width=150 src=\"" + album.cover + "\"/></li>" +
-        "<li>Artist : " + album.artist + "</li>" +
+    var tracks = "";
+    for (var i = 0; i < album.tracklist.length; i++){
+        tracks += album.tracklist[i].name + " (" + album.tracklist[i].duration + "), ";
+    }
+    
+    $("#search_result").append("<div class='ac_box' onclick=\"addAlbumToForm('"+album.cover+"','"+album.artist+"','"+album.name+"','"+album.released+"','"+tracks+"')\"" +
+        "<img width=150 src=\"" + album.cover + "\"/>" +
+        "<ul><li>Artist : " + album.artist + "</li>" +
         "<li>Album : " + album.name + "</li>" +
         "</ul>" +
         "<h3>Tracks</h3><ol>"
@@ -25,7 +45,7 @@ function addAlbum(album)
     for (var i = 0; i < album.tracklist.length; i++){
         $("#content").append("<li>" + album.tracklist[i].name + " time : " + album.tracklist[i].duration + "</li>");
     }
-    $("#content").append("</ol>");
+    $("#content").append("</ol></div>");
 }
 
 function searchAlbumStarted()

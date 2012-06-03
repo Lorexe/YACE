@@ -49,6 +49,7 @@ public class ServletItemAddEdit extends HttpServlet {
 
             YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
             YitemtypeFacade facItemtype = ServicesLocator.getItemTypeFacade();
+            YattributeFacade facAttribute = ServicesLocator.getAttributeFacade();
             
             String idCollection = request.getParameter("coll");
             String idType = request.getParameter("type");
@@ -74,6 +75,17 @@ public class ServletItemAddEdit extends HttpServlet {
                             request.setAttribute("autocomplete", name);
                     }
                     
+                    // Récupération des attributes et conversion des noms
+                    List<Yattribute> attrs = facAttribute.findAttributesByItem(itemtype);
+                    List<String> attrsName = new ArrayList<String>();
+                    for(Yattribute att : attrs) {
+                        attrsName.add(YaceUtils.deAccent(att.getName()));
+                    }
+                    request.setAttribute("attrsName", attrsName);
+                    
+                    request.setAttribute("idColl", idCollection);
+                    request.setAttribute("idType", idType);
+                    
                     String editItem = request.getParameter("edit");
                     if(editItem!=null && !editItem.isEmpty()) { // Si editItem, c'est l'édition
                         YitemFacade facItem = ServicesLocator.getItemFacade();
@@ -82,8 +94,6 @@ public class ServletItemAddEdit extends HttpServlet {
                         if(item.getCollection().equals(collection)) {
                             request.setAttribute("pageTitle", "Edition d'un objet " + itemtype.getName() + " de la collection " + collection.getTheme());
                             request.setAttribute("pageHeaderTitle", "Edition d'un objet <strong>" + itemtype.getName() + "</strong> de la collection <strong>" + collection.getTheme() + "</strong>");
-                            request.setAttribute("idColl", idCollection);
-                            request.setAttribute("idType", idType);
                             request.setAttribute("edit", editItem);
                             
                             // Ajout des valeurs de l'item
@@ -99,8 +109,6 @@ public class ServletItemAddEdit extends HttpServlet {
                     } else { // Sinon l'ajout
                         request.setAttribute("pageTitle", "Ajout d'un objet " + itemtype.getName() + " dans la collection " + collection.getTheme());
                         request.setAttribute("pageHeaderTitle", "Ajout d'un objet <strong>" + itemtype.getName() + "</strong> dans la collection <strong>" + collection.getTheme() + "</strong>");
-                        request.setAttribute("idColl", idCollection);
-                        request.setAttribute("idType", idType);
                         request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
                     }
                 } else {
@@ -146,6 +154,13 @@ public class ServletItemAddEdit extends HttpServlet {
                     YattributeFacade attrFacade = ServicesLocator.getAttributeFacade();
                     YattributevalueFacade attrValFacade = ServicesLocator.getAttributeValueFacade();
                     
+                    // Récupération des attributes et conversion des noms
+                    List<Yattribute> listAttributes = attrFacade.findAttributesByItem(itemtype);
+                    List<String> attrsName = new ArrayList<String>();
+                    for(Yattribute att : listAttributes) {
+                        attrsName.add(YaceUtils.deAccent(att.getName()));
+                    }
+                    
                     String buttonAdd = request.getParameter("button_add");
                     String buttonEdit = request.getParameter("button_edit");
                     if(buttonAdd != null) {
@@ -154,23 +169,21 @@ public class ServletItemAddEdit extends HttpServlet {
                         item.setType(itemtype);
                         item.setCollection(collection);
                         itemFacade.create(item);
-
-                        // Récupération des attributs
-                        List<Yattribute> listAttributes = new ArrayList<Yattribute>();
-                        listAttributes = attrFacade.findAttributesByItem(itemtype);
-
+                        
                         // Remplissage des attributeValue
-                        for(Yattribute attr : listAttributes) {
+                        for(int i=0; i<listAttributes.size(); i++) {
+                            Yattribute attr = listAttributes.get(i);
                             Yattributevalue av = new Yattributevalue();
                             av.setAttribute(attr);
-
+                            
                             // Gestion des types d'attributs
+                            String attrName = attrsName.get(i);
                             if(attr.getType().equalsIgnoreCase("string")) {
-                                av.setValStr(request.getParameter("attr_" + attr.getName()));
+                                av.setValStr(request.getParameter("attr_" + attrName));
                             } else {
-                                av.setValStr(request.getParameter("attr_" + attr.getName()));
+                                av.setValStr(request.getParameter("attr_" + attrName));
                             }
-
+                            
                             // Enregistrement de l'attributevalue
                             attrValFacade.create(av);
                             av.addYitem(item);
@@ -186,13 +199,10 @@ public class ServletItemAddEdit extends HttpServlet {
                             Yitem item = itemFacade.find(Integer.parseInt(itemId));
                             List<Yattributevalue> attrVals = new ArrayList<Yattributevalue>();
                             attrVals = attrValFacade.findAllValuesForItem(item);
-                            
-                            List<Yattribute> listAttributes = new ArrayList<Yattribute>();
-                            listAttributes = attrFacade.findAttributesByItem(itemtype);
                         
                             for(int i=0; i<attrVals.size(); i++) {
                                 Yattributevalue attrVal = attrVals.get(i);
-                                String attrName = listAttributes.get(i).getName();
+                                String attrName = attrsName.get(i);
                                 String attrType = listAttributes.get(i).getType();
                                 
                                 String newValue = request.getParameter("attr_" + attrName);
