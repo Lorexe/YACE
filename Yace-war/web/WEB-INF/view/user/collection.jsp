@@ -20,6 +20,10 @@
             <a class="y-button y-button-green" href="itemtypemgmt?coll=${collection.getIdYCOLLECTION()}">J'ajoute un type d'objet</a>
             <br/><br/>
         </c:if>
+            
+        <c:if test="${empty user || user != collection.owner}">
+            <p>Cette collection appartient à <strong>${collection.owner.pseudo}</strong></p>
+        </c:if>
         
         <%-- Ajout d'objet de typeitem public --%>
         <c:if test="${!empty user && user eq collection.owner && !empty itemtypesPublic && itemtypesPublic!=null}">
