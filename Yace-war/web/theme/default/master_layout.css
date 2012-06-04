@@ -128,7 +128,7 @@
  */
 html {
     min-width: 940px;
-    margin: 0 100px;
+    margin: 0 42px;
     background: #abc;
 }
 
@@ -391,6 +391,7 @@ section.splash {
     height: 80%;
     margin-top: 3pc;
     margin-left: -35%;
+    overflow: auto;
 }
 
 /**
@@ -415,19 +416,20 @@ footer {
 aside#search_result {
     float: right;
     padding-right: 10px;
-    width: 340px;
+    width: 40%;
     overflow-y: auto;
     height: 500px;
     overflow-x: hidden;
     margin-right:10px;
+    font-size: 0.7em;
 }
 
 aside#search_result .ac_box {
     border: 1px solid gray;
     border-radius: 15px;
-    margin: 5px auto;
-    padding: 10px;
-    width: 300px;
+    margin: 2% auto;
+    padding: 3%;
+    width: 94%;
 }
  
  aside#search_result .ac_box .clear_image {

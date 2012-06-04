@@ -21,64 +21,57 @@
             <p class="search-header">
                 <a href="see?idCollection=${curItem.collection.idYCOLLECTION}"><label><strong> Collection : ${curItem.collection.theme}</strong></label></a><br/><br/>
                 <label ><strong>Type d'objet  : ${curItem.type.name}</strong></label><br/>
-                <label ><strong>Propriètaire  : ${curItem.collection.owner.pseudo}</strong></label><br/><br/>
+                <label ><strong>Propri&eacute;taire  : ${curItem.collection.owner.pseudo}</strong></label><br/><br/>
                 <c:choose>
                     <c:when test="${prevIt ne -1}">
-                        <a href="details?item=${prevIt}"><img alt="Précédent" src="./theme/default/img/icon/prev_24.png" title="Précédent"></a>
+                        <a href="details?item=${prevIt}"><img alt="Précédent" src="./theme/default/img/icon/prev_24.png" title="Précédent"/></a>
                     </c:when>
                     <c:otherwise>
-                        <img alt="" src="./theme/default/img/icon/prev_24g.png">
+                        <img alt="" src="./theme/default/img/icon/prev_24g.png"/>
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
                     <c:when test="${nextIt ne -1}">
-                        <a href="details?item=${nextIt}"><img alt="Suivant" src="./theme/default/img/icon/next_24.png" title="Suivant"></a>
+                        <a href="details?item=${nextIt}"><img alt="Suivant" src="./theme/default/img/icon/next_24.png" title="Suivant"/></a>
                     </c:when>
                     <c:otherwise>
-                        <img alt="" src="./theme/default/img/icon/next_24g.png">
+                        <img alt="" src="./theme/default/img/icon/next_24g.png"/>
                     </c:otherwise>
                 </c:choose>
                 <br/>
                 </p>
                 <h3>Les Caractéristiques</h3><br/><br/>
-                
-            <c:forEach var="attval" items="${attributevalues}">
-                <c:choose>
-                    <c:when test="${attval.attribute.type eq 'String'}">
-                        <label ><b>${attval.attribute.name} : </b></label>&nbsp;&nbsp;
-                        <c:choose>
-                            <c:when test="${fn:length(attval.valStr) > 25}">
-                                <p class="attr-longtext" for="attrval${attval.idYATTRIBUTEVALUE}">
-                                ${attval.valStr}
-                                </p>
-                            </c:when>
-                            <c:otherwise>
-                                <label for="attrval${attval.idYATTRIBUTEVALUE}">${attval.valStr}</label>
-                                <br/><br/>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:when>
-                    <c:when test="${attval.attribute.type eq 'Image'}">
-                        <!-- todo : afficher l'image   balise img    -->
-                        <label ><b>${attval.attribute.name}</b></label><br/>
-                        <img for="attrval${attval.idYATTRIBUTEVALUE}" class="attr-cover" src="${attval.valStr}"></img>
-                        <br/><br/>
-                    </c:when>
-                    <c:when test="${attval.attribute.type eq 'URL'}">
-                        <label ><b>${attval.attribute.name} : </b></label>&nbsp;&nbsp;
-                        <!-- todo : creer l'url  balise a     -->
-                        <a href="${attval.valStr}">Lien</a>
-                        <br/><br/>
-                    </c:when>
-                    <c:otherwise>
-                        <label for="">error! no value found</label>
-                    </c:otherwise>
-                </c:choose>
-                
-            </c:forEach>
+                <table class="y-table">
+                    <c:forEach var="attval" items="${attributevalues}" varStatus ="attrcount">
+                        <tr <c:if test="${attrcount.count % 2 == 0}">class="odd"</c:if>>
+                            <td>
+                                <label ><b>${attval.attribute.name}</b></label>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${attval.attribute.type eq 'String'}">
+                                        <label  class="attr-longtext" for="attrval${attval.idYATTRIBUTEVALUE}">${attval.valStr}</label>        
+                                    </c:when>
+                                    <c:when test="${attval.attribute.type eq 'Image'}">
+                                        <!-- todo : afficher l'image   balise img    -->
+                                        <img for="attrval${attval.idYATTRIBUTEVALUE}" class="attr-cover" src="${attval.valStr}"></img>
+                                    </c:when>
+                                    <c:when test="${attval.attribute.type eq 'URL'}">
+                                        <!-- todo : creer l'url  balise a     -->
+                                        <a href="${attval.valStr}">Lien</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <label for="">error! no value found</label>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            
             <c:if test="${canEdit eq true}">         
             <a class="y-button y-button-white" href="itemmgmt?coll=${curItem.collection.idYCOLLECTION}&type=${curItem.type.getIdYITEMTYPE()}&edit=${curItem.getIdYITEM()}">
-            Éditer cet objet</a>
+            &Eacute;diter cet objet</a>
             </c:if>
             </div>
         </c:otherwise>
