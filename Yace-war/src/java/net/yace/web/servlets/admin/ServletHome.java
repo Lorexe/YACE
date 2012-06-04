@@ -23,7 +23,6 @@ public class ServletHome extends HttpServlet {
 
     private final static String VUE_PRESENTATION = "welcome.jsp";
     private final static String VUE_HOME_ADMIN = "WEB-INF/view/admin/index.jsp";
-    private final static String ERROR_PAGE = "WEB-INF/view/user/errorpage.jsp";
 
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -59,8 +58,12 @@ public class ServletHome extends HttpServlet {
             List<String> infoBoxes = new ArrayList<String>();
             List<String> tipBoxes = new ArrayList<String>();
 
-            infoBoxes.add("En cours de rédaction");
-            tipBoxes.add("En cours de rédaction");
+            infoBoxes.add("Dans cette section du site, vous avez accès à divers outils vous permettant d'administrer Ya<em class='CE'>ce</em>.");
+            infoBoxes.add("Vous pouvez (dés)activer les inscriptions au site, ajouter/modifier des grades utilisateurs, éditer/supprimer les utilisateurs du site.");
+            tipBoxes.add("Utilisez vos pouvoirs avec parcimonie.");
+            tipBoxes.add("N'hésitez pas à changer les informations de connexion d'un utilisateur s'il ne respecte pas les règles d'éthique en société.");
+            tipBoxes.add("N'hésitez pas à supprimer un utilisateur qui partage de manière publique des collections choquantes. Les objets qu'il a enregistré sur le site seront automatiquement oubliés.");
+            tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous avez une suggestion à nous transmettre.");
 
             asideHelp.put("tip", tipBoxes);
             asideHelp.put("info", infoBoxes);
@@ -71,33 +74,7 @@ public class ServletHome extends HttpServlet {
             request.setAttribute("pageTitle", "Administration du site");
             request.getRequestDispatcher(VUE_HOME_ADMIN).forward(request, response);
         } else {
-            /*
-             * Erreur: l'utilisateur connecté n'est pas administrateur
-             */
-            // On défini l'erreur qui s'est produite
-            request.setAttribute("errorMsg",
-                    "Nous sommes désolé, mais vous ne pouvez pas accéder à l'administration.<br/>"
-                    + "Référez-vous à l'aide contextuelle pour plus d'information.<br/>"
-                    + "Vous n'êtes pas satisfait ? <a href='about'>Contactez-nous</a> !");
-
-            // Aide contextuelle
-            Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
-
-            List<String> infoBoxes = new ArrayList<String>();
-            List<String> tipBoxes = new ArrayList<String>();
-
-            infoBoxes.add("Vous tentez d'accéder à l'administration sans en avoir les privilèges.");
-            tipBoxes.add("Essayez de ne pas accéder à l'administration !");
-            tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous pensez qu'il s'agit d'une erreur de notre part. N'oubliez pas de détailler les actions qui vous ont mené à cette page, merci.");
-
-            asideHelp.put("tip", tipBoxes);
-            asideHelp.put("info", infoBoxes);
-
-            request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
-
-            // On nomme et affiche la page
-            request.setAttribute("pageTitle", "Accès non autorisé");
-            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+            YaceUtils.displayAdminError(request, response);
         }
     }
 

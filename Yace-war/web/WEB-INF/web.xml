@@ -73,6 +73,10 @@
         <servlet-name>ServletItemSearch</servlet-name>
         <servlet-class>net.yace.web.servlets.ServletItemSearch</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletItemTypeMgmt</servlet-name>
+        <servlet-class>net.yace.web.servlets.ServletItemTypeMgmt</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletRegister</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -140,6 +144,10 @@
     <servlet-mapping>
         <servlet-name>ServletItemSearch</servlet-name>
         <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletItemTypeMgmt</servlet-name>
+        <url-pattern>/itemtypemgmt</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>2880</session-timeout>

@@ -91,7 +91,7 @@ public class ServletRegister extends HttpServlet {
                     u.setPseudo(pseudo);
                     u.setEmail(email);
                     u.setPasswordHash(YaceUtils.digestMD5(pass));
-                    u.setRank(new Yrank(1)); //TODO : récupérer le rang par défaut
+                    u.setRank(new Yrank(2)); // 2 = rank collectionneur = !admin
 
                     userFacade.create(u);
 

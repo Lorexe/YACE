@@ -48,7 +48,7 @@
                 
                 <figure class="cover" id="item-${item.type.getIdYITEMTYPE()}-${item.getIdYITEM()}">
                     <aside class="item-details">
-                        <a href="details?item=${item.getIdYITEM()}">
+                        <a href="details?item=${item.getIdYITEM()}&clr=${searched}">
                             <strong>Détails</strong>
                         </a>
                     </aside>
@@ -68,7 +68,7 @@
             <br/><br/>
             <c:choose>
                 <c:when test="${totalsize > 1}">
-                <form name="searchNav" action="search" method="post" title="Navigation dans les Résultats">
+                <form name="searchNav" action="search" method="get" title="Navigation dans les Résultats">
                     <c:choose>
                         <c:when test="${searchpagenumber > 1}">
                             <input type="submit" name="searchprev" value="Page précedénte" class="y-button y-button-white" />
@@ -96,7 +96,40 @@
         </c:otherwise>
     </c:choose>
 </section>
-    
+   
 </section>
     
 <div id="foreground"></div>
+
+    <c:forEach var="item" items="${resultlist}" varStatus="idi">
+        <div role="preview" id="prev-item-${item.type.getIdYITEMTYPE()}-${item.getIdYITEM()}">
+            <section class="splash whitebox">
+                <header>
+                    <h1>Aperçu de l'élément</h1>
+                </header>
+                <section class="content">
+                    <table class="y-table">
+                        <c:forEach var="attval" items="${item.yattributevalueCollection}" varStatus="attrcount">
+                            <tr <c:if test="${attrcount.count % 2 == 0}">class="odd"</c:if>>
+                                    <td>
+                                    ${attval.attribute.name}
+                                </td>
+                                <c:choose>
+                                    <c:when test="${attval.attribute.type == 'Image'}">
+                                        <td>
+                                            <img class="imgfix" src="${attval.valStr}"/>
+                                        </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>
+                                            ${attval.valStr}
+                                        </td>
+                                    </c:otherwise>
+                                </c:choose>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </section>
+            </section>
+        </div>
+    </c:forEach>

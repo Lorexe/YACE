@@ -42,7 +42,7 @@ public class ServletItemSearch extends HttpServlet {
         //redirection accueil
         //page accessible en post
         
-        request.getRequestDispatcher(VUE_HOME).forward(request, response);
+        doPost(request, response);
     }
 
     /** 

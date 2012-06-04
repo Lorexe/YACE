@@ -17,7 +17,13 @@
         </sql:query>
             
         <h1>Liste des <strong>utilisateurs</strong></h1>
-        
+        <% if (request.getAttribute("error") != null) {%>
+        <output id="out1" class="warning output"><%= request.getAttribute("error")%></output>
+        <% } else if (request.getAttribute("info") != null) {%>
+        <output id="out1" class="info output"><%= request.getAttribute("info")%></output>
+        <% } else {%>
+        <output id="out1" class="hidden"></output>
+        <% }%>
         <form name="userModif" method="POST"></form>
         <table id="tabEdition" class="y-table y-table-form y-table-center">
             <thead>
@@ -31,30 +37,33 @@
             </thead>
             <tbody>
                 
-                <c:forEach var="user" items="${users.rows}" varStatus="counter">
-                    <tr id="user${user.idYUSER}" <c:if test="${counter.count % 2 != 0}">class="odd"</c:if>>
+                <%-- la variable "user" est déjà prise par la session => renommé en U par Bruno --%>
+                <c:forEach var="U" items="${users.rows}" varStatus="counter">
+                    <tr id="user${U.idYUSER}" <c:if test="${counter.count % 2 != 0}">class="odd"</c:if>>
                         <td>
-                            ${user.idYUSER}
-                            <input type="hidden" name="idYUSER" value="${user.idYUSER}" />
+                            ${U.idYUSER}
+                            <input type="hidden" name="idYUSER" value="${U.idYUSER}" />
                             <input type="hidden" name="mode" value="edit" />
                         </td>
-                        <td><input type="text" name="pseudo" size="20" value="${user.pseudo}" required disabled="disabled" /></td>
-                        <td><input type="text" name="email" size="50" value="${user.email}" required disabled="disabled" /></td>
+                        <td><input type="text" name="pseudo" size="20" value="${U.pseudo}" required disabled="disabled" /></td>
+                        <td><input type="text" name="email" size="50" value="${U.email}" required disabled="disabled" /></td>
                         <td>
                             <select name="rank" disabled="disabled">
                                 <c:forEach var="rank" items="${ranks.rows}">
-                                    <option value="${rank.idYRANK}" <c:if test="${rank.idYRANK == user.rank}">selected="selected"</c:if>>${rank.description}</option>
+                                    <option value="${rank.idYRANK}" <c:if test="${rank.idYRANK == U.rank}">selected="selected"</c:if>>${rank.description}</option>
                                 </c:forEach>
                             </select>
                         </td>
                         <td>
                             <div class="mgmtIcons">
-                                <img class='editicon' src='./theme/default/img/img_trans.gif' alt='Editer' title='Editer' onclick='edit("user${user.idYUSER}")' />
-                                <img class='deleteicon' src='./theme/default/img/img_trans.gif' alt='Supprimer' title='Supprimer' onclick='del("user${user.idYUSER}")' />
+                                <img class='editicon' src='./theme/default/img/img_trans.gif' alt='Editer' title='Editer' onclick='edit("user${U.idYUSER}")' />
+                                <c:if test="${user.idYUSER ne U.idYUSER}">
+                                    <img class='deleteicon' src='./theme/default/img/img_trans.gif' alt='Supprimer' title='Supprimer' onclick='del("user${U.idYUSER}")' />
+                                </c:if>
                             </div>
                             <div class="mgmtIcons">
-                                <img class='undoicon' src='./theme/default/img/img_trans.gif' alt='Annuler' title='Annuler' onclick='undo("user${user.idYUSER}")' style='display: none;' />
-                                <img class='validicon' src='./theme/default/img/img_trans.gif' alt='Valider' title='Valider' onclick='send("user${user.idYUSER}")' style='display: none;' />
+                                <img class='undoicon' src='./theme/default/img/img_trans.gif' alt='Annuler' title='Annuler' onclick='undo("user${U.idYUSER}")' style='display: none;' />
+                                <img class='validicon' src='./theme/default/img/img_trans.gif' alt='Valider' title='Valider' onclick='send("user${U.idYUSER}")' style='display: none;' />
                             </div>
                         </td>
                     </tr>

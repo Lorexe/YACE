@@ -347,3 +347,8 @@ strong {
     margin-bottom: 20px;
     padding-bottom: 6px;
 }
+
+.search-line {
+    background: yellow;
+    
+}
