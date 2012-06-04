@@ -99,6 +99,10 @@ public class ServletItemDetails extends HttpServlet {
                     request.setAttribute("attributevalues", valList);
                     request.setAttribute("prevIt", YaceUtils.getPrevItemId(item));
                     request.setAttribute("nextIt", YaceUtils.getNextItemId(item));
+                    
+                    request.setAttribute("pageTitle", "Détails d'un objet de " + item.getCollection().getTheme());
+                    request.setAttribute("pageHeaderTitle", "Détails d'un objet de <strong>"+item.getCollection().getTheme()+"</strong>");
+                    request.getRequestDispatcher(VUE_ITEM).forward(request, response);
                 }
                 else
                 {
@@ -112,8 +116,7 @@ public class ServletItemDetails extends HttpServlet {
             }
         }
         
-        request.setAttribute("pageTitle", "Les Détails de l'objet");//look for a title  
-        request.getRequestDispatcher(VUE_ITEM).forward(request, response);// GO jsp
+        
     }
 
     

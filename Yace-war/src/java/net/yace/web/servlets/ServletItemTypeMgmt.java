@@ -101,6 +101,7 @@ public class ServletItemTypeMgmt extends HttpServlet {
                         Yitemtype it = new Yitemtype();
                         it.setName(request.getParameter("name_type"));
                         it.setIsPublic(Boolean.FALSE);
+                        it.setCollection(collection);
                         facItemtype.create(it);
                         
                         for(int i=0; i<nb_champs; i++) {

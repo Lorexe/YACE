@@ -6,7 +6,7 @@
 
 <section id="main" class="whitebox"> <!-- main panel -->
 <header>
-    <h1>${pageTitle}</h1>
+    <h1>${pageHeaderTitle}</h1>
 </header>
 <section class="content">
     <aside id="toggletips"><strong>A I D E</strong></aside>
