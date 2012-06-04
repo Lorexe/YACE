@@ -5,7 +5,9 @@
 package net.yace.web.servlets;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -78,10 +80,18 @@ public class ServletItemDetails extends HttpServlet {
                         for(Yattributevalue av : valList)
                         {
                             if(!av.getAttribute().getType().equals("Image") || !av.getAttribute().getType().equals("URL"))
-                                if(av.getValStr().matches("(?i).*"+clrword+".*"))
+                            {
+                                String lowInput = av.getValStr().toUpperCase();
+                                Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+                                lowInput = pattern.matcher(Normalizer.normalize(lowInput, Normalizer.Form.NFD)).replaceAll("");
+                                String lowSub = clrword.toUpperCase();
+                                lowSub = pattern.matcher(Normalizer.normalize(lowSub, Normalizer.Form.NFD)).replaceAll("");
+                                
+                                if(lowInput.matches("(?i).*"+lowSub+".*"))
                                 {
-                                    av.setValStr(YaceUtils.envelopSubStrings(av.getValStr(), clrword,"<span class=\"search-line\">","</span>"));
+                                    av.setValStr(YaceUtils.envelopSubStrings(av.getValStr(), lowInput, lowSub,"<span class=\"search-line\">","</span>"));
                                 }
+                            }
                         }
                     }
                     request.setAttribute("canEdit", YaceUtils.canEditItem(item, yuser));

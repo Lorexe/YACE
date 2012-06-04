@@ -65,7 +65,7 @@ public class ServletItemSearch extends HttpServlet {
         String nextpage = request.getParameter("searchnext");
         String prevpage = request.getParameter("searchprev");
         
-        
+        search = search.trim();
         int firstres = Integer.parseInt(request.getParameter("firstres"));
         int resultsnumber = 3;//nombre des resultats à afficher sur une page
         int totalsize = 0;

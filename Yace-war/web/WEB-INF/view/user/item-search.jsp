@@ -12,6 +12,7 @@
     <aside id="toggletips"><strong>A I D E</strong></aside>
     
     <h3>Les Résultats de recherche pour : "<b>${searched}</b>"</h3>
+    <c:if test="${totalsize eq 0}"><c:set var="totalsize" value="1"/></c:if>
     <h4>Page :  ${searchpagenumber} sur ${totalsize} page(s)</h4>
     <p class="search-header">
     <c:choose>
@@ -29,7 +30,9 @@
     <br/>
     <c:choose>
         <c:when test="${empty resultlist}">
-            <p>Aucun objet trouvé</p>
+            <p><strong>Aucun objet trouvé. </strong><br/>
+               Saisissez un autre mot clé et rélancez la recherche.
+            </p>
         </c:when>
         <c:otherwise>
             <c:set var="colId" value="${resultlist.get(0).collection.getIdYCOLLECTION()}"/>
@@ -109,26 +112,53 @@
                 </header>
                 <section class="content">
                     <table class="y-table">
-                        <c:forEach var="attval" items="${item.yattributevalueCollection}" varStatus="attrcount">
+                        <!-- 
+                            pour l'aperçu, je limite le nombre des attributs à afficher à max 5
+                            au cas où l'itemtype a trop d'attributs et ça rique de deborder
+                            pour voir l'ensemble des attributs consulter page details
+                        -->
+                        <c:choose>
+                            <c:when test="${fn:length(item.yattributevalueCollection) < 5}">
+                                <c:set var="maxloop" value="${fn:length(item.yattributevalueCollection)}"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="maxloop" value="${4}"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:forEach var="i" begin="0" end="${maxloop}" step="1" varStatus ="attrcount">
                             <tr <c:if test="${attrcount.count % 2 == 0}">class="odd"</c:if>>
-                                    <td>
-                                    ${attval.attribute.name}
+                                <td>
+                                    ${item.yattributevalueCollection.get(i).attribute.name}
                                 </td>
                                 <c:choose>
-                                    <c:when test="${attval.attribute.type == 'Image'}">
+                                    <c:when test="${item.yattributevalueCollection.get(i).attribute.type == 'Image'}">
                                         <td>
-                                            <img class="imgfix" src="${attval.valStr}"/>
+                                            <img class="imgfix" src="${item.yattributevalueCollection.get(i).valStr}"/>
+                                        </td>
+                                    </c:when>
+                                    <c:when test="${item.yattributevalueCollection.get(i).attribute.type == 'URL'}">
+                                        <td>
+                                            <a href="${item.yattributevalueCollection.get(i).valStr}">Link</a>
                                         </td>
                                     </c:when>
                                     <c:otherwise>
                                         <td>
-                                            ${attval.valStr}
+                                            <!-- couper un string trop long, max x caracteres -->
+                                            <c:set var="maxstrlen" value="250"/>
+                                            <c:set var="valStrcut" value="${item.yattributevalueCollection.get(i).valStr}"/>
+                                            <c:if test="${fn:length(valStrcut) > maxstrlen}">
+                                                <c:set var="valStrcut" value="${fn:substring(item.yattributevalueCollection.get(i).valStr,0,maxstrlen)} ..."/>
+                                            </c:if>
+                                            ${valStrcut}
                                         </td>
                                     </c:otherwise>
                                 </c:choose>
                             </tr>
                         </c:forEach>
                     </table>
+                    <a class="y-button y-button-white" href="details?item=${item.getIdYITEM()}&clr=${searched}">
+                        <strong>Tous les Details de l'Objet</strong>
+                    </a>
                 </section>
             </section>
         </div>

@@ -348,6 +348,10 @@ strong {
     padding-bottom: 6px;
 }
 
+.search-line {
+    background: yellow;
+}
+
 /**
  * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> CORPS <<<<<<<<<
  */
