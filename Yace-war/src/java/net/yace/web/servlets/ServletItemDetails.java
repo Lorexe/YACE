@@ -6,7 +6,10 @@ package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +30,7 @@ import net.yace.web.utils.YaceUtils;
 public class ServletItemDetails extends HttpServlet {
     
     private final static String VUE_ITEM = "WEB-INF/view/user/item-attributevalues.jsp";
+    private final static String VUE_HOME = "WEB-INF/view/user/home.jsp";
 
     //url pattern : /details
     /** 
@@ -49,8 +53,8 @@ public class ServletItemDetails extends HttpServlet {
         idItem = request.getParameter("item");
         if(idItem == null || idItem.isEmpty())
         {
-         //param invalide
-         //afficher message d'erreur ou rediriger l'user à l'accueil?
+            //rediriger l'user à l'accueil
+            request.getRequestDispatcher(VUE_HOME).forward(request, response);
         }
         else
         {
@@ -94,6 +98,21 @@ public class ServletItemDetails extends HttpServlet {
                             }
                         }
                     }
+                    
+                    Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+                    List<String> infoBoxes = new ArrayList<String>();
+                    List<String> tipBoxes = new ArrayList<String>();
+
+                    infoBoxes.add("Tous les détails d'un objet.");
+                    tipBoxes.add("Les flèches bleues permettent de naviguer parmi les éléments de Collection courante");
+                    tipBoxes.add("Si vous venez d'effectuer une recherche, l'élément correspondant est surligné");
+
+                    asideHelp.put("tip", tipBoxes);
+                    asideHelp.put("info", infoBoxes);
+
+                    request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+                    
+                    
                     request.setAttribute("canEdit", YaceUtils.canEditItem(item, yuser));
                     request.setAttribute("curItem", item);
                     request.setAttribute("attributevalues", valList);
@@ -104,16 +123,10 @@ public class ServletItemDetails extends HttpServlet {
                     request.setAttribute("pageHeaderTitle", "Détails d'un objet de <strong>"+item.getCollection().getTheme()+"</strong>");
                     request.getRequestDispatcher(VUE_ITEM).forward(request, response);
                 }
-                else
-                {
-                    //error liste vide
-                    //afficher message d'erreur
-                }
             }
-            else
-            {
-                //error item non disponible
-            }
+            //l'user ne peut pas consulter cet item
+            //rediriger l'user à l'accueil
+            request.getRequestDispatcher(VUE_HOME).forward(request, response);
         }
         
         

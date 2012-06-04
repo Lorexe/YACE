@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.yace.entity.Ycollection;
 import net.yace.entity.Yitem;
+import net.yace.entity.Yitemtype;
 import net.yace.entity.Yuser;
 
 /**
@@ -366,5 +367,42 @@ public class YaceUtils {
         
         return result;
     }
-
+    
+    //vérifie si itemtype peut être consulté par user
+    public static Boolean canConsultItemType(Yitemtype itemtype, Yuser yuser) {
+        boolean result = false;
+        if(itemtype != null)
+        {
+            if (yuser != null) 
+            {
+                //l'admin peut tout editer
+                if (yuser.getRank().isAdmin() || itemtype.isPublic()) {
+                    result = true;
+                } else if (yuser.getIdYUSER() == itemtype.getCollection().getOwner().getIdYUSER()) {
+                    result = true;
+                }
+            }
+            else
+            {
+                //un visiteur peut consulter le type public
+                if(itemtype.isPublic())
+                    result = true;
+            }
+        }
+        return result;
+    }
+    
+    //vérifie si itemtype peut être édité par user
+    public static Boolean canEditItemType(Yitemtype itemtype, Yuser yuser)
+    {
+        Boolean canedit = false;
+        if(yuser != null)
+        {
+            if(yuser.getRank().isAdmin())
+                canedit = true;
+            else if(yuser.getIdYUSER()==itemtype.getCollection().getOwner().getIdYUSER())
+                canedit = true;
+        }
+        return canedit;
+    }
 }

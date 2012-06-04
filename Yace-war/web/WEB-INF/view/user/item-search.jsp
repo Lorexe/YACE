@@ -118,11 +118,11 @@
                             pour voir l'ensemble des attributs consulter page details
                         -->
                         <c:choose>
-                            <c:when test="${fn:length(item.yattributevalueCollection) < 5}">
+                            <c:when test="${fn:length(item.yattributevalueCollection) < 6}">
                                 <c:set var="maxloop" value="${fn:length(item.yattributevalueCollection)}"/>
                             </c:when>
                             <c:otherwise>
-                                <c:set var="maxloop" value="${4}"/>
+                                <c:set var="maxloop" value="${5}"/>
                             </c:otherwise>
                         </c:choose>
                         <c:forEach var="i" begin="0" end="${maxloop}" step="1" varStatus ="attrcount">
