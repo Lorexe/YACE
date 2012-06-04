@@ -88,4 +88,18 @@ public class YitemtypeFacade extends AbstractFacade<Yitemtype> {
 
         return tList;
     }
+    
+    public List<Yitemtype> findItemtypesWithoutItem(Ycollection collection) {
+        List<Yitemtype> tList = null;
+        Query query;
+        query = em.createNamedQuery("Yitemtype.findWithoutItem");
+        query.setParameter("idYCOLLECTION", collection.getIdYCOLLECTION());
+
+        try {
+            tList = query.getResultList();
+        } catch (NoResultException e) {
+        }
+        
+        return tList;
+    }
 }

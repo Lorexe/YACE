@@ -76,8 +76,12 @@ public class ServletCollectionView extends HttpServlet {
                 // Ajout d'objet de typeitem public
                 List<Yitemtype> itemtypesPublic = itfac.findItemtypesPublic();
                 
+                // Liste les types d'objet sans objet
+                List<Yitemtype> withoutItem = itfac.findItemtypesWithoutItem(coll);
+                
                 request.setAttribute("collection", coll);
                 request.setAttribute("itemtypes", itemtypes);
+                request.setAttribute("withoutItem", withoutItem);
                 request.setAttribute("itemtypesPublic", itemtypesPublic);
                 request.setAttribute("attributes", attributes);
                 request.setAttribute("values", values);

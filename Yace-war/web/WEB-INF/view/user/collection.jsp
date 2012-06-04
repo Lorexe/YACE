@@ -39,7 +39,19 @@
             <br/><br/>
         </c:if>
         
-        
+        <c:forEach var="itemtype" items="${withoutItem}" varStatus="idit">
+            <h1>${itemtype.getName()}
+                <c:if test="${!empty user && user eq collection.owner}">
+                    <a class="y-button y-button-blue" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}">
+                        J'ajoute un objet de ce type
+                    </a>
+                </c:if>
+            </h1>
+            
+            <p>Vous devriez ajouter des objets dans votre collection !</p>
+        </c:forEach>
+            
+            
         <c:forEach var="itemtype" items="${itemtypes}" varStatus="idit">
 
             <h1>${itemtype.getName()}
