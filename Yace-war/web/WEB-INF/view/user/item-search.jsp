@@ -105,7 +105,7 @@
 <div id="foreground"></div>
 
     <c:forEach var="item" items="${resultlist}" varStatus="idi">
-        <div role="preview" id="prev-item-${item.type.getIdYITEMTYPE()}-${item.getIdYITEM()}">
+        <div role="preview" id="prev-item-${item.type.getIdYITEMTYPE()}-${item.getIdYITEM()}"  style="display: none; ">
             <section class="splash whitebox">
                 <header>
                     <h1>Aperçu de l'élément</h1>

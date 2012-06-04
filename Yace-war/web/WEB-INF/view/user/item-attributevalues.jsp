@@ -40,7 +40,7 @@
                 </c:choose>
                 <br/>
                 </p>
-                <h3>Les Caractéristiques</h3><br/><br/>
+                <h3>Les Caract&eacute;ristiques</h3><br/><br/>
                 <table class="y-table">
                     <c:forEach var="attval" items="${attributevalues}" varStatus ="attrcount">
                         <tr <c:if test="${attrcount.count % 2 == 0}">class="odd"</c:if>>
@@ -54,11 +54,11 @@
                                     </c:when>
                                     <c:when test="${attval.attribute.type eq 'Image'}">
                                         <!-- todo : afficher l'image   balise img    -->
-                                        <img for="attrval${attval.idYATTRIBUTEVALUE}" class="attr-cover" src="${attval.valStr}"></img>
+                                        <img for="attrval${attval.idYATTRIBUTEVALUE}" class="attr-cover" src="${attval.valStr}"/>
                                     </c:when>
                                     <c:when test="${attval.attribute.type eq 'URL'}">
                                         <!-- todo : creer l'url  balise a     -->
-                                        <a href="${attval.valStr}">Lien</a>
+                                        <a href="${attval.valStr}">${attval.valStr}</a>
                                     </c:when>
                                     <c:otherwise>
                                         <label for="">error! no value found</label>

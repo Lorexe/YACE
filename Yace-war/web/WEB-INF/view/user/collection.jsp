@@ -15,13 +15,14 @@
 
     <section class="content"> <!-- contenu intéressant -->
         <aside id="toggletips"><strong>A I D E</strong></aside>
-
-        <a class="y-button y-button-green" href="itemtypemgmt?coll=${collection.getIdYCOLLECTION()}">J'ajoute un type d'objet</a>
         
-        <br/><br/>
+        <c:if test="${!empty user && user eq collection.owner}">
+            <a class="y-button y-button-green" href="itemtypemgmt?coll=${collection.getIdYCOLLECTION()}">J'ajoute un type d'objet</a>
+            <br/><br/>
+        </c:if>
         
         <%-- Ajout d'objet de typeitem public --%>
-        <c:if test="${!empty itemtypesPublic && itemtypesPublic!=null}">
+        <c:if test="${!empty user && user eq collection.owner && !empty itemtypesPublic && itemtypesPublic!=null}">
             <form id="form_itemtype_public" action="itemmgmt" method="get">
                 <input type="hidden" name="coll" value="${collection.getIdYCOLLECTION()}"/>
                 <select name="type">
@@ -37,10 +38,13 @@
         
         <c:forEach var="itemtype" items="${itemtypes}" varStatus="idit">
 
-            <h1>${itemtype.getName()} 
-                <a class="y-button y-button-green" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}">
-                    Nouvel objet 
-                </a></h1>
+            <h1>${itemtype.getName()}
+                <c:if test="${!empty user && user eq collection.owner}">
+                    <a class="y-button y-button-blue" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}">
+                        J'ajoute un objet de ce type
+                    </a>
+                </c:if>
+            </h1>
 
             <c:forEach var="item" items="${values.get(idit.count - 1)}" varStatus="idi">
 
