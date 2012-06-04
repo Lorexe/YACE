@@ -13,12 +13,12 @@
     
     <c:choose>
         <c:when test="${empty attributevalues}">
-            <p>Aucune valeur disponible</p>
+            <p class="search-header">Aucune valeur disponible</p>
         </c:when>
         <c:otherwise>
             <div>
                 
-            <p>
+            <p class="search-header">
                 <a href="see?idCollection=${curItem.collection.idYCOLLECTION}"><label><strong> Collection : ${curItem.collection.theme}</strong></label></a><br/><br/>
                 <label ><strong>Type d'objet  : ${curItem.type.name}</strong></label><br/><br/>
                 <c:choose>

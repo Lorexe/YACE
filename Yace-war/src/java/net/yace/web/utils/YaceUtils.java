@@ -325,5 +325,29 @@ public class YaceUtils {
         nfdNormalizedString = pattern.matcher(nfdNormalizedString).replaceAll("");
         return nfdNormalizedString.replaceAll(" ", "_").toLowerCase();
     }
+    
+    //entoure les elements sub contenus dans input avec le prefix et le suffix
+    public static String envelopSubStrings(String input, String sub, String prefix, String suffix)
+    {
+        String lowInput = input.toLowerCase();
+        String lowSub = sub.toLowerCase();
+        
+        String result = "";
+        int i = 0;
+        int j = 0;
+        while(lowInput.contains(lowSub))
+        {
+            
+            i=lowInput.indexOf(lowSub);
+            result = result.concat(input.substring(0, i));
+            result = result.concat(prefix+input.substring(i, i+sub.length())+suffix);
+            lowInput = lowInput.substring(i+sub.length());
+            input = input.substring(i+sub.length());
+            if(!lowInput.contains(lowSub) && input.length()>0)
+                result = result.concat(input);
+        }
+        
+        return result;
+    }
 
 }
