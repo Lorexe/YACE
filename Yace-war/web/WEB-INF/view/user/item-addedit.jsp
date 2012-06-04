@@ -55,10 +55,10 @@
                             <td>${attr.name}</td>
                             <c:choose>
                                 <c:when test="${attr.type=='String'}">
-                                    <td><input type="text" id="attr_${attrsName.get(counter.count-1)}" name="attr_${attrsName.get(counter.count-1)}" size="30" required <c:if test="${!empty edit}">value="${itemValues.get(counter.count-1).getValStr()}"</c:if> /></td>
+                                    <td><input type="text" id="attr_${attrsName.get(counter.count-1)}" name="attr_${attrsName.get(counter.count-1)}" size="30" <c:if test="${counter.count eq 1}">required</c:if> <c:if test="${!empty edit}">value="${itemValues.get(counter.count-1).getValStr()}"</c:if> /></td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><input type="text" id="attr_${attrsName.get(counter.count-1)}" name="attr_${attrsName.get(counter.count-1)}" size="30" required <c:if test="${!empty edit}">value="${itemValues.get(counter.count-1).getValStr()}"</c:if> /></td>
+                                    <td><input type="text" id="attr_${attrsName.get(counter.count-1)}" name="attr_${attrsName.get(counter.count-1)}" size="30" <c:if test="${counter.count eq 1}">required</c:if> <c:if test="${!empty edit}">value="${itemValues.get(counter.count-1).getValStr()}"</c:if> /></td>
                                 </c:otherwise>
                             </c:choose>
                         </tr>
