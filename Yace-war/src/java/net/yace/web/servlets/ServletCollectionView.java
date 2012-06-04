@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets;
 
 import java.io.IOException;
@@ -76,8 +72,13 @@ public class ServletCollectionView extends HttpServlet {
                         values.get(i).add(yatvfac.findAllValuesForItem(items.get(j)));
                     }
                 }
+                
+                // Ajout d'objet de typeitem public
+                List<Yitemtype> itemtypesPublic = itfac.findItemtypesPublic();
+                
                 request.setAttribute("collection", coll);
                 request.setAttribute("itemtypes", itemtypes);
+                request.setAttribute("itemtypesPublic", itemtypesPublic);
                 request.setAttribute("attributes", attributes);
                 request.setAttribute("values", values);
                 request.setAttribute("items", itemsByType);

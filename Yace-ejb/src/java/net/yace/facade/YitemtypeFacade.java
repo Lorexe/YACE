@@ -4,6 +4,7 @@
  */
 package net.yace.facade;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -72,6 +73,19 @@ public class YitemtypeFacade extends AbstractFacade<Yitemtype> {
         } catch (NoResultException e) {
         }
         
+        return tList;
+    }
+    
+    public List<Yitemtype> findItemtypesPublic() {
+        List<Yitemtype> tList = null;
+        Query query;
+        query = em.createNamedQuery("Yitemtype.findAllItemtypePublic");
+        
+        try {
+            tList = query.getResultList();
+        } catch (NoResultException e) {
+        }
+
         return tList;
     }
 }

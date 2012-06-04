@@ -16,8 +16,25 @@
     <section class="content"> <!-- contenu intéressant -->
         <aside id="toggletips"><strong>A I D E</strong></aside>
 
-        <a class="y-button y-button-blue" href="itemtypemgmt?coll=${collection.getIdYCOLLECTION()}">J'ajoute un type d'objet</a><br/><br/>
-
+        <a class="y-button y-button-green" href="itemtypemgmt?coll=${collection.getIdYCOLLECTION()}">J'ajoute un type d'objet</a>
+        
+        <br/><br/>
+        
+        <%-- Ajout d'objet de typeitem public --%>
+        <c:if test="${!empty itemtypesPublic && itemtypesPublic!=null}">
+            <form id="form_itemtype_public" action="itemmgmt" method="get">
+                <input type="hidden" name="coll" value="${collection.getIdYCOLLECTION()}"/>
+                <select name="type">
+                    <c:forEach var="type" items="${itemtypesPublic}" varStatus="counter">
+                        <option value="${type.getIdYITEMTYPE()}">${type.getName()}</option>
+                    </c:forEach>
+                </select>
+                <input type="submit" class="y-button y-button-white" value="Ajouter un objet"/>
+            </form>
+            <br/><br/>
+        </c:if>
+        
+        
         <c:forEach var="itemtype" items="${itemtypes}" varStatus="idit">
 
             <h1>${itemtype.getName()} 

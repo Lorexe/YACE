@@ -39,7 +39,7 @@
                         <div id="menubar">
                             <a href="./"><img class="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" /></a>
                             <a href="about"><img class="helpicon" alt="A propos" title="A propos de YaCE!" src="./theme/default/img/img_trans.gif" /></a>
-                            <form name="search" action="search" method="post" id="searchbar" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
+                            <form name="search" action="search" method="get" id="searchbar" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
                                 <!--<a href=""><img class="searchicon" src="./theme/default/img/img_trans.gif" /></a>-->
                                 <input src="./theme/default/img/img_trans.gif" type="image" value="submit" class="searchicon"> 
                                 <input type="text" name = "searchword" id="keyword" />
@@ -54,8 +54,8 @@
                                         </c:when>
                                     </c:choose>
                                 <select name="searchdomain">
-                                    <option value="mycolls">Mes collections</option>
                                     <option value="all">Collections publiques</option>
+                                    <option value="mycolls">Mes collections</option>
                                     <c:choose>
                                         <c:when test="${not empty collection}">
                                     <option value="thiscoll">Cette collection</option>
