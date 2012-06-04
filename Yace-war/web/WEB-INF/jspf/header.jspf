@@ -54,8 +54,8 @@
                                         </c:when>
                                     </c:choose>
                                 <select name="searchdomain">
-                                    <option value="mycolls">Mes collections</option>
                                     <option value="all">Collections publiques</option>
+                                    <option value="mycolls">Mes collections</option>
                                     <c:choose>
                                         <c:when test="${not empty collection}">
                                     <option value="thiscoll">Cette collection</option>

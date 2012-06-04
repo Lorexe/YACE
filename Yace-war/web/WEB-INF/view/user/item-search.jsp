@@ -100,3 +100,36 @@
 </section>
     
 <div id="foreground"></div>
+
+    <c:forEach var="item" items="${resultlist}" varStatus="idi">
+        <div role="preview" id="prev-item-${item.type.getIdYITEMTYPE()}-${item.getIdYITEM()}">
+            <section class="splash whitebox">
+                <header>
+                    <h1>Aperçu de l'élément</h1>
+                </header>
+                <section class="content">
+                    <table class="y-table">
+                        <c:forEach var="attval" items="${item.yattributevalueCollection}" varStatus="attrcount">
+                            <tr <c:if test="${attrcount.count % 2 == 0}">class="odd"</c:if>>
+                                    <td>
+                                    ${attval.attribute.name}
+                                </td>
+                                <c:choose>
+                                    <c:when test="${attval.attribute.type == 'Image'}">
+                                        <td>
+                                            <img class="imgfix" src="${attval.valStr}"/>
+                                        </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>
+                                            ${attval.valStr}
+                                        </td>
+                                    </c:otherwise>
+                                </c:choose>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </section>
+            </section>
+        </div>
+    </c:forEach>

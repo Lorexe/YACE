@@ -20,7 +20,8 @@
                 
             <p class="search-header">
                 <a href="see?idCollection=${curItem.collection.idYCOLLECTION}"><label><strong> Collection : ${curItem.collection.theme}</strong></label></a><br/><br/>
-                <label ><strong>Type d'objet  : ${curItem.type.name}</strong></label><br/><br/>
+                <label ><strong>Type d'objet  : ${curItem.type.name}</strong></label><br/>
+                <label ><strong>Propriètaire  : ${curItem.collection.owner.pseudo}</strong></label><br/><br/>
                 <c:choose>
                     <c:when test="${prevIt ne -1}">
                         <a href="details?item=${prevIt}"><img alt="Précédent" src="./theme/default/img/icon/prev_24.png" title="Précédent"></a>
@@ -75,6 +76,10 @@
                 </c:choose>
                 
             </c:forEach>
+            <c:if test="${canEdit eq true}">         
+            <a class="y-button y-button-white" href="itemmgmt?coll=${curItem.collection.idYCOLLECTION}&type=${curItem.type.getIdYITEMTYPE()}&edit=${curItem.getIdYITEM()}">
+            Éditer cet objet</a>
+            </c:if>
             </div>
         </c:otherwise>
     </c:choose>

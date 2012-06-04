@@ -349,5 +349,20 @@ public class YaceUtils {
         
         return result;
     }
+    
+    //vérifie si item peut être consulté par user
+    public static Boolean canEditItem(Yitem item, Yuser yuser) {
+        boolean result = false;
+        if(yuser != null && item != null)
+        {
+            //l'admin peut tout editer
+            if(yuser.getRank().isAdmin())
+                result = true;
+            else if(yuser.getIdYUSER() == item.getCollection().getOwner().getIdYUSER())
+                result = true;
+        }
+        
+        return result;
+    }
 
 }

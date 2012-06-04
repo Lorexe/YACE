@@ -58,7 +58,6 @@ public class ServletItemDetails extends HttpServlet {
             //savoir deja si l'item existe
             Yitem item = itemFac.find(idIt);
             
-            YaceUtils.SessionState state = YaceUtils.getSessionState(request);
             
             HttpSession session = request.getSession(false);
             Yuser yuser = null;
@@ -85,7 +84,7 @@ public class ServletItemDetails extends HttpServlet {
                                 }
                         }
                     }
-                    
+                    request.setAttribute("canEdit", YaceUtils.canEditItem(item, yuser));
                     request.setAttribute("curItem", item);
                     request.setAttribute("attributevalues", valList);
                     request.setAttribute("prevIt", YaceUtils.getPrevItemId(item));
