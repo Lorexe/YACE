@@ -4,8 +4,6 @@
     Author     : Scohy Jérôme <scohy.jerome@gmail.com>
 --%>
 
-<%@ page import="net.yace.web.utils.YaceUtils" %>
-
 <section id="main" class="whitebox"> <!-- main panel -->
 
     <header>

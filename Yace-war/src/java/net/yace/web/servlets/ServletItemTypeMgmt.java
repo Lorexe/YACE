@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets;
 
 import java.io.IOException;
@@ -13,6 +9,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import net.yace.entity.Yattribute;
+import net.yace.entity.Ycollection;
+import net.yace.entity.Yitemtype;
+import net.yace.entity.Yuser;
+import net.yace.facade.YattributeFacade;
+import net.yace.facade.YcollectionFacade;
+import net.yace.facade.YitemFacade;
+import net.yace.facade.YitemtypeFacade;
+import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 import net.yace.web.utils.YaceUtils.SessionState;
 
@@ -23,15 +29,9 @@ import net.yace.web.utils.YaceUtils.SessionState;
 public class ServletItemTypeMgmt extends HttpServlet {
     
     private final static String VUE_PRESENTATION = "welcome.jsp";
-    private final static String VUE_MGMT_ITEMTYPE = "WEB-INF/view/user/about.jsp"; //TODO à modif
+    private final static String VUE_MGMT_ITEMTYPE = "WEB-INF/view/user/itemtypemgmt.jsp";
+    private final static String SVLT_COLLECTION = "see?idCollection=";
     
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -53,29 +53,79 @@ public class ServletItemTypeMgmt extends HttpServlet {
 
             request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
 
-            // On nomme et affiche la page
-            request.setAttribute("pageTitle", "Gestion des types d'objet de la collection : ");
-            request.getRequestDispatcher(VUE_MGMT_ITEMTYPE).forward(request, response);
+            
+            HttpSession session = request.getSession(false);
+            Yuser yuser = (Yuser) session.getAttribute("user");
+
+            YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
+            String idCollection = request.getParameter("coll");
+            if (idCollection != null && !idCollection.isEmpty()) {
+                Ycollection collection = facColl.find(Integer.parseInt(idCollection));
+                if (collection!=null && collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
+                    // On nomme et affiche la page
+                    request.setAttribute("pageTitle", "Ajout d'un type d'objet à la collection " + collection.getTheme());
+                    request.setAttribute("pageHeaderTitle", "Ajout d'un type d'objet à la collection <strong>" + collection.getTheme() + "</strong>");
+                    request.setAttribute("idColl", idCollection);
+                    request.getRequestDispatcher(VUE_MGMT_ITEMTYPE).forward(request, response);
+                } else {
+                     YaceUtils.displayCollectionUnreachableError(request, response);
+                }
+            } else {
+                 YaceUtils.displayCollectionUnreachableError(request, response);
+            }
         }
     }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        boolean redirect = false;
+        
+        YaceUtils.SessionState state = YaceUtils.getSessionState(request);
+        if (state != YaceUtils.SessionState.noauth) {
+            HttpSession session = request.getSession(false);
+            Yuser yuser = (Yuser) session.getAttribute("user");
+
+            YcollectionFacade facColl = ServicesLocator.getCollectionFacade();
+            YitemtypeFacade facItemtype = ServicesLocator.getItemTypeFacade();
+            YattributeFacade facAttribute = ServicesLocator.getAttributeFacade();
+
+            String idCollection = request.getParameter("coll");
+            if (idCollection != null && !idCollection.isEmpty() ) {
+                Ycollection collection = facColl.find(Integer.parseInt(idCollection));
+                if (collection != null && collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
+                    String buttonValidate = request.getParameter("button_validate");
+                    if (buttonValidate != null) {
+                        int nb_champs = Integer.parseInt(request.getParameter("nb_champs"));
+                        
+                        Yitemtype it = new Yitemtype();
+                        it.setName(request.getParameter("name_type"));
+                        it.setIsPublic(Boolean.FALSE);
+                        facItemtype.create(it);
+                        
+                        for(int i=0; i<nb_champs; i++) {
+                            Yattribute attr = new Yattribute();
+                            attr.setMany(Boolean.FALSE);
+                            attr.setName(request.getParameter("name_"+i));
+                            attr.setNoOrder((i+1));
+                            attr.setType(request.getParameter("type_"+i));
+                            attr.setItemtype(it);
+                            facAttribute.create(attr);
+                        }
+                    }
+                    
+                    redirect = true;
+                    response.sendRedirect(SVLT_COLLECTION + idCollection);
+                }
+            }
+        }
+        
+        if (!redirect) // si pas d'ajout, on fait appel à l'affichage normal de la page
+        {
+            doGet(request, response);
+        }
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Ajout/suppression d'un itemtype à une collection";
