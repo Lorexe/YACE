@@ -40,6 +40,38 @@
                     </tr>
                 </tbody>
             </table>
+            <div role="share">
+                <div id='fb-root'></div>
+                <script src='http://connect.facebook.net/en_US/all.js'></script>
+                <p><a onclick='postToFeed(); return false;'>Facebook link</a></p>
+                <p id='msg'></p>
+
+                <script> 
+                  FB.init({appId: "377846235598184", status: true, cookie: true});
+
+                  function postToFeed() {
+
+                    // calling the API ...
+                    var obj = {
+                      method: 'feed',
+                      link: 'http://yace.no-ip.com/Yace-war/collections?u=${user.idYUSER}',
+                      picture: 'http://yace.no-ip.com/Yace-war/theme/default/img/logo.png',
+                      name: 'Collectionneur ? YaCE!',
+                      caption: 'Gestionnaire de collection pour TOUS les collectionneurs !',
+                      description: "YaCE!, c'est [yes] mais avec [yeah] dedans.",
+                      display: 'iframe'
+                    };
+
+                    function callback(response) {
+                      document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+                    }
+
+                    FB.ui(obj, callback);
+                  }
+
+                </script>
+                <a href="collections?u=${user.idYUSER}">Mes collections publiques</a>
+            </div>
         </form>
         <% if (request.getAttribute("error") != null) {%>
         <output id="out1" class="warning output"><%= request.getAttribute("error")%></output>
