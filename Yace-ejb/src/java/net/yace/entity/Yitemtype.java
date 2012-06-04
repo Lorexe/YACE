@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Yitemtype.findByIdYITEMTYPE", query = "SELECT y FROM Yitemtype y WHERE y.idYITEMTYPE = :idYITEMTYPE"),
     @NamedQuery(name = "Yitemtype.findByName", query = "SELECT y FROM Yitemtype y WHERE y.name = :name"),
     @NamedQuery(name = "Yitemtype.findAllTypesLike", query = "SELECT y FROM Yitemtype y WHERE y.name LIKE :name"),
-    @NamedQuery(name = "Yitemtype.findAllInCollection", query = "SELECT DISTINCT yit FROM Ycollection y JOIN y.yitemCollection yi JOIN yi.type yit WHERE y.idYCOLLECTION = :idYCOLLECTION"),
+    @NamedQuery(name = "Yitemtype.findAllInCollection", query = "SELECT DISTINCT yit FROM Ycollection y JOIN y.yitemCollection yi JOIN yi.type yit WHERE y.idYCOLLECTION = :idYCOLLECTION OR yit.collection.idYCOLLECTION = :idYCOLLECTION"),
     @NamedQuery(name = "Yitemtype.findAllItemtypePublic", query = "SELECT y FROM Yitemtype y WHERE y.isPublic = TRUE")})
     //@NamedQuery(name = "Yitemtype.findAllInCollection", query = "SELECT DISTINCT yit FROM yitemtype yit JOIN yitem y ON yit.idYITEMTYPE = y.type WHERE y.collection = :collection")
 

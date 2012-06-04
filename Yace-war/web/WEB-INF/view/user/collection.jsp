@@ -68,7 +68,6 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <!-- POUR LE FIGCAPTION SUIVANT ==> PREVOIR TAILLE CONTENU MAXIMALE -->
                     <figcaption title="${values.get(idit.count-1).get(idi.count-1).get(1).valStr}">
                         ${values.get(idit.count-1).get(idi.count-1).get(1).valStr}
                     </figcaption>
@@ -113,11 +112,11 @@
                             </tr>
                         </c:forEach>
                     </table>
-
-                    <a class="y-button y-button-white" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}&edit=${items.get(idit.count-1).get(idi.count-1).getIdYITEM()}">
-                        Éditer cet objet
-                    </a>
-
+                    <c:if test="${!empty user && user eq collection.owner}">
+                        <a class="y-button y-button-white" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}&edit=${items.get(idit.count-1).get(idi.count-1).getIdYITEM()}">
+                            Éditer cet objet
+                        </a>
+                    </c:if>
                 </section>
             </section>
         </div>
