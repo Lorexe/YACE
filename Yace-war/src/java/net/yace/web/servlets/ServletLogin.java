@@ -52,9 +52,11 @@ public class ServletLogin extends HttpServlet {
                 List<String> infoBoxes = new ArrayList<String>();
                 List<String> tipBoxes = new ArrayList<String>();
 
-                infoBoxes.add("Bienvenue sur Ya<em class='CE'>ce</em> !");
-                infoBoxes.add("Vous pouvez gérer vos collections blablabla !");
-
+                infoBoxes.add("Bienvenue sur Ya<em class='CE'>ce</em> ! Cette zone d'aide est à consulter à chaque fois que vous ne savez pas comment utiliser une page.");
+                tipBoxes.add("Commencez pas créer une collection, ajoutez ensuite directement des objets de type prédéfini ou créez vos propres types d'objet.");
+                tipBoxes.add("Pour partager vos collections, vous devez les rendre publiques ! Un lien se trouve dans l'édition de votre profil pour partager vos collections publiques avec vos amis.");
+                tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous avez une suggestion à nous transmettre.");
+                
                 asideHelp.put("tip", tipBoxes);
                 asideHelp.put("info", infoBoxes);
 

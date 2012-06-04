@@ -10,7 +10,7 @@
     <section class="content"> <!-- contenu intéressant -->
         <aside id="toggletips"><strong>A I D E</strong></aside>
 
-        <div id="slideshow" class="angled stripes">
+        <div id="slideshow" class="angled stripes masterversion">
 
             <article class="slide">
                 <h1>Yace, c'est quoi?</h1>

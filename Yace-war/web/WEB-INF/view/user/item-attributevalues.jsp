@@ -21,26 +21,26 @@
             <p class="search-header">
                 <a href="see?idCollection=${curItem.collection.idYCOLLECTION}"><label><strong> Collection : ${curItem.collection.theme}</strong></label></a><br/><br/>
                 <label ><strong>Type d'objet  : ${curItem.type.name}</strong></label><br/>
-                <label ><strong>Propriètaire  : ${curItem.collection.owner.pseudo}</strong></label><br/><br/>
+                <label ><strong>Propri&eacute;taire  : ${curItem.collection.owner.pseudo}</strong></label><br/><br/>
                 <c:choose>
                     <c:when test="${prevIt ne -1}">
-                        <a href="details?item=${prevIt}"><img alt="Précédent" src="./theme/default/img/icon/prev_24.png" title="Précédent"></a>
+                        <a href="details?item=${prevIt}"><img alt="Précédent" src="./theme/default/img/icon/prev_24.png" title="Précédent"/></a>
                     </c:when>
                     <c:otherwise>
-                        <img alt="" src="./theme/default/img/icon/prev_24g.png">
+                        <img alt="" src="./theme/default/img/icon/prev_24g.png"/>
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
                     <c:when test="${nextIt ne -1}">
-                        <a href="details?item=${nextIt}"><img alt="Suivant" src="./theme/default/img/icon/next_24.png" title="Suivant"></a>
+                        <a href="details?item=${nextIt}"><img alt="Suivant" src="./theme/default/img/icon/next_24.png" title="Suivant"/></a>
                     </c:when>
                     <c:otherwise>
-                        <img alt="" src="./theme/default/img/icon/next_24g.png">
+                        <img alt="" src="./theme/default/img/icon/next_24g.png"/>
                     </c:otherwise>
                 </c:choose>
                 <br/>
                 </p>
-                <h3>Les Caractéristiques</h3><br/><br/>
+                <h3>Les Caract&eacute;ristiques</h3><br/><br/>
                 
             <c:forEach var="attval" items="${attributevalues}">
                 <c:choose>
@@ -61,13 +61,13 @@
                     <c:when test="${attval.attribute.type eq 'Image'}">
                         <!-- todo : afficher l'image   balise img    -->
                         <label ><b>${attval.attribute.name}</b></label><br/>
-                        <img for="attrval${attval.idYATTRIBUTEVALUE}" class="attr-cover" src="${attval.valStr}"></img>
+                        <img for="attrval${attval.idYATTRIBUTEVALUE}" class="attr-cover" src="${attval.valStr}"/>
                         <br/><br/>
                     </c:when>
                     <c:when test="${attval.attribute.type eq 'URL'}">
                         <label ><b>${attval.attribute.name} : </b></label>&nbsp;&nbsp;
                         <!-- todo : creer l'url  balise a     -->
-                        <a href="${attval.valStr}">Lien</a>
+                        <a href="${attval.valStr}">${attval.valStr}</a>
                         <br/><br/>
                     </c:when>
                     <c:otherwise>
@@ -78,7 +78,7 @@
             </c:forEach>
             <c:if test="${canEdit eq true}">         
             <a class="y-button y-button-white" href="itemmgmt?coll=${curItem.collection.idYCOLLECTION}&type=${curItem.type.getIdYITEMTYPE()}&edit=${curItem.getIdYITEM()}">
-            Éditer cet objet</a>
+            &Eacute;diter cet objet</a>
             </c:if>
             </div>
         </c:otherwise>

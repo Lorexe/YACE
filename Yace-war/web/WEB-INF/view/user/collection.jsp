@@ -77,7 +77,7 @@
 
 <c:forEach var="itemtype" items="${itemtypes}" varStatus="idit">
     <c:forEach var="item" items="${values.get(idit.count - 1)}" varStatus="idi">
-        <div role="preview" id="prev-item-${idit.count}-${idi.count}">
+        <div role="preview" id="prev-item-${idit.count}-${idi.count}" style="display: none; ">
             <section class="splash whitebox">
                 <header>
                     <h1>Détails de l'élément</h1>

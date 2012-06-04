@@ -35,7 +35,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="submit" class="y-button y-button-blue" />
+                            <input type="submit" class="y-button y-button-green" value="J'enregistre" />
                         </td>
                     </tr>
                 </tbody>
@@ -43,34 +43,37 @@
             <div role="share">
                 <div id='fb-root'></div>
                 <script src='http://connect.facebook.net/en_US/all.js'></script>
-                <p><a onclick='postToFeed(); return false;'>Facebook link</a></p>
+                <p><a class="y-button y-button-blue" onclick='postToFeed(); return false;'>Je publie sur FACEBOOK mes collections publiques !</a></p>
                 <p id='msg'></p>
 
-                <script> 
-                  FB.init({appId: "377846235598184", status: true, cookie: true});
+                <script type="text/javascript">
+                      FB.init({appId: "377846235598184", status: true, cookie: true});
 
-                  function postToFeed() {
+                      function postToFeed() {
 
-                    // calling the API ...
-                    var obj = {
-                      method: 'feed',
-                      link: 'http://yace.no-ip.com/Yace-war/collections?u=${user.idYUSER}',
-                      picture: 'http://yace.no-ip.com/Yace-war/theme/default/img/logo.png',
-                      name: 'Collectionneur ? YaCE!',
-                      caption: 'Gestionnaire de collection pour TOUS les collectionneurs !',
-                      description: "YaCE!, c'est [yes] mais avec [yeah] dedans.",
-                      display: 'iframe'
-                    };
+                        // calling the API ...
+                        var obj = {
+                          method: 'feed',
+                          link: 'http://yace.no-ip.com/Yace-war/collections?u=${user.idYUSER}',
+                          picture: 'http://yace.no-ip.com/Yace-war/theme/default/img/logo.png',
+                          name: 'Collectionneur ? YaCE!',
+                          caption: 'Gestionnaire de collection pour TOUS les collectionneurs !',
+                          description: "YaCE!, c'est [yes] mais avec [yeah] dedans.",
+                          display: 'iframe'
+                        };
 
-                    function callback(response) {
-                      document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
-                    }
+                        function callback(response) {
+                            if (response && response.post_id) {
+                                document.getElementById('msg').innerHTML = "Vous venez de partager vos collections sur votre mur Facebook !";
+                            } else {
+                                //document.getElementById('msg').innerHTML = "Une erreur s'est produite, veuillez réessayer !";
+                            }
+                        }
 
-                    FB.ui(obj, callback);
-                  }
-
+                        FB.ui(obj, callback);
+                      }
                 </script>
-                <a href="collections?u=${user.idYUSER}">Mes collections publiques</a>
+                <a href="collections?u=${user.idYUSER}">Copier le lien public</a> (clic-droit -> copier le lien)
             </div>
         </form>
         <% if (request.getAttribute("error") != null) {%>

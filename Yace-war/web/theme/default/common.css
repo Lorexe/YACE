@@ -348,6 +348,10 @@ strong {
     padding-bottom: 6px;
 }
 
+.search-line {
+    background: yellow;
+}
+
 /**
  * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> CORPS <<<<<<<<<
  */
@@ -391,6 +395,7 @@ strong {
 
 	footer[role="tour"]{
 		width: 77%;
+                margin: 0 auto;
 	}
 
 	/**
@@ -453,6 +458,10 @@ strong {
 	margin:1em;
 	margin-bottom: 2em;
 	border-radius: 6px;
+}
+
+#slideshow.masterversion{
+    margin:0 auto;
 }
 
 	nav[role="slideremote"]{
