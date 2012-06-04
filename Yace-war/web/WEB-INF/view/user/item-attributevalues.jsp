@@ -40,42 +40,35 @@
                 </c:choose>
                 <br/>
                 </p>
-                <h3>Les Caract&eacute;ristiques</h3><br/><br/>
-                
-            <c:forEach var="attval" items="${attributevalues}">
-                <c:choose>
-                    <c:when test="${attval.attribute.type eq 'String'}">
-                        <label ><b>${attval.attribute.name} : </b></label>&nbsp;&nbsp;
-                        <c:choose>
-                            <c:when test="${fn:length(attval.valStr) > 25}">
-                                <p class="attr-longtext" for="attrval${attval.idYATTRIBUTEVALUE}">
-                                ${attval.valStr}
-                                </p>
-                            </c:when>
-                            <c:otherwise>
-                                <label for="attrval${attval.idYATTRIBUTEVALUE}">${attval.valStr}</label>
-                                <br/><br/>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:when>
-                    <c:when test="${attval.attribute.type eq 'Image'}">
-                        <!-- todo : afficher l'image   balise img    -->
-                        <label ><b>${attval.attribute.name}</b></label><br/>
-                        <img for="attrval${attval.idYATTRIBUTEVALUE}" class="attr-cover" src="${attval.valStr}"/>
-                        <br/><br/>
-                    </c:when>
-                    <c:when test="${attval.attribute.type eq 'URL'}">
-                        <label ><b>${attval.attribute.name} : </b></label>&nbsp;&nbsp;
-                        <!-- todo : creer l'url  balise a     -->
-                        <a href="${attval.valStr}">${attval.valStr}</a>
-                        <br/><br/>
-                    </c:when>
-                    <c:otherwise>
-                        <label for="">error! no value found</label>
-                    </c:otherwise>
-                </c:choose>
-                
-            </c:forEach>
+                <h3>Les Caractéristiques</h3><br/><br/>
+                <table class="y-table">
+                    <c:forEach var="attval" items="${attributevalues}" varStatus ="attrcount">
+                        <tr <c:if test="${attrcount.count % 2 == 0}">class="odd"</c:if>>
+                            <td>
+                                <label ><b>${attval.attribute.name}</b></label>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${attval.attribute.type eq 'String'}">
+                                        <label  class="attr-longtext" for="attrval${attval.idYATTRIBUTEVALUE}">${attval.valStr}</label>        
+                                    </c:when>
+                                    <c:when test="${attval.attribute.type eq 'Image'}">
+                                        <!-- todo : afficher l'image   balise img    -->
+                                        <img for="attrval${attval.idYATTRIBUTEVALUE}" class="attr-cover" src="${attval.valStr}"></img>
+                                    </c:when>
+                                    <c:when test="${attval.attribute.type eq 'URL'}">
+                                        <!-- todo : creer l'url  balise a     -->
+                                        <a href="${attval.valStr}">Lien</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <label for="">error! no value found</label>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            
             <c:if test="${canEdit eq true}">         
             <a class="y-button y-button-white" href="itemmgmt?coll=${curItem.collection.idYCOLLECTION}&type=${curItem.type.getIdYITEMTYPE()}&edit=${curItem.getIdYITEM()}">
             &Eacute;diter cet objet</a>
