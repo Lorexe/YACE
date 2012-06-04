@@ -36,18 +36,19 @@ function addAlbum(album)
         tracks += album.tracklist[i].name + " (" + album.tracklist[i].duration + "), ";
     if(tracks.length > 0) tracks = tracks.substr(0,tracks.length-2);
     
-    $("#search_result").append("<div class='ac_box' onclick=\"addAlbumToForm('"+album.cover+"','"+album.artist+"','"+album.name+"','"+album.released+"','"+tracks+"')\"" +
+    var div = "<div class='ac_box' onclick=\"addAlbumToForm('"+album.cover+"','"+album.artist+"','"+album.name+"','"+album.released+"','"+tracks+"')\">" +
         "<img height='150' src=\"" + album.cover + "\"/>" +
         "<ul><li>Artiste : " + album.artist + "</li>" +
         "<li>Album : " + album.name + "</li>" +
         "</ul>" +
-        "<h3>Tracks</h3><ol>"
-        );
+        "<h3>Tracks</h3><ol>";
         
     for (var i = 0; i < album.tracklist.length; i++){
-        $("#content").append("<li>" + album.tracklist[i].name + " (" + album.tracklist[i].duration + ")</li>");
+        div += "<li>" + album.tracklist[i].name + " (" + album.tracklist[i].duration + ")</li>";
     }
-    $("#content").append("</ol><div class='clear_image'></div></div>");
+    div += "</ol><div class='clear_image'></div></div>";
+    
+    $("#search_result").append(div);
 }
 
 function searchAlbumStarted()
