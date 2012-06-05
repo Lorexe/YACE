@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.yace.web.utils.EmailSender;
 import net.yace.web.utils.YaceUtils;
 
 /**
@@ -21,8 +22,8 @@ import net.yace.web.utils.YaceUtils;
  */
 public class ServletAbout extends HttpServlet {
     
-    private final static String VUE_PRESENTATION = "welcome.jsp";
     private final static String VUE_ABOUT = "WEB-INF/view/user/about.jsp";
+    private final static String MAIL_TO = "yet.another.collection.engine@gmail.com";
     
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -63,6 +64,27 @@ public class ServletAbout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        /*
+         * Faut encore faire tous les C.V.
+         * et afficher une boite d'info/warning ou quoi
+         * en fonction des erreurs à balancer.
+         */
+        String senderName = request.getParameter("name");
+        String senderMail = request.getParameter("email");
+        String msgSubject = request.getParameter("subject");
+        String msgContent = request.getParameter("msg");
+        
+        try {
+            new EmailSender(
+                    MAIL_TO,
+                    senderMail,
+                    msgSubject,
+                    "Auteur: " + senderName + "\n" + msgContent
+                );
+        } catch (RuntimeException e) {
+            // message dans boite warning
+        }
+        
         doGet(request, response);
     }
 

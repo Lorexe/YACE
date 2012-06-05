@@ -11,21 +11,26 @@
         
         <h1>Contact</h1>
         <p>Utilisez le formulaire ci-dessous pour nous envoyer des suggestions, questions ou autres commentaires.</p>
-        <form action="mailto:admin@yace.com?subject=Message provenant de YaCE!" method="post" enctype="text/plain">
+        <%-- <form action="mailto:admin@yace.com?subject=Message provenant de YaCE!" method="post" enctype="text/plain"> --%>
+        <form action="#" method="post" enctype="text/plain">
             <table class="y-table y-table-form">
                 <tr class="odd">
                     <td><b>Votre nom:</b></td>
-                    <td><input name="name" size="20" value="${user.pseudo}"></td>
+                    <td><input name="name" size="20" value="${user.pseudo}" placeholder="Jacques Dupont"></td>
                 </tr>
                 <tr>
-                    <td><b>Email:</b></td>
-                    <td><input name="email" size="20" value="${user.email}"></td>
+                    <td><b>Votre email:</b></td>
+                    <td><input name="email" size="20" value="${user.email}" placeholder="j.dupont@gmail.com"></td>
                 </tr>
                 <tr class="odd">
+                    <td><b>Sujet:</b></td>
+                    <td><input name="subject" size="20" placeholder="Idée d'amélioration"></td>
+                </tr>
+                <tr>
                     <td><b>Message:</b></td>
                     <td><textarea name="msg"></textarea></td>
                 </tr>
-                <tr>
+                <tr class="odd">
                     <td><input class="y-button y-button-blue" type="submit" value="J'envoie le message"/></td>
                     <td><input class="y-button y-button-white" type="reset" value="Je recommence"></td>
                 </tr>
