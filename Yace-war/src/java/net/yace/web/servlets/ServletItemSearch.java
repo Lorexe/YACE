@@ -82,7 +82,7 @@ public class ServletItemSearch extends HttpServlet {
             //
         }
         
-        int resultsnumber = 6;//nombre des resultats à afficher sur une page
+        int resultsnumber = 15;//nombre des resultats à afficher sur une page
         int totalsize = 0;
         String totsize = request.getParameter("totalsize");
         if(totsize != null)
