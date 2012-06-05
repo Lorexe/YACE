@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.facade;
 
 import java.util.ArrayList;
@@ -14,10 +10,6 @@ import javax.persistence.NoResultException;
 import net.yace.entity.Ycollection;
 import net.yace.entity.Yitemtype;
 
-/**
- *
- * @author Mikhail Pitchugin <mikael.pitchugin.isat@gmail.com>
- */
 @Stateless
 public class YitemtypeFacade extends AbstractFacade<Yitemtype> {
 

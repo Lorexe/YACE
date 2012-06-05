@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets;
 
 import java.io.IOException;
@@ -20,10 +16,6 @@ import net.yace.facade.YitemtypeFacade;
 import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 
-/**
- *
- * @author Mikhail Pitchugin <mikael.pitchugin.isat@gmail.com>
- */
 public class ServletItemTypeResume extends HttpServlet {
 
     private final static String VUE_TYPE = "WEB-INF/view/user/itemtype-details.jsp";

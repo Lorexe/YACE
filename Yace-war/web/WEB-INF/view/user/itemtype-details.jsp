@@ -1,9 +1,3 @@
-<%-- 
-    Document   : itemtype-details
-    Created on : 4 juin 2012, 19:29:31
-    Author     : Mikhail Pitchugin <mikael.pitchugin.isat@gmail.com>
---%>
-
 <section id="main" class="whitebox"> <!-- main panel -->
 <header>
     <h1>${pageTitle}</h1>

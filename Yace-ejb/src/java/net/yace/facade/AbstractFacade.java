@@ -1,16 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.facade;
 
 import java.util.List;
 import javax.persistence.EntityManager;
 
-/**
- *
- * @author Mikhail Pitchugin <mikael.pitchugin.isat@gmail.com>
- */
 public abstract class AbstractFacade<T> {
     private Class<T> entityClass;
 

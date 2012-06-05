@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.facade;
 
 import java.util.List;
@@ -13,10 +9,6 @@ import javax.persistence.Query;
 import net.yace.entity.Yattribute;
 import net.yace.entity.Yitemtype;
 
-/**
- *
- * @author Mikhail Pitchugin <mikael.pitchugin.isat@gmail.com>
- */
 @Stateless
 public class YattributeFacade extends AbstractFacade<Yattribute> {
     @PersistenceContext(unitName = "Yace-ejbPU")

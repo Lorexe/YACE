@@ -18,14 +18,12 @@
     </c:choose>
 </header>
 
-<section class="content"> <!-- contenu intéressant -->
+<section class="content"> 
     <aside id="toggletips"><strong>A I D E</strong></aside>
 
     <div id="appender"></div>
 
     <form name="wizardcollection" method="POST" action="#"></form>
-    <%-- <button class="y-button y-button-white" onclick="valid()">Je valide !</button> --%>
-    
 </section>
 
 </section>

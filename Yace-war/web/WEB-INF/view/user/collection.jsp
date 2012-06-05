@@ -1,9 +1,3 @@
-<%-- 
-    Document   : collection
-    Created on : 31 mai 2012, 19:43:57
-    Author     : Pegazz <la101576 at student.helha.be>
---%>
-
 <section id="main" class="whitebox"> <!-- main panel -->
 
     <header>

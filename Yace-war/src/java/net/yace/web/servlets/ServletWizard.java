@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets;
 
 import java.io.IOException;
@@ -20,10 +16,6 @@ import net.yace.facade.YcollectionFacade;
 import net.yace.web.utils.YaceUtils;
 import net.yace.web.utils.ServicesLocator;
 
-/**
- *
- * @author MaBoy <bruno.boi@student.helha.be>
- */
 public class ServletWizard extends HttpServlet {
 
     private final static String VUE_PRESENTATION = "welcome.jsp";
@@ -41,11 +33,7 @@ public class ServletWizard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Si on appelle l'assistant pour une collection déjà définie, paramètre "collection" passé en get
-        //S'en suit un C.V. et si c'est bon, on passe l'attribut "collection" pour la jsp.
-        // TODO : déterminer quels renseignements sont nécessaires à l'assistant histoire que tout soit disponible dans la request
-        //        la modification d'une collection existante est certainement une fonctionnalité dont on peut se passer pour vendredi
-        //        je prropose donc qu'on se concentre d'abord sur la création proprement dite (donc code get bon, reste code post)
+
         YaceUtils.SessionState state = YaceUtils.getSessionState(request);
         if (state == YaceUtils.SessionState.noauth) {
             request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
@@ -53,11 +41,11 @@ public class ServletWizard extends HttpServlet {
             YcollectionFacade collFacade = ServicesLocator.getCollectionFacade();
 
             HttpSession session = request.getSession(false);
-            //On check pas, c'est déjà fait !
+            
             Yuser user = (Yuser) session.getAttribute("user");
 
             String strIdcoll = request.getParameter("idCollection");
-            //Collection définie en get ?
+            
             if (strIdcoll != null) {
                 int idcoll = Integer.parseInt(strIdcoll);
                 Ycollection collection = collFacade.find(idcoll);

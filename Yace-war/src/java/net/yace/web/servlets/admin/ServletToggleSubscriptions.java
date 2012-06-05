@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets.admin;
 
 import java.io.IOException;
@@ -18,10 +14,6 @@ import net.yace.facade.YsettingFacade;
 import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 
-/**
- *
- * @author MaBoy <bruno.boi@student.helha.be>
- */
 public class ServletToggleSubscriptions extends HttpServlet {
 
     private final static String VUE_PRESENTATION = "welcome.jsp";

@@ -24,10 +24,7 @@ import net.yace.facade.YitemtypeFacade;
 import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 
-/**
- *
- * @author Scohy Jérôme
- */
+
 public class ServletItemAddEdit extends HttpServlet {
 
     private final static String VUE_PRESENTATION = "welcome.jsp";
@@ -59,7 +56,6 @@ public class ServletItemAddEdit extends HttpServlet {
             if (idCollection != null && !idCollection.isEmpty() && idType != null && !idType.isEmpty()) {
                 Ycollection collection = facColl.find(Integer.parseInt(idCollection));
                 Yitemtype itemtype = facItemtype.find(Integer.parseInt(idType));
-                // TODO : Vérifier si l'itemtype est associé à la collection
                 if (itemtype!=null && collection!=null && collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
                     
                     // Vérifie si l'autocompletion doit etre prise en compte
@@ -186,7 +182,6 @@ public class ServletItemAddEdit extends HttpServlet {
             if (idCollection != null && !idCollection.isEmpty() && idType != null && !idType.isEmpty()) {
                 Ycollection collection = facColl.find(Integer.parseInt(idCollection));
                 Yitemtype itemtype = facItemtype.find(Integer.parseInt(idType));
-                // TODO : Vérifier si l'itemtype est associé à la collection
                 if (itemtype != null && collection != null && collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
 
                     YitemFacade itemFacade = ServicesLocator.getItemFacade();
@@ -271,7 +266,6 @@ public class ServletItemAddEdit extends HttpServlet {
 
                     redirect = true;
                     request.getRequestDispatcher(SVLT_COLLECTION + idCollection).forward(request, response);
-                    //response.sendRedirect(SVLT_COLLECTION + idCollection);
                 }
             }
         }

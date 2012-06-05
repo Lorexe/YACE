@@ -12,11 +12,6 @@ import net.yace.facade.YuserFacade;
 import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 
-/**
- *
- * @author Scohy Jerome
- * @author Boi Bruno
- */
 public class ServletRegister extends HttpServlet {
     
     private final static String VUE_PRESENTATION = "welcome.jsp";

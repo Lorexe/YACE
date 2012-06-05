@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.facade;
 
 import javax.ejb.Stateless;
@@ -11,10 +7,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import net.yace.entity.Ysetting;
 
-/**
- *
- * @author MaBoy <bruno.boi@student.helha.be>
- */
 @Stateless
 public class YsettingFacade extends AbstractFacade<Ysetting> {
 

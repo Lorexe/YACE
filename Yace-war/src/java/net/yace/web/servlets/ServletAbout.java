@@ -12,10 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.yace.web.utils.EmailSender;
 import net.yace.web.utils.YaceUtils;
 
-/**
- *
- * @author MaBoy <bruno.boi@student.helha.be>
- */
 public class ServletAbout extends HttpServlet {
     
     private final static String VUE_ABOUT = "WEB-INF/view/user/about.jsp";

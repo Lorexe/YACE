@@ -14,10 +14,6 @@ import net.yace.facade.YrankFacade;
 import net.yace.facade.YsettingFacade;
 import net.yace.facade.YuserFacade;
 
-/**
- *
- * @author Scohy Jérôme
- */
 public abstract class ServicesLocator {
     private ServicesLocator() {
     }

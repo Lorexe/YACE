@@ -21,10 +21,6 @@ import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 import net.yace.web.utils.YaceUtils.SessionState;
 
-/**
- *
- * @author biddaputzese <biddaputzese@gmail.com>
- */
 public class ServletItemTypeMgmt extends HttpServlet {
     
     private final static String VUE_PRESENTATION = "welcome.jsp";

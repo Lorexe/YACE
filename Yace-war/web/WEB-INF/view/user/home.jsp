@@ -6,7 +6,7 @@
         </h1>
     </header>
 
-    <section class="content"> <!-- contenu intéressant -->
+    <section class="content"> 
         <aside id="toggletips"><strong>A I D E</strong></aside>
 
         <div id="slideshow" class="angled stripes masterversion">

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : item-attributevalues
-    Created on : 31 mai 2012, 22:27:31
-    Author     : Mikhail Pitchugin <mikael.pitchugin.isat@gmail.com>
---%>
-
 <section id="main" class="whitebox"> <!-- main panel -->
 <header>
     <h1>${pageHeaderTitle}</h1>

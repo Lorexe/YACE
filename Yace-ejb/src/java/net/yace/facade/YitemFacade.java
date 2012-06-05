@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.facade;
 
 import java.util.ArrayList;
@@ -17,10 +13,6 @@ import net.yace.entity.Yitem;
 import net.yace.entity.Yitemtype;
 import net.yace.entity.Yuser;
 
-/**
- *
- * @author Mikhail Pitchugin <mikael.pitchugin.isat@gmail.com>
- */
 @Stateless
 public class YitemFacade extends AbstractFacade<Yitem> {
     @PersistenceContext(unitName = "Yace-ejbPU")

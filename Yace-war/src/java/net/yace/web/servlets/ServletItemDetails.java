@@ -57,7 +57,7 @@ public class ServletItemDetails extends HttpServlet {
                 if (valList != null) {
                     String clrword = request.getParameter("clr");//parametre à surligner
                     if (clrword != null && !clrword.equals("")) {
-                        //passer le parametre à la jsp
+                        
                         request.setAttribute("clr", clrword);
                         for (Yattributevalue av : valList) {
                             if (!av.getAttribute().getType().equals("Image") || !av.getAttribute().getType().equals("URL")) {

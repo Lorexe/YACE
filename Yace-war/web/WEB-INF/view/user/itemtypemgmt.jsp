@@ -1,16 +1,10 @@
-<%-- 
-    Document   : itemtypemgmt
-    Created on : 4 juin 2012
-    Author     : Scohy Jérôme <scohy.jerome@gmail.com>
---%>
-
 <section id="main" class="whitebox"> <!-- main panel -->
 
     <header>
         <h1>${pageHeaderTitle}</h1>
     </header>
 
-    <section class="content"> <!-- contenu intéressant -->
+    <section class="content">
         <aside id="toggletips"><strong>A I D E</strong></aside>
 
         <form method="post" action="itemtypemgmt">

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : item-search
-    Created on : 2 juin 2012, 15:54:57
-    Author     : Mikhail Pitchugin <mikael.pitchugin.isat@gmail.com>
---%>
-
 <section id="main" class="whitebox"> <!-- main panel -->
     <header>
         <h1>${pageTitle}</h1>

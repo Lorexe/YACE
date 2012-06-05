@@ -23,13 +23,8 @@ import net.yace.facade.YitemtypeFacade;
 import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 
-/**
- *
- * @author MaBoy <bruno.boi@student.helha.be>
- */
 public class ServletCollectionView extends HttpServlet {
 
-    //TODO mettre ta fucking jsp ici mec :p
     private final static String VUE_COLL_VIEW = "WEB-INF/view/user/collection.jsp";
 
     /** 

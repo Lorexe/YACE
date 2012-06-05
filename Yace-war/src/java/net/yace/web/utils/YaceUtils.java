@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.utils;
 
 import java.io.IOException;
@@ -27,10 +23,6 @@ import net.yace.entity.Yitemtype;
 import net.yace.entity.Yuser;
 import net.yace.facade.YitemFacade;
 
-/**
- *
- * @author MaBoy <bruno.boi@student.helha.be>
- */
 public class YaceUtils {
     
     private final static String ERROR_PAGE = "WEB-INF/view/user/errorpage.jsp";
@@ -505,10 +497,11 @@ public class YaceUtils {
             return false;
         }
         //url format regex
-        String urlPattern = "^http(s{0,1})://[a-zA-Z0-9_/\\-\\.]+\\.([A-Za-z/]{2,5})[a-zA-Z0-9_/\\&\\?\\=\\-\\.\\~\\%]*";
+        //String urlPattern = "^http(s{0,1})://[a-zA-Z0-9_/\\-\\.]+\\.([A-Za-z/]{2,5})[a-zA-Z0-9_/\\&\\?\\=\\-\\.\\~\\%]*";
+        String urlPattern = "^((https?|ftp)://|(www|ftp)\\.)[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$";
         Pattern pattern = Pattern.compile(urlPattern);
         Matcher matcher = pattern.matcher(url);
-        // return url.matches(urlPattern);
+        
         return matcher.matches();
     }
 }

@@ -22,7 +22,7 @@
     </c:choose>
 </header>
 
-<section class="content"> <!-- contenu intéressant -->
+<section class="content"> 
     <aside id="toggletips"><strong>A I D E</strong></aside>
 <% if (request.getAttribute("deletionOK") == null) {%>
     <div class="wizardBox">
@@ -47,7 +47,6 @@
             <input type="hidden" name="idCollection" value="${coll.rows[0].idYCOLLECTION}"/>
         </c:if>
     </form>
-    <%-- <button class="y-button y-button-white" onclick="valid()">Je valide !</button> --%>
 <% } else { %>
     <p>${deletionOK}</p>
 <% } %>

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets.admin;
 
 import java.io.IOException;
@@ -15,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.yace.web.utils.YaceUtils;
 
-/**
- *
- * @author MaBoy <bruno.boi@student.helha.be>
- */
 public class ServletHome extends HttpServlet {
 
     private final static String VUE_PRESENTATION = "welcome.jsp";

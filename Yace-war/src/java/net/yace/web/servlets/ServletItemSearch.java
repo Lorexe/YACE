@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets;
 
 import java.io.IOException;
@@ -23,10 +19,6 @@ import net.yace.facade.YitemFacade;
 import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 
-/**
- *
- * @author Mikhail Pitchugin <mikael.pitchugin.isat@gmail.com>
- */
 public class ServletItemSearch extends HttpServlet {
 
     private final static String VUE_SEARCH = "WEB-INF/view/user/item-search.jsp";

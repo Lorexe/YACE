@@ -14,10 +14,6 @@ import net.yace.facade.YrankFacade;
 import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;
 
-/**
- *
- * @author MaBoy <bruno.boi@student.helha.be>
- */
 public class ServletRankMgmt extends HttpServlet {
 
     private final static String VUE_PRESENTATION = "welcome.jsp";
