@@ -9,7 +9,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -291,7 +290,7 @@ public class YaceUtils {
         List<String> tipBoxes = new ArrayList<String>();
 
         infoBoxes.add("Pour effectuer une recherche, vous devez au moins introduire un mot de deux caractères.");
-        tipBoxes.add("Essayez de faire une recherche sun un terme plus long");
+        tipBoxes.add("Essayez de faire une recherche sur un terme plus long");
 
         asideHelp.put("tip", tipBoxes);
         asideHelp.put("info", infoBoxes);
