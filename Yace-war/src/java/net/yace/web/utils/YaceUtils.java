@@ -499,4 +499,16 @@ public class YaceUtils {
         }
         return candelete;
     }
+    
+    public static boolean isValidURL(String url) {
+        if (url == null) {
+            return false;
+        }
+        //url format regex
+        String urlPattern = "^http(s{0,1})://[a-zA-Z0-9_/\\-\\.]+\\.([A-Za-z/]{2,5})[a-zA-Z0-9_/\\&\\?\\=\\-\\.\\~\\%]*";
+        Pattern pattern = Pattern.compile(urlPattern);
+        Matcher matcher = pattern.matcher(url);
+        // return url.matches(urlPattern);
+        return matcher.matches();
+    }
 }

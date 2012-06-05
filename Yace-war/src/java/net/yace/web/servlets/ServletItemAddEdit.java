@@ -221,7 +221,12 @@ public class ServletItemAddEdit extends HttpServlet {
                             if(attr.getType().equalsIgnoreCase("string")) {
                                 av.setValStr(request.getParameter("attr_" + attrName));
                             } else {
-                                av.setValStr(request.getParameter("attr_" + attrName));
+                                //tester si l'url est valide
+                                //sinon attributevalue vide, afficher image par defaut
+                                if(YaceUtils.isValidURL(request.getParameter("attr_" + attrName)))
+                                    av.setValStr(request.getParameter("attr_" + attrName));
+                                else
+                                    av.setValStr("");
                             }
                             
                             // Enregistrement de l'attributevalue
@@ -251,9 +256,13 @@ public class ServletItemAddEdit extends HttpServlet {
                                 if (attrType.equalsIgnoreCase("string")) {
                                     attrVal.setValStr(newValue);
                                 } else {
-                                    attrVal.setValStr(newValue);
+                                    //tester si l'url est valide
+                                    //sinon attributevalue vide, afficher image par defaut
+                                    if(YaceUtils.isValidURL(newValue))
+                                        attrVal.setValStr(newValue);
+                                    else
+                                        attrVal.setValStr("");
                                 }
-
                                 attrValFacade.edit(attrVal);
                             }
                             
