@@ -94,6 +94,7 @@ public class ServletItemTypeMgmt extends HttpServlet {
                 Ycollection collection = facColl.find(Integer.parseInt(idCollection));
                 if (collection != null && collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
                     String buttonValidate = request.getParameter("button_validate");
+                    String buttonDelete = request.getParameter("delete");
                     if (buttonValidate != null) {
                         int nb_champs = Integer.parseInt(request.getParameter("nb_champs"));
                         
@@ -111,6 +112,13 @@ public class ServletItemTypeMgmt extends HttpServlet {
                             attr.setType(request.getParameter("type_"+i));
                             attr.setItemtype(it);
                             facAttribute.create(attr);
+                        }
+                    } else if(buttonDelete != null) {
+                        String itemtypeId = request.getParameter("itemtypeId");
+                        
+                        if(itemtypeId != null && !itemtypeId.isEmpty()) {
+                            Yitemtype yit = facItemtype.find(Integer.parseInt(itemtypeId));
+                            facItemtype.remove(yit);
                         }
                     }
                     
