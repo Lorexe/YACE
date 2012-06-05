@@ -359,6 +359,8 @@ figure.cover {
     figure.cover img {
         height: 110px;
         width: 110px;
+        margin-top: 1px;
+        margin-bottom: -2px;
     }
 
     figure.cover figcaption {
@@ -517,3 +519,4 @@ div.mgmtIcons img{display:inline-block}
 div#dummy{display:none}
 div.wizardBox{width:360px;text-align:center;margin:20px 0;padding:5px 0;border:2px solid #9cf;}
 a[onclick]{cursor:pointer}
+form[role="profile-edit"]{margin-bottom:40px}

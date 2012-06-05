@@ -17,7 +17,6 @@
         <form method="post" action="itemtypemgmt">
             <input type="hidden" name="coll" value="${idColl}"/>
             
-            
             <p><label for="name_type">Nom du type d'objet</label>  <input type="text" id="name_type" name="name_type" require/></p>
             
             <input type="hidden" name="nb_champs" id="nb_champs" value="2"/>
@@ -44,13 +43,13 @@
                 </tfoot>
                 <tbody id="table_champs">
                     <tr>
-                        <td><input type="text" name="name_0" value="Cover"/></td>
+                        <td><input type="text" name="name_0" value="Photo"/></td>
                         <td>Image</td>
                         <td></td>
                     </tr>
                     <tr class="odd">
                         <td><input type="text" name="name_1" value="Titre"/></td>
-                        <td>Chaine de caractère</td>
+                        <td>Texte</td>
                         <td></td>
                     </tr>
                 </tbody>
@@ -81,7 +80,7 @@ $(document).ready(function(){
                
         $(select_type).attr("name", "type_"+nb_champs)
                       .attr("id", "type_"+nb_champs);
-        $(select_type).html("<option value='String'>Chaine de caractère</option><option value='Image'>Image</option>");
+        $(select_type).html("<option value='String'>Texte</option><option value='Image'>Image</option>");
         
         $(td_action).html("<img class='deleteicon' src='./theme/default/img/img_trans.gif' alt='Supprimer' title='Supprimer' onclick='del("+nb_champs+")' />");
         

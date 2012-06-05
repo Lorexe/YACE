@@ -10,7 +10,7 @@
     <section class="content"> <!-- contenu intéressant -->
         <aside id="toggletips"><strong>A I D E</strong></aside>
 
-        <form method="POST" action="#">
+        <form role="profile-edit" method="POST" action="#">
             <table class="y-table y-table-form">
                 <tbody>
                     <tr class="odd">
