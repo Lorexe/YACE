@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.yace.entity.Ycollection;
 import net.yace.entity.Yitem;
+import net.yace.entity.Yitemtype;
 import net.yace.entity.Yuser;
 
 /**
@@ -248,6 +249,33 @@ public class YaceUtils {
         request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
     }
     
+        
+    public static void displaySearchError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // erreur survenur lors de la recherche des items
+        request.setAttribute("errorMsg",
+                "Nous sommes désolés, mais votre recherche n'a pas abouti.<br/>"
+                + "Vous devez introduire au moins un mot de deux caractères pour effectuer une recherche.<br/>"
+                + "Vous n'êtes pas satisfait ? <a href='about'>Contactez-nous</a> !");
+
+        // Aide contextuelle
+        Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+        List<String> infoBoxes = new ArrayList<String>();
+        List<String> tipBoxes = new ArrayList<String>();
+
+        infoBoxes.add("Pour effectuer une recherche, vous devez au moins introduire un mot de deux caractères.");
+        tipBoxes.add("Essayez de faire une recherche sun un terme plus long");
+
+        asideHelp.put("tip", tipBoxes);
+        asideHelp.put("info", infoBoxes);
+
+        request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+
+        // On nomme et affiche la page
+        request.setAttribute("pageTitle", "Recherche non valide");
+        request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+    }
+        
     //vérifie si item peut être consulté par user
     public static boolean CanDisplayItem(Yitem item, Yuser usr)
     {
@@ -366,5 +394,42 @@ public class YaceUtils {
         
         return result;
     }
-
+    
+    //vérifie si itemtype peut être consulté par user
+    public static Boolean canConsultItemType(Yitemtype itemtype, Yuser yuser) {
+        boolean result = false;
+        if(itemtype != null)
+        {
+            if (yuser != null) 
+            {
+                //l'admin peut tout editer
+                if (yuser.getRank().isAdmin() || itemtype.isPublic()) {
+                    result = true;
+                } else if (yuser.getIdYUSER() == itemtype.getCollection().getOwner().getIdYUSER()) {
+                    result = true;
+                }
+            }
+            else
+            {
+                //un visiteur peut consulter le type public
+                if(itemtype.isPublic())
+                    result = true;
+            }
+        }
+        return result;
+    }
+    
+    //vérifie si itemtype peut être édité par user
+    public static Boolean canEditItemType(Yitemtype itemtype, Yuser yuser)
+    {
+        Boolean canedit = false;
+        if(yuser != null)
+        {
+            if(yuser.getRank().isAdmin())
+                canedit = true;
+            else if(yuser.getIdYUSER()==itemtype.getCollection().getOwner().getIdYUSER())
+                canedit = true;
+        }
+        return canedit;
+    }
 }

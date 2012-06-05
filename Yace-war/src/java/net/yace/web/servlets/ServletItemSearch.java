@@ -6,7 +6,10 @@ package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +21,7 @@ import net.yace.entity.Yuser;
 import net.yace.facade.YcollectionFacade;
 import net.yace.facade.YitemFacade;
 import net.yace.web.utils.ServicesLocator;
+import net.yace.web.utils.YaceUtils;
 
 /**
  *
@@ -65,9 +69,20 @@ public class ServletItemSearch extends HttpServlet {
         String nextpage = request.getParameter("searchnext");
         String prevpage = request.getParameter("searchprev");
         
+        //vérification des paramètres
+        if(search == null)
+            search = "";
+        
         search = search.trim();
-        int firstres = Integer.parseInt(request.getParameter("firstres"));
-        int resultsnumber = 3;//nombre des resultats à afficher sur une page
+        int firstres = 0;
+        try
+        {
+            firstres = Integer.parseInt(request.getParameter("firstres"));
+        }catch(NumberFormatException e){
+            //
+        }
+        
+        int resultsnumber = 6;//nombre des resultats à afficher sur une page
         int totalsize = 0;
         String totsize = request.getParameter("totalsize");
         if(totsize != null)
@@ -90,7 +105,7 @@ public class ServletItemSearch extends HttpServlet {
             if(session != null)
                 yuser = (Yuser)session.getAttribute("user");
         
-        if(search != null || !search.equals(""))//changer || à && , ajouter limitation taille du search
+        if(search != null && search.length() > 1)//limitation taille du search
         {
             request.setAttribute("searched", search);
             request.setAttribute("searchtype", domain);
@@ -165,6 +180,26 @@ public class ServletItemSearch extends HttpServlet {
             request.setAttribute("searchpagenumber", (firstres/resultsnumber)+1);//numéro de page
             request.setAttribute("firstres", firstres);//valeur pour le formulaire dynamique
             request.setAttribute("resultsnumber", resultsnumber);
+            
+            Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+            List<String> infoBoxes = new ArrayList<String>();
+            List<String> tipBoxes = new ArrayList<String>();
+
+            infoBoxes.add("Chercher des objets.");
+            tipBoxes.add("Les objets sont affichés par collection");
+            tipBoxes.add("Cliquez sur le lien Details, les mots correspondants à votre recherche seront surlignés");
+            tipBoxes.add("Vous pouvez naviguer sur les autres pages de résultats via les liens en bas de page");
+
+            asideHelp.put("tip", tipBoxes);
+            asideHelp.put("info", infoBoxes);
+
+            request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+        }
+        else
+        {
+            //erreur  : terme a rechercher trop court
+            YaceUtils.displaySearchError(request, response);
         }
         
         
