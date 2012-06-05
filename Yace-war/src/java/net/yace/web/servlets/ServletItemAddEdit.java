@@ -231,6 +231,8 @@ public class ServletItemAddEdit extends HttpServlet {
                             itemFacade.edit(item);
                             attrValFacade.edit(av);
                         }
+                        
+                        request.setAttribute("messageInfos", "L'objet a bien été ajouté !");
                     } else if (buttonEdit != null) {
                         String itemId = request.getParameter("edit");
 
@@ -254,6 +256,8 @@ public class ServletItemAddEdit extends HttpServlet {
 
                                 attrValFacade.edit(attrVal);
                             }
+                            
+                            request.setAttribute("messageInfos", "L'objet a bien été édité !");
                         }
                     } else if(buttonDelete != null) {
                         String itemId = request.getParameter("itemId");
@@ -261,11 +265,14 @@ public class ServletItemAddEdit extends HttpServlet {
                         if(itemId != null && !itemId.isEmpty()) {
                             Yitem item = itemFacade.find(Integer.parseInt(itemId));
                             itemFacade.remove(item);
+                            
+                            request.setAttribute("messageInfos", "L'objet a bien été supprimé !");
                         }
                     }
 
                     redirect = true;
-                    response.sendRedirect(SVLT_COLLECTION + idCollection);
+                    request.getRequestDispatcher(SVLT_COLLECTION + idCollection).forward(request, response);
+                    //response.sendRedirect(SVLT_COLLECTION + idCollection);
                 }
             }
         }

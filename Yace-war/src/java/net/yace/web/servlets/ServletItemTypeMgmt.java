@@ -114,17 +114,21 @@ public class ServletItemTypeMgmt extends HttpServlet {
                             attr.setItemtype(it);
                             facAttribute.create(attr);
                         }
+                        
+                        request.setAttribute("messageInfos", "Le type d'objets a bien été ajouté !");
                     } else if(buttonDelete != null) {
                         String itemtypeId = request.getParameter("itemtypeId");
                         
                         if(itemtypeId != null && !itemtypeId.isEmpty()) {
                             Yitemtype yit = facItemtype.find(Integer.parseInt(itemtypeId));
                             facItemtype.remove(yit);
+                            
+                            request.setAttribute("messageInfos", "Le type et les objets associés ont bien été supprimés !");
                         }
                     }
                     
                     redirect = true;
-                    response.sendRedirect(SVLT_COLLECTION + idCollection);
+                    request.getRequestDispatcher(SVLT_COLLECTION + idCollection).forward(request, response);
                 }
             }
         }

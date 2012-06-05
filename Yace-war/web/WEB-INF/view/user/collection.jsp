@@ -19,6 +19,10 @@
             <p>Cette collection appartient à <strong>${collection.owner.pseudo}</strong></p>
         </c:if>
             
+        <c:if test="${!empty messageInfos}">
+            <div id="box_informative" onclick="$('#box_informative').hide()">${messageInfos}</div>
+        </c:if>
+        
         <c:if test="${!empty user && user eq collection.owner}">
             <form id="form_itemtype_public" action="itemmgmt" method="get">
                 <c:if test="${!empty itemtypesPublic && itemtypesPublic!=null}">
