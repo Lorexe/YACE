@@ -6,6 +6,7 @@ package net.yace.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,9 +65,9 @@ public class Yitemtype implements Serializable {
     private Collection<Yitemtype> yitemtypeCollection;
     @ManyToMany(mappedBy = "yitemtypeCollection")
     private Collection<Yitemtype> yitemtypeCollection1;
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "type", orphanRemoval = true, cascade={CascadeType.REMOVE})
     private Collection<Yitem> yitemCollection;
-    @OneToMany(mappedBy = "itemtype")
+    @OneToMany(mappedBy = "itemtype", orphanRemoval = true, cascade={CascadeType.REMOVE})
     private Collection<Yattribute> yattributeCollection;
     @JoinColumn(name = "collection", referencedColumnName = "idYCOLLECTION")
     @ManyToOne
