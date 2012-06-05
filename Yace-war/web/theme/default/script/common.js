@@ -31,7 +31,7 @@ String.prototype.trim = function () {
 function validateSearchForm() {
     if($("#keyword").val().length < 1){
         //pas de recherche sur paramètre vide
-        $("#keyword").prop('title', 'Vous devez introduire un mot d\'au moins 2 caractères');
+        $("#searchbar").prop('title', 'Vous devez introduire un mot d\'au moins 2 lettres');
         return false;
     }
     else
