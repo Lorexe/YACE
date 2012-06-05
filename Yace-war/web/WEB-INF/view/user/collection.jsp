@@ -42,8 +42,8 @@
             <h1>${itemtype.getName()}</h1>
             <c:choose>
                 <c:when test="${!empty user && user eq collection.owner}">
-                    Vous n'avez pas encore d'objets de ce type ? Cliquez ici pour <a class="y-button y-button-blue" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}">ajouter le premier</a> .<br/>
-                    Vous pouvez aussi <button class="y-button y-button-blue" id="deleteType" rel="#confirmType" onclick="delItemtype(${itemtype.getIdYITEMTYPE()})">supprimer ce type</button> d'objet si vous n'en avez pas l'utilité.
+                    Vous n'avez pas encore d'objets de ce type ? Cliquez ici pour <a class="y-button y-button-white" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}">ajouter le premier</a> .<br/>
+                    Vous pouvez aussi <button class="y-button y-button-red" id="deleteType" rel="#confirmType" onclick="delItemtype(${itemtype.getIdYITEMTYPE()})">supprimer</button> ce type d'objet si vous n'en avez pas l'utilité.
                 </c:when>
                 <c:otherwise>Aucun objet dans ce type</c:otherwise>
             </c:choose>
@@ -131,7 +131,9 @@
                         <a class="y-button y-button-white" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}&edit=${items.get(idit.count-1).get(idi.count-1).getIdYITEM()}">
                             Éditer cet objet
                         </a> 
-                        <button class="y-button y-button-white" id="deleteItem" rel="#confirmItem" onclick="delItem(${items.get(idit.count-1).get(idi.count-1).getIdYITEM()}, ${itemtype.getIdYITEMTYPE()})">Supprimer cette objet</button>
+                        <button class="y-button y-button-white" id="deleteItem" rel="#confirmItem" onclick="delItem(${items.get(idit.count-1).get(idi.count-1).getIdYITEM()}, ${itemtype.getIdYITEMTYPE()})">
+                            Supprimer cet objet
+                        </button>
                     </c:if>
                 </section>
             </section>
@@ -216,15 +218,7 @@ $(document).ready(function(){
             }
     });
     
-    var trigger = $('#deleteType').overlay({
-        mask: {
-            color: '#000033',
-            loadSpeed: 150,
-            opacity: 0.5
-	},
-	closeOnClick: false});
-    
-    var triggers = $('#deleteItem').overlay({
+    var trigger = $('#deleteType, #deleteItem').overlay({
         mask: {
             color: '#000033',
             loadSpeed: 150,
