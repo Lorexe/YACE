@@ -69,8 +69,19 @@ public class ServletItemSearch extends HttpServlet {
         String nextpage = request.getParameter("searchnext");
         String prevpage = request.getParameter("searchprev");
         
+        //vérification des paramètres
+        if(search == null)
+            search = "";
+        
         search = search.trim();
-        int firstres = Integer.parseInt(request.getParameter("firstres"));
+        int firstres = 0;
+        try
+        {
+            firstres = Integer.parseInt(request.getParameter("firstres"));
+        }catch(NumberFormatException e){
+            //
+        }
+        
         int resultsnumber = 6;//nombre des resultats à afficher sur une page
         int totalsize = 0;
         String totsize = request.getParameter("totalsize");
@@ -94,7 +105,7 @@ public class ServletItemSearch extends HttpServlet {
             if(session != null)
                 yuser = (Yuser)session.getAttribute("user");
         
-        if(search != null || !search.equals(""))//changer || à && , ajouter limitation taille du search
+        if(search != null && search.length() > 1)//limitation taille du search
         {
             request.setAttribute("searched", search);
             request.setAttribute("searchtype", domain);
@@ -184,6 +195,11 @@ public class ServletItemSearch extends HttpServlet {
             asideHelp.put("info", infoBoxes);
 
             request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+        }
+        else
+        {
+            //erreur  : terme a rechercher trop court
+            YaceUtils.displaySearchError(request, response);
         }
         
         

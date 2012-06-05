@@ -39,10 +39,10 @@
                         <div id="menubar">
                             <a href="./"><img class="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" /></a>
                             <a href="about"><img class="helpicon" alt="A propos" title="A propos de YaCE!" src="./theme/default/img/img_trans.gif" /></a>
-                            <form name="search" action="search" method="get" id="searchbar" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
+                            <form name="search" action="search" method="get" id="searchbar" onsubmit="return validateSearchForm()" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
                                 <!--<a href=""><img class="searchicon" src="./theme/default/img/img_trans.gif" /></a>-->
                                 <input src="./theme/default/img/img_trans.gif" type="image" value="submit" class="searchicon"> 
-                                <input type="text" name = "searchword" id="keyword" />
+                                <input type="text" name = "searchword" id="keyword" value=""/>
                                 <!-- ce formulaire de recherche fournit toujours les prémiers resultats -->
                                 <input type="hidden" name="firstres" value="0"/>
                                 <!-- recherche dans une collection precise disponible uniquement

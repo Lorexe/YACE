@@ -249,6 +249,33 @@ public class YaceUtils {
         request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
     }
     
+        
+    public static void displaySearchError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // erreur survenur lors de la recherche des items
+        request.setAttribute("errorMsg",
+                "Nous sommes désolés, mais votre recherche n'a pas abouti.<br/>"
+                + "Vous devez introduire au moins un mot de deux caractères pour effectuer une recherche.<br/>"
+                + "Vous n'êtes pas satisfait ? <a href='about'>Contactez-nous</a> !");
+
+        // Aide contextuelle
+        Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+        List<String> infoBoxes = new ArrayList<String>();
+        List<String> tipBoxes = new ArrayList<String>();
+
+        infoBoxes.add("Pour effectuer une recherche, vous devez au moins introduire un mot de deux caractères.");
+        tipBoxes.add("Essayez de faire une recherche sun un terme plus long");
+
+        asideHelp.put("tip", tipBoxes);
+        asideHelp.put("info", infoBoxes);
+
+        request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+
+        // On nomme et affiche la page
+        request.setAttribute("pageTitle", "Recherche non valide");
+        request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+    }
+        
     //vérifie si item peut être consulté par user
     public static boolean CanDisplayItem(Yitem item, Yuser usr)
     {
