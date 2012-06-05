@@ -99,7 +99,7 @@ public class ServletCollectionView extends HttpServlet {
                 infoBoxes.add("Les objets sont triés par type");
                 tipBoxes.add("Un clic sur un objet affichera sa description complète");
                 tipBoxes.add("Un clic sur <strong>Détails</strong> vous redirigera sur une page de navigation détaillée");
-                if (user.getIdYUSER() == owner.getIdYUSER()) {
+                if (user != null && user.getIdYUSER() == owner.getIdYUSER()) {
                     tipBoxes.add("Vous pouvez aussi ajouter des objets à votre collection, ou éditer un objet déjà existant");
                 }
 

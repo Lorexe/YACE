@@ -53,11 +53,11 @@
                                         <label  class="attr-longtext" for="attrval${attval.idYATTRIBUTEVALUE}">${attval.valStr}</label>        
                                     </c:when>
                                     <c:when test="${attval.attribute.type eq 'Image'}">
-                                        <!-- todo : afficher l'image   balise img    -->
+                                        <%-- todo : afficher l'image   balise img    --%>
                                         <img for="attrval${attval.idYATTRIBUTEVALUE}" class="attr-cover" src="${attval.valStr}"/>
                                     </c:when>
                                     <c:when test="${attval.attribute.type eq 'URL'}">
-                                        <!-- todo : creer l'url  balise a     -->
+                                        <%-- todo : creer l'url  balise a     --%>
                                         <a href="${attval.valStr}">${attval.valStr}</a>
                                     </c:when>
                                     <c:otherwise>

@@ -99,21 +99,26 @@ public class ServletItemDetails extends HttpServlet {
 
                     asideHelp.put("tip", tipBoxes);
                     asideHelp.put("info", infoBoxes);
+                    
+                    int[]tab = YaceUtils.getPrevNextItemId(item);//prev et next
 
                     request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
                     request.setAttribute("canEdit", YaceUtils.canEditItem(item, yuser));
                     request.setAttribute("canDelete", YaceUtils.canDeleteItem(item, yuser));
                     request.setAttribute("curItem", item);
                     request.setAttribute("attributevalues", valList);
-                    request.setAttribute("prevIt", YaceUtils.getPrevItemId(item));
-                    request.setAttribute("nextIt", YaceUtils.getNextItemId(item));
+                    request.setAttribute("prevIt", tab[0]);
+                    request.setAttribute("nextIt", tab[1]);
                     request.setAttribute("pageTitle", "Détails d'un objet de " + item.getCollection().getTheme());
                     request.setAttribute("pageHeaderTitle", "Détails d'un objet de <strong>" + item.getCollection().getTheme() + "</strong>");
                     request.getRequestDispatcher(VUE_ITEM).forward(request, response);
                 }
             }
-            //l'user ne peut pas consulter cet item
-            YaceUtils.displayItemError(request, response);
+            else
+            {
+                //l'user ne peut pas consulter cet item
+                YaceUtils.displayItemError(request, response);
+            }
         }
 
 

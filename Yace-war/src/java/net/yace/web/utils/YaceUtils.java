@@ -345,7 +345,7 @@ public class YaceUtils {
         int x = -1;
         YitemFacade itemFac = ServicesLocator.getItemFacade();
         ArrayList<Yitem> itemList = new ArrayList<Yitem>(itemFac.findAll(item.getCollection()));
-        x = itemList.indexOf(item);//indes de l'item courant
+        x = itemList.indexOf(item);//index de l'item courant
         if(x>0)
             x = itemList.get(x-1).getIdYITEM();
         else
@@ -361,13 +361,39 @@ public class YaceUtils {
         int x = -1;
         YitemFacade itemFac = ServicesLocator.getItemFacade();
         ArrayList<Yitem> itemList = new ArrayList<Yitem>(itemFac.findAll(item.getCollection()));
-        x = itemList.indexOf(item);//indes de l'item courant
+        x = itemList.indexOf(item);//index de l'item courant
         if(x<itemList.size()-1)
             x = itemList.get(x+1).getIdYITEM();
         else
             x=-1;
         
         return x;
+    }
+    
+    //Optimisation  : un appel db au lieu de 2
+    //retourne un tableau de 2 éléments, le premier est l'index prev
+    //le second esr next
+    //-1 si n'existe pas
+    public static int[] getPrevNextItemId(Yitem item)
+    {
+        int x = -1;
+        int y = -1;
+        YitemFacade itemFac = ServicesLocator.getItemFacade();
+        ArrayList<Yitem> itemList = new ArrayList<Yitem>(itemFac.findAll(item.getCollection()));
+        x = y = itemList.indexOf(item);//index de l'item courant
+        //precedent
+        if(x>0)
+            x = itemList.get(x-1).getIdYITEM();
+        else
+            x=-1;
+        //suivant
+        if(y<itemList.size()-1)
+            y = itemList.get(y+1).getIdYITEM();
+        else
+            y=-1;
+        int[] tab = {x,y};
+        
+        return tab;
     }
     
     /*

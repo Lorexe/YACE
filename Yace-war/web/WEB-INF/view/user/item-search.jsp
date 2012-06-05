@@ -83,7 +83,7 @@
                             </c:choose>
                             <input type="hidden" name="searchword" value="${searched}"/>
                             <input type="hidden" name="searchdomain" value="${searchtype}"/>
-                            <!-- navigation parmi les résultats -->
+                            <%-- navigation parmi les résultats --%>
                             <input type="hidden" name="firstres" value="${firstres}"/>
                             <input type="hidden" name="totalsize" value="${totalsize}"/>
                             <c:choose>
@@ -111,11 +111,11 @@
             </header>
             <section class="content">
                 <table class="y-table">
-                    <!-- 
+                    <%-- 
                         pour l'aperçu, je limite le nombre des attributs à afficher à max 5
                         au cas où l'itemtype a trop d'attributs et ça rique de deborder
                         pour voir l'ensemble des attributs consulter page details
-                    -->
+                    --%>
                     <c:choose>
                         <c:when test="${fn:length(item.yattributevalueCollection) < 6}">
                             <c:set var="maxloop" value="${fn:length(item.yattributevalueCollection)}"/>
@@ -142,7 +142,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <td>
-                                        <!-- couper un string trop long, max x caracteres -->
+                                        <%-- couper un string trop long, max x caracteres --%>
                                         <c:set var="maxstrlen" value="250"/>
                                         <c:set var="valStrcut" value="${item.yattributevalueCollection.get(i).valStr}"/>
                                         <c:if test="${fn:length(valStrcut) > maxstrlen}">
