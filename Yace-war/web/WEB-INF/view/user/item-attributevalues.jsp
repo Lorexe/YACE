@@ -6,7 +6,7 @@
 
 <section id="main" class="whitebox"> <!-- main panel -->
 <header>
-    <h1>${pageTitle}</h1>
+    <h1>${pageHeaderTitle}</h1>
 </header>
 <section class="content">
     <aside id="toggletips"><strong>A I D E</strong></aside>
@@ -71,12 +71,15 @@
             <br/>
             <c:if test="${canEdit eq true}">         
             <a class="y-button y-button-white" href="itemmgmt?coll=${curItem.collection.idYCOLLECTION}&type=${curItem.type.getIdYITEMTYPE()}&edit=${curItem.getIdYITEM()}">
-            &Eacute;diter cet objet</a>
+            &Eacute;diter cet objet</a> 
             </c:if>
             <c:if test="${canDelete eq true}">
-            <form id="deleteitemform" action="deleteitem">
-                <input type="hidden" name="del" value="${curItem.idYITEM}"/>
-                <a class="y-button y-button-red" id="deleteItem" rel="#confirm">Supprimer cet Objet</a>
+            <a class="y-button y-button-white" id="deleteItem" rel="#confirm">Supprimer cet objet</a>
+            <form id="deleteitemform" action="itemmgmt" method="post">
+                <input type="hidden" name="itemId" value="${curItem.idYITEM}"/>
+                <input type="hidden" name="type" value="${curItem.type.idYITEMTYPE}"/>
+                <input type="hidden" name="coll" value="${curItem.collection.idYCOLLECTION}"/>
+                <input type="hidden" name="delete" value="delete"/>
             </form>
             </c:if>
             </div>
@@ -88,14 +91,14 @@
     
 <div id="foreground"></div>
 
-<!-- Modal dialogs -->
-<!-- confirm dialog -->
+<%-- Modal dialogs --%>
+<%-- confirm dialog --%>
 <div class="modal modal-info whitebox" id="confirm">
     <header>
         <h1><strong>Confirmation</strong> attendue</h1>
     </header>
     <p>
-        Vous effectuez une <strong>action</strong> qui demande une <strong>confirmation</strong>. Si vous souhaitez continuer, <strong>vous allez supprimer d&eacute;finitivement l'objet courant.</strong> !
+        Vous effectuez une <strong>action</strong> qui demande une <strong>confirmation</strong>. Si vous souhaitez continuer, <strong>l'objet sera d&eacute;finitivement supprim&eacute;</strong> !
     </p>
     
     <p>
