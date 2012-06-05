@@ -1,7 +1,6 @@
 <section id="main" class="whitebox"> <!-- main panel -->
 
     <header>
-        <input type="image" class="printicon" alt="Imprimer la page" title="Imprimer la page" src="./theme/default/img/img_trans.gif" />
         <h1>
             Bienvenue sur <strong>Ya<em class="CE">ce</em>!</strong>
         </h1>

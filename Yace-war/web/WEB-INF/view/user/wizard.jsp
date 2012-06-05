@@ -8,7 +8,6 @@
     </c:if>
     
 <header onclick="test()">
-    <input type="image" class="printicon" alt="Imprimer la page" title="Imprimer la page" src="./theme/default/img/img_trans.gif" />
     <c:choose>
         <c:when test="${!empty coll}">
             <h1>Modification de <strong>${coll.rows[0].theme}</strong></h1>

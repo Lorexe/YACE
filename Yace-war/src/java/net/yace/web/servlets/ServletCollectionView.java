@@ -2,7 +2,9 @@ package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -72,13 +74,13 @@ public class ServletCollectionView extends HttpServlet {
                         values.get(i).add(yatvfac.findAllValuesForItem(items.get(j)));
                     }
                 }
-                
+
                 // Ajout d'objet de typeitem public
                 List<Yitemtype> itemtypesPublic = itfac.findItemtypesPublic();
-                
+
                 // Liste les types d'objet sans objet
                 List<Yitemtype> withoutItem = itfac.findItemtypesWithoutItem(coll);
-                
+
                 request.setAttribute("collection", coll);
                 request.setAttribute("itemtypes", itemtypes);
                 request.setAttribute("withoutItem", withoutItem);
@@ -87,6 +89,25 @@ public class ServletCollectionView extends HttpServlet {
                 request.setAttribute("values", values);
                 request.setAttribute("items", itemsByType);
                 request.setAttribute("pageTitle", "Objets dans la collection");
+
+                //ASIDE HELP
+                Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+                List<String> infoBoxes = new ArrayList<String>();
+                List<String> tipBoxes = new ArrayList<String>();
+
+                infoBoxes.add("Sur cette page, vous pouvez consulter le contenu de vos collections");
+                infoBoxes.add("Les objets sont triés par type");
+                tipBoxes.add("Un clic sur un objet affichera sa description complète");
+                tipBoxes.add("Un clic sur <strong>Détails</strong> vous redirigera sur une page de navigation détaillée");
+                if (user.getIdYUSER() == owner.getIdYUSER()) {
+                    tipBoxes.add("Vous pouvez aussi ajouter des objets à votre collection, ou éditer un objet déjà existant");
+                }
+
+                asideHelp.put("tip", tipBoxes);
+                asideHelp.put("info", infoBoxes);
+
+                request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+
                 request.getRequestDispatcher(VUE_COLL_VIEW).forward(request, response);
             } else {
                 error = true;
