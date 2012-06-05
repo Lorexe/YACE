@@ -4,11 +4,14 @@ var uri_album = "http://ws.audioscrobbler.com/2.0/";
 var semamusic = 0;
 var basename = "";
 
+var tabalbums = new Array();
+
 function getAlbums(input_basename)
 {
     //var apik = "c9aec14b6bfccf2883dbc1ad9e9adf6c";
     //var uri = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b25b959554ed76058ac220b7b2e0a026";
     basename = input_basename;
+    tabalbums = new Array();
     var name = $("#search_input").val();
     $("#search_result").empty();
     $("#search_result").html("<h2>R&eacute;sultats de la recherche</h2>");
@@ -16,27 +19,40 @@ function getAlbums(input_basename)
     searchLastfm(name);
 }
 
-function addAlbumToForm(cover, artist, name, released, tracks) {
-    if(cover=="undefined") $("#"+basename+"cover").val("");
-    else                   $("#"+basename+"cover").val(cover);
-    if(artist=="undefined") $("#"+basename+"artiste").val("");
-    else                    $("#"+basename+"artiste").val(artist);
-    if(name=="undefined") $("#"+basename+"nom").val("");
-    else                  $("#"+basename+"nom").val(name);
-    if(released=="undefined") $("#"+basename+"date_de_sortie").val("");
-    else                      $("#"+basename+"date_de_sortie").val(released);
-    if(tracks=="undefined") $("#"+basename+"tracklist").val("");
-    else                    $("#"+basename+"tracklist").val(tracks);
+function addAlbumToForm(id) {
+    var album = tabalbums[id];
+    
+    if(album.cover=="undefined") $("#"+basename+"cover").val("");
+    else                   $("#"+basename+"cover").val(album.cover);
+    if(album.artist=="undefined") $("#"+basename+"artiste").val("");
+    else                    $("#"+basename+"artiste").val(album.artist);
+    if(album.name=="undefined") $("#"+basename+"nom").val("");
+    else                  $("#"+basename+"nom").val(album.name);
+    if(album.released=="undefined") $("#"+basename+"date_de_sortie").val("");
+    else                      $("#"+basename+"date_de_sortie").val(album.released);
+    if(album.tracks=="undefined") $("#"+basename+"tracklist").val("");
+    else                    $("#"+basename+"tracklist").val(GenerateTracks(album.tracklist));
+}
+
+function GenerateTracks(tracklist) {
+    var tracks = "";
+    for (var i = 0; i < tracklist.length; i++)
+        tracks += tracklist[i].name + " (" + tracklist[i].duration + "), ";
+    if(tracks.length > 0) tracks = tracks.substr(0,tracks.length-2);
+    
+    return tracks;
 }
 
 function addAlbum(album)
 {
+    tabalbums.push(album);
+    
     var tracks = "";
     for (var i = 0; i < album.tracklist.length; i++)
         tracks += album.tracklist[i].name + " (" + album.tracklist[i].duration + "), ";
     if(tracks.length > 0) tracks = tracks.substr(0,tracks.length-2);
     
-    var div = "<div class='ac_box' onclick=\"addAlbumToForm('"+album.cover+"','"+album.artist+"','"+album.name+"','"+album.released+"','"+tracks+"')\">" +
+    var div = "<div class='ac_box' onclick=\"addAlbumToForm("+tabalbums.indexOf(album)+")\">" +
         "<img height='150' src=\"" + album.cover + "\"/>" +
         "<ul><li>Artiste : " + album.artist + "</li>" +
         "<li>Album : " + album.name + "</li>" +
@@ -89,14 +105,13 @@ function searchLastfmArtist(name)
         type:"GET",
         url:url,
         dataType:"jsonp",
-        error: function() { finishingMusicSearch();}, 
+        error: function() {finishingMusicSearch();}, 
         success: function(data){
 
             var keeper = data.results.artistmatches.artist.length;			
             for (var i = 0; i < keeper; i++)
             {
                 var mbid = data.results.artistmatches.artist[i].mbid;
-                console.log(mbid);
                 if (mbid != "")
                     getLastfmArtistAlbums(mbid);
             }
@@ -112,7 +127,7 @@ function getLastfmArtistAlbums(mbid)
         type:"GET",
         url:url,
         dataType:"jsonp",
-        error: function() { finishingMusicSearch();}, 
+        error: function() {finishingMusicSearch();}, 
         success: function(data){
             
             var keeper = data.topalbums.album.length;
@@ -147,7 +162,7 @@ function searchLastfmAlbum(name)
         type:"GET",
         url:url,
         dataType:"jsonp",
-        error: function() { finishingMusicSearch();}, 
+        error: function() {finishingMusicSearch();}, 
         success: function(data){
             
             var keeper = data.results.albummatches.album.length;
@@ -183,10 +198,8 @@ function getLastfmAlbum(mbid)
         type:"GET",
         url:url,
         dataType:"jsonp",
-        error: function() { finishingMusicSearch();}, 
+        error: function() {finishingMusicSearch();}, 
         success: function(data){
-            console.log("-ALBUM GETINFO-");
-            console.log(data);
             
             var tracklist = [];
             if (data.album.tracks.track != undefined)
