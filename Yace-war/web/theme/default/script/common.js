@@ -27,3 +27,13 @@ function setFatal(idWhere, msg) {
 String.prototype.trim = function () {
     return this.replace(/^\s*/, "").replace(/\s*$/, "");
 }
+
+function validateSearchForm() {
+    if($("#keyword").val().length < 1){
+        //pas de recherche sur paramètre vide
+        $("#searchbar").prop('title', 'Vous devez introduire un mot d\'au moins 2 lettres');
+        return false;
+    }
+    else
+        return true;
+}

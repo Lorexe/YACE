@@ -11,7 +11,7 @@
 <section class="content">
     <aside id="toggletips"><strong>A I D E</strong></aside>
     
-    <h3>Les Résultats de recherche pour : "<b>${searched}</b>"</h3>
+    <h3>Les Résultats de recherche pour : "<b>${fn:escapeXml(searched)}</b>"</h3>
     <c:if test="${totalsize eq 0}"><c:set var="totalsize" value="1"/></c:if>
     <h4>Page :  ${searchpagenumber} sur ${totalsize} page(s)</h4>
     <p class="search-header">
@@ -51,7 +51,7 @@
                 
                 <figure class="cover" id="item-${item.type.getIdYITEMTYPE()}-${item.getIdYITEM()}">
                     <aside class="item-details">
-                        <a href="details?item=${item.getIdYITEM()}&clr=${searched}">
+                        <a href="details?item=${item.getIdYITEM()}&clr=${fn:escapeXml(searched)}">
                             <strong>Détails</strong>
                         </a>
                     </aside>
@@ -118,11 +118,11 @@
                             pour voir l'ensemble des attributs consulter page details
                         -->
                         <c:choose>
-                            <c:when test="${fn:length(item.yattributevalueCollection) < 5}">
+                            <c:when test="${fn:length(item.yattributevalueCollection) < 6}">
                                 <c:set var="maxloop" value="${fn:length(item.yattributevalueCollection)}"/>
                             </c:when>
                             <c:otherwise>
-                                <c:set var="maxloop" value="${4}"/>
+                                <c:set var="maxloop" value="${5}"/>
                             </c:otherwise>
                         </c:choose>
                         <c:forEach var="i" begin="0" end="${maxloop}" step="1" varStatus ="attrcount">
@@ -156,7 +156,7 @@
                             </tr>
                         </c:forEach>
                     </table>
-                    <a class="y-button y-button-white" href="details?item=${item.getIdYITEM()}&clr=${searched}">
+                    <a class="y-button y-button-white" href="details?item=${item.getIdYITEM()}&clr=${fn:escapeXml(searched)}">
                         <strong>Tous les Details de l'Objet</strong>
                     </a>
                 </section>

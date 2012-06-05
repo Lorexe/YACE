@@ -39,18 +39,19 @@
             <br/><br/>
         </c:if>
         
-        <c:forEach var="itemtype" items="${withoutItem}" varStatus="idit">
-            <h1>${itemtype.getName()}
-                <c:if test="${!empty user && user eq collection.owner}">
+        <c:if test="${!empty user && user eq collection.owner}">
+            <c:forEach var="itemtype" items="${withoutItem}" varStatus="idit">
+                <h1>${itemtype.getName()}
                     <a class="y-button y-button-blue" href="itemmgmt?coll=${collection.getIdYCOLLECTION()}&type=${itemtype.getIdYITEMTYPE()}">
                         J'ajoute un objet de ce type
                     </a>
-                </c:if>
-            </h1>
-            
-            <p>Vous devriez ajouter des objets dans votre collection !</p>
-        </c:forEach>
-            
+                </h1>
+
+                <p>
+                    Vous n'avez pas encore d'objet de ce type ? <img class="upicon" src="./theme/default/img/img_trans.gif" /> Cliquez ci-dessus pour en ajouter un !
+                </p>
+            </c:forEach>
+        </c:if>
             
         <c:forEach var="itemtype" items="${itemtypes}" varStatus="idit">
 

@@ -9,7 +9,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.yace.entity.Ycollection;
 import net.yace.entity.Yitem;
+import net.yace.entity.Yitemtype;
 import net.yace.entity.Yuser;
+import net.yace.facade.YitemFacade;
 
 /**
  *
@@ -194,6 +195,33 @@ public class YaceUtils {
         request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
     }
     
+    public static void displayItemError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // On défini l'erreur qui s'est produite
+        request.setAttribute("errorMsg",
+                "Nous sommes désolé, mais l'objet que vous recherchez n'existe pas dans notre base de données, ou vous n'avez pas la permission de voir les informations qui y sont liées.<br/>"
+                + "Référez-vous à l'aide contextuelle pour plus d'information.<br/>"
+                + "Vous n'êtes pas satisfait ? <a href='about'>Contactez-nous</a> !");
+
+        // Aide contextuelle
+        Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+        List<String> infoBoxes = new ArrayList<String>();
+        List<String> tipBoxes = new ArrayList<String>();
+
+        infoBoxes.add("Vous tentez d'accéder aux informations d'un objet qui est inconnu de nos services ou qui nécessite des droits que vous n'avez pas.");
+        tipBoxes.add("Vérifiez le lien avec lequel vous tentez d'accéder à cette page !");
+        tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous pensez qu'il s'agit d'une erreur de notre part. N'oubliez pas de détailler les actions qui vous ont mené à cette page, merci.");
+
+        asideHelp.put("tip", tipBoxes);
+        asideHelp.put("info", infoBoxes);
+
+        request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+
+        // On nomme et affiche la page
+        request.setAttribute("pageTitle", "Objet inaccessible");
+        request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+    }
+    
     public static void displayCollectionUnreachableError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // On défini l'erreur qui s'est produite
         request.setAttribute("errorMsg",
@@ -248,6 +276,33 @@ public class YaceUtils {
         request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
     }
     
+        
+    public static void displaySearchError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // erreur survenur lors de la recherche des items
+        request.setAttribute("errorMsg",
+                "Nous sommes désolés, mais votre recherche n'a pas abouti.<br/>"
+                + "Vous devez introduire au moins un mot de deux caractères pour effectuer une recherche.<br/>"
+                + "Vous n'êtes pas satisfait ? <a href='about'>Contactez-nous</a> !");
+
+        // Aide contextuelle
+        Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+        List<String> infoBoxes = new ArrayList<String>();
+        List<String> tipBoxes = new ArrayList<String>();
+
+        infoBoxes.add("Pour effectuer une recherche, vous devez au moins introduire un mot de deux caractères.");
+        tipBoxes.add("Essayez de faire une recherche sur un terme plus long");
+
+        asideHelp.put("tip", tipBoxes);
+        asideHelp.put("info", infoBoxes);
+
+        request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+
+        // On nomme et affiche la page
+        request.setAttribute("pageTitle", "Recherche non valide");
+        request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+    }
+        
     //vérifie si item peut être consulté par user
     public static boolean CanDisplayItem(Yitem item, Yuser usr)
     {
@@ -288,8 +343,8 @@ public class YaceUtils {
     public static int getPrevItemId(Yitem item)
     {
         int x = -1;
-        
-        ArrayList<Yitem> itemList = new ArrayList<Yitem>(item.getCollection().getYitemCollection());
+        YitemFacade itemFac = ServicesLocator.getItemFacade();
+        ArrayList<Yitem> itemList = new ArrayList<Yitem>(itemFac.findAll(item.getCollection()));
         x = itemList.indexOf(item);//indes de l'item courant
         if(x>0)
             x = itemList.get(x-1).getIdYITEM();
@@ -304,8 +359,8 @@ public class YaceUtils {
     public static int getNextItemId(Yitem item)
     {
         int x = -1;
-        
-        ArrayList<Yitem> itemList = new ArrayList<Yitem>(item.getCollection().getYitemCollection());
+        YitemFacade itemFac = ServicesLocator.getItemFacade();
+        ArrayList<Yitem> itemList = new ArrayList<Yitem>(itemFac.findAll(item.getCollection()));
         x = itemList.indexOf(item);//indes de l'item courant
         if(x<itemList.size()-1)
             x = itemList.get(x+1).getIdYITEM();
@@ -366,5 +421,56 @@ public class YaceUtils {
         
         return result;
     }
-
+    
+    //vérifie si itemtype peut être consulté par user
+    public static Boolean canConsultItemType(Yitemtype itemtype, Yuser yuser) {
+        boolean result = false;
+        if(itemtype != null)
+        {
+            if (yuser != null) 
+            {
+                //l'admin peut tout editer
+                if (yuser.getRank().isAdmin() || itemtype.isPublic()) {
+                    result = true;
+                } else if (yuser.getIdYUSER() == itemtype.getCollection().getOwner().getIdYUSER()) {
+                    result = true;
+                }
+            }
+            else
+            {
+                //un visiteur peut consulter le type public
+                if(itemtype.isPublic())
+                    result = true;
+            }
+        }
+        return result;
+    }
+    
+    //vérifie si itemtype peut être édité par user
+    public static Boolean canEditItemType(Yitemtype itemtype, Yuser yuser)
+    {
+        Boolean canedit = false;
+        if(yuser != null)
+        {
+            if(yuser.getRank().isAdmin())
+                canedit = true;
+            else if(yuser.getIdYUSER()==itemtype.getCollection().getOwner().getIdYUSER())
+                canedit = true;
+        }
+        return canedit;
+    }
+    
+    //vérifie si item peut être supprimé par user
+    public static Boolean canDeleteItem(Yitem item, Yuser yuser)
+    {
+        Boolean candelete = false;
+        if(item != null && yuser != null)
+        {
+            if(yuser.getRank().isAdmin())
+                candelete = true;
+            else if(yuser.getIdYUSER()==item.getCollection().getOwner().getIdYUSER())
+                candelete = true;
+        }
+        return candelete;
+    }
 }

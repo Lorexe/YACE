@@ -16,7 +16,6 @@ import net.yace.entity.Yitemtype;
 import net.yace.entity.Yuser;
 import net.yace.facade.YattributeFacade;
 import net.yace.facade.YcollectionFacade;
-import net.yace.facade.YitemFacade;
 import net.yace.facade.YitemtypeFacade;
 import net.yace.web.utils.ServicesLocator;
 import net.yace.web.utils.YaceUtils;

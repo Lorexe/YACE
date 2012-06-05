@@ -40,21 +40,21 @@ import javax.xml.bind.annotation.XmlTransient;
         + "JOIN y.collection col "
         + "JOIN y.yattributevalueCollection av "
         + "JOIN av.attribute ya "
-        + "WHERE (col.isPublic = true) AND (ya.type NOT IN ('Image','URL')) AND (LOWER(av.valStr) LIKE :search)"),
+        + "WHERE (col.isPublic = true) AND (ya.type NOT IN ('Image','URL')) AND (LOWER(av.valStr) LIKE :search) ORDER BY col.theme"),
     @NamedQuery(name = "Yitem.findItemsFromUser", 
         query = "SELECT DISTINCT yi FROM Yuser y "
         + "JOIN y.ycollectionCollection yc "
         + "JOIN yc.yitemCollection yi "
         + "JOIN yi.yattributevalueCollection yav "
         + "JOIN yav.attribute ya "
-        + "WHERE y = :yuser AND (ya.type NOT IN ('Image','URL')) AND (LOWER(yav.valStr) LIKE :search)"),
+        + "WHERE y = :yuser AND (ya.type NOT IN ('Image','URL')) AND (LOWER(yav.valStr) LIKE :search) ORDER BY yc.theme"),
     @NamedQuery(name = "Yitem.findItemsInColl", 
         query = "SELECT DISTINCT yi FROM Ycollection yc "
         + "JOIN yc.owner y "
         + "JOIN yc.yitemCollection yi "
         + "JOIN yi.yattributevalueCollection yav "
         + "JOIN yav.attribute ya "
-        + "WHERE yc = :coll AND (y = :yuser OR yc.isPublic = true) AND (ya.type NOT IN ('Image','URL')) AND (LOWER(yav.valStr) LIKE :search)"),
+        + "WHERE yc = :coll AND (y = :yuser OR yc.isPublic = true) AND (ya.type NOT IN ('Image','URL')) AND (LOWER(yav.valStr) LIKE :search) ORDER BY yc.theme"),
     @NamedQuery(name = "Yitem.findAllItemsFromUser", 
         query = "SELECT DISTINCT yi FROM Yuser y "
         + "JOIN y.ycollectionCollection yc "

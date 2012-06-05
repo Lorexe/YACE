@@ -4,8 +4,11 @@ var append_book = "key=AIzaSyACxun2j0Wat4J9vtrBFDSgluDft7UI-mg&callback=?";
 var semabook = 0;
 var basename = "";
 
+var tabbooks = new Array();
+
 function getBooks(input_basename, lang)
 {
+    tabbooks = new Array();
     basename = input_basename;
     var name = $("#search_input").val();
     $("#search_result").empty();
@@ -14,21 +17,28 @@ function getBooks(input_basename, lang)
     searchGBook(name, lang);
 }
 
-function addBookToForm(cover, titre, auteur, resume, editeur, annee, nb_pages) {
-    if(cover=="undefined") $("#"+basename+"cover").val("");
-    else                   $("#"+basename+"cover").val(cover);
-    if(titre=="undefined") $("#"+basename+"titre").val("");
-    else                   $("#"+basename+"titre").val(titre);
-    if(auteur=="undefined") $("#"+basename+"auteur").val("");
-    else                    $("#"+basename+"auteur").val(auteur);
-    if(resume=="undefined") $("#"+basename+"resume").val("");
-    else                    $("#"+basename+"resume").val(resume);
-    if(editeur=="undefined") $("#"+basename+"editeur").val("");
-    else                     $("#"+basename+"editeur").val(editeur);
-    if(annee=="undefined") $("#"+basename+"date_de_sortie").val("");
-    else                   $("#"+basename+"date_de_sortie").val(annee);
-    if(nb_pages=="undefined") $("#"+basename+"nombre_de_pages").val("");
-    else                      $("#"+basename+"nombre_de_pages").val(nb_pages);
+function addBookToForm(id) {
+    var book = tabbooks[id];    
+    
+    var authorstr = "";
+    for (var i = 0; i < book.authors.length; i++)
+        authorstr += book.authors[i].name + ", ";
+    if(authorstr.length > 0) authorstr = authorstr.substr(0,authorstr.length-2);
+    
+    if(book.cover=="undefined") $("#"+basename+"cover").val("");
+    else                   $("#"+basename+"cover").val(book.cover);
+    if(book.title=="undefined") $("#"+basename+"titre").val("");
+    else                   $("#"+basename+"titre").val(book.title);
+    if(authorstr=="undefined") $("#"+basename+"auteur").val("");
+    else                    $("#"+basename+"auteur").val(authorstr);
+    if(book.plot=="undefined") $("#"+basename+"resume").val("");
+    else                    $("#"+basename+"resume").val(book.plot);
+    if(book.publisher=="undefined") $("#"+basename+"editeur").val("");
+    else                     $("#"+basename+"editeur").val(book.publisher);
+    if(book.released=="undefined") $("#"+basename+"date_de_sortie").val("");
+    else                   $("#"+basename+"date_de_sortie").val(book.released);
+    if(book.pageCount=="undefined") $("#"+basename+"nombre_de_pages").val("");
+    else                      $("#"+basename+"nombre_de_pages").val(book.pageCount);
 }
 
 /*
@@ -36,12 +46,14 @@ function addBookToForm(cover, titre, auteur, resume, editeur, annee, nb_pages) {
  */
 function addBook(book)
 {
+    tabbooks.push(book);
+    
     var authorstr = "";
     for (var i = 0; i < book.authors.length; i++)
         authorstr += book.authors[i].name + ", ";
     if(authorstr.length > 0) authorstr = authorstr.substr(0,authorstr.length-2);
     
-    $("#search_result").append("<div class='ac_box' onclick=\"addBookToForm('"+book.cover+"', '"+book.title+"', '"+authorstr+"', '"+book.plot+"', '"+book.publisher+"', '"+book.released+"', '"+book.pageCount+"')\">" +
+    $("#search_result").append("<div class='ac_box' onclick=\"addBookToForm("+tabbooks.indexOf(book)+")\">" +
         "<img height='150' src='" + book.cover + "'/>" +
         "<ul><li>Auteur : " + authorstr + "</li>" +
         "<li>Titre : " + book.title + "</li>" +
