@@ -20,7 +20,7 @@
         </c:if>
             
         <c:if test="${!empty messageInfos}">
-            <div id="box_informative" onclick="$('#box_informative').hide()">${messageInfos}</div>
+            <div id="box_informative" class="info output" onclick="$(this).hide()">${messageInfos}</div>
         </c:if>
         
         <c:if test="${!empty user && user eq collection.owner}">

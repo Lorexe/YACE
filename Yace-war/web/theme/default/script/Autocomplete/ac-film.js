@@ -102,7 +102,7 @@ function addFilm(film)
 
 function searchFilmStarted()
 {
-    $("#searching").append("Recherche...");
+    $("#searching").append("<img class='spinwheelicon' src='./theme/default/img/img_trans.gif'/>");
 }
 
 function searchFilmStopped()

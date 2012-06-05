@@ -26,21 +26,21 @@
                 <c:choose>
                     <c:when test="${autocomplete=='film'}">
                         <button type="button" onclick='getMovies("attr_")' class="y-button y-button-white">
-                            <img alt="Rechercher" src="./theme/default/img/img_trans.gif" class="searchicon"/>
+                            <img alt="Rechercher" title="Rechercher sur IMDb et TMDb" src="./theme/default/img/img_trans.gif" class="eyeicon"/>
                         </button>
                     </c:when>
                     <c:when test="${autocomplete=='music'}">
                         <button type="button" onclick='getAlbums("attr_")' class="y-button y-button-white">
-                            <img alt="Rechercher" src="./theme/default/img/img_trans.gif" class="searchicon"/>
+                            <img alt="Rechercher" title="Rechercher sur last.fm" src="./theme/default/img/img_trans.gif" class="eyeicon"/>
                         </button>
                     </c:when>
                     <c:when test="${autocomplete=='book'}">
                         <br/>
                         <button type="button" onclick='getBooks("attr_", "fr")' class="y-button y-button-white">
-                            <img alt="Rechercher" src="./theme/default/img/img_trans.gif" class="searchicon"/> (Fr)
+                            <img alt="Rechercher" title="Rechercher sur Google Books" src="./theme/default/img/img_trans.gif" class="eyeicon"/> (Fr)
                         </button>
                         <button type="button" onclick='getBooks("attr_", "en")' class="y-button y-button-white">
-                            <img alt="Rechercher" src="./theme/default/img/img_trans.gif" class="searchicon"/> (En)
+                            <img alt="Rechercher" title="Rechercher sur Google Books" src="./theme/default/img/img_trans.gif" class="eyeicon"/> (En)
                         </button>
                     </c:when>
                 </c:choose>

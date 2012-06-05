@@ -84,6 +84,14 @@
   margin: 4px 5px 0 5px;
 }
 
+.spinwheelicon {
+    background-image: url('./img/icon/spinwheel_16.gif');
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
 .moreicon {
     background-image: url('./img/icon/more_16.png');
     width: 16px;
@@ -449,28 +457,18 @@ aside#search_result .ac_box {
      border: 2px outset orange;
  }
  
+ #search_form {
+     margin-bottom: 15px;
+ }
+ 
  /**
  * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> BOX INFORMATIVE <<<<<<<<<<
  */
 #box_informative {
-    border: 1px solid darkorange;
-    border-radius: 10px;
-    background-color: orange;
     margin: 5px;
-    padding: 15px;
     width: 30%;
-    
-    cursor: pointer;
 }
-#box_informative:hover {
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#ff9900),to(#ff6600));
-    background-image: -webkit-linear-gradient(top,#ff9900,#ff6600);
-    background-image: -moz-linear-gradient(top,#ff9900,#ff6600);
-    background-image: -ms-linear-gradient(top,#ff9900,#ff6600);
-    background-image: -o-linear-gradient(top,#ff9900,#ff6600);
-    background-image: linear-gradient(top,#ff9900,#ff6600);
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-}
+
 /**
  * ->>>>>>>>>>->>>>>>>>>>->>>>>>>>>> CLASSES <<<<<<<<<<
  */

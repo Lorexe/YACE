@@ -63,7 +63,7 @@ function addBook(book)
 
 function searchBookStarted()
 {
-    $("#searching").append("Recherche...");
+    $("#searching").append("<img class='spinwheelicon' src='./theme/default/img/img_trans.gif'/>");
 }
 
 function searchBookStopped()

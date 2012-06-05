@@ -302,6 +302,11 @@ strong {
     text-align: center;
 }
 
+.output:hover {
+    border-style: outset;
+    cursor: pointer;
+}
+
 /* :::: FIXES & TOOLS :::: */
 .clearfix::after {
     visibility: hidden;

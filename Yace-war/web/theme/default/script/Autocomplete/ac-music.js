@@ -69,7 +69,7 @@ function addAlbum(album)
 
 function searchAlbumStarted()
 {
-    $("#searching").append("Recherche...");
+    $("#searching").append("<img class='spinwheelicon' src='./theme/default/img/img_trans.gif'/>");
 }
 
 function searchAlbumStopped()

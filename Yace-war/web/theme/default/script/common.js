@@ -4,6 +4,7 @@ function setInfo(idWhere, msg) {
         .addClass('info output')
         .empty()
         .append(msg)
+        .show()
     });
 }
 function setWarning(idWhere, msg) {
@@ -12,6 +13,7 @@ function setWarning(idWhere, msg) {
         .addClass('warning output')
         .empty()
         .append(msg)
+        .show()
     });
 }
 
@@ -21,6 +23,7 @@ function setFatal(idWhere, msg) {
         .addClass('fatal output')
         .empty()
         .append(msg)
+        .show()
     });
 }
 
@@ -37,3 +40,9 @@ function validateSearchForm() {
     else
         return true;
 }
+
+$(document).ready(function(){
+    $(".output").click(function(){
+        $(this).hide();
+    });
+});
