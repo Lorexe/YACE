@@ -43,19 +43,12 @@ public class ServletItemSearch extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //redirection accueil
         //page accessible en post
         
         doPost(request, response);
     }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -112,7 +105,7 @@ public class ServletItemSearch extends HttpServlet {
             
             if(domain.equals("all"))
             {
-                //obtenir la taile totale lors du premier appel
+                //obtenir la taille totale lors du premier appel
                 if(totalsize == 0)
                 {
                     totalsize = itemFac.getItemsByAttrValues(search,0,0).size();
@@ -142,7 +135,7 @@ public class ServletItemSearch extends HttpServlet {
                 
                 request.setAttribute("resultlist", resultlist);
             }
-            else//if (domain.equals("thiscoll"))
+            else//recherche dans une collection donnée
             {
                 //recherche dans une collection donnée
                 //recuperer l'id de collection
@@ -166,7 +159,7 @@ public class ServletItemSearch extends HttpServlet {
                 request.setAttribute("searchcoll", colid);
                 
             }
-            //encode des elements à afficher?
+            //encore des elements à afficher ?
             //si le nombre des results < taille de selection, non
             if(resultsnumber > resultlist.size())
             {
@@ -213,6 +206,6 @@ public class ServletItemSearch extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Search servlet";
+        return "Servler de gestion de la recherche des objets";
     }
 }
