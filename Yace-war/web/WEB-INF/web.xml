@@ -81,6 +81,10 @@
         <servlet-name>ServletItemTypeResume</servlet-name>
         <servlet-class>net.yace.web.servlets.ServletItemTypeResume</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletDeleteItem</servlet-name>
+        <servlet-class>net.yace.web.servlets.ServletDeleteItem</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletRegister</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -156,6 +160,10 @@
     <servlet-mapping>
         <servlet-name>ServletItemTypeResume</servlet-name>
         <url-pattern>/typedetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletDeleteItem</servlet-name>
+        <url-pattern>/deleteitem</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>2880</session-timeout>

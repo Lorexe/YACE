@@ -68,10 +68,16 @@
                         </tr>
                     </c:forEach>
                 </table>
-            
+            <br/>
             <c:if test="${canEdit eq true}">         
             <a class="y-button y-button-white" href="itemmgmt?coll=${curItem.collection.idYCOLLECTION}&type=${curItem.type.getIdYITEMTYPE()}&edit=${curItem.getIdYITEM()}">
             &Eacute;diter cet objet</a>
+            </c:if>
+            <c:if test="${canDelete eq true}">
+            <form id="deleteitemform" action="deleteitem">
+                <input type="hidden" name="del" value="${curItem.idYITEM}"/>
+                <a class="y-button y-button-red" id="deleteItem" rel="#confirm">Supprimer cet Objet</a>
+            </form>
             </c:if>
             </div>
         </c:otherwise>
@@ -81,3 +87,46 @@
 </section>
     
 <div id="foreground"></div>
+
+<!-- Modal dialogs -->
+<!-- confirm dialog -->
+<div class="modal modal-info whitebox" id="confirm">
+    <header>
+        <h1><strong>Confirmation</strong> attendue</h1>
+    </header>
+    <p>
+        Vous effectuez une <strong>action</strong> qui demande une <strong>confirmation</strong>. Si vous souhaitez continuer, <strong>vous allez supprimer d&eacute;finitivement l'objet courant.</strong> !
+    </p>
+    
+    <p>
+        <button class="close y-button y-button-red confirm-yes"> oui </button>
+        <button class="close y-button y-button-blue"> non </button>
+    </p>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+// trigger pour la suppression d'une collection
+var trigger = $('#deleteItem').overlay({
+
+	mask: {
+		color: '#000033',
+		loadSpeed: 150,
+		opacity: 0.5
+	},
+
+	closeOnClick: false
+
+});
+
+// link les boutons oui/non
+var yesnobuttons = $('#confirm button').click(function(e){
+	// récupère le bouton cliqué (le premier dans le flux)
+	var yes = yesnobuttons.index(this) === 0;
+	if(yes) {
+            $("#deleteitemform").submit();
+        }
+});
+});
+</script>

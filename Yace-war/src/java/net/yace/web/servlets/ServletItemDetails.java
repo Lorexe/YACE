@@ -102,6 +102,7 @@ public class ServletItemDetails extends HttpServlet {
 
                     request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
                     request.setAttribute("canEdit", YaceUtils.canEditItem(item, yuser));
+                    request.setAttribute("canDelete", YaceUtils.canDeleteItem(item, yuser));
                     request.setAttribute("curItem", item);
                     request.setAttribute("attributevalues", valList);
                     request.setAttribute("prevIt", YaceUtils.getPrevItemId(item));

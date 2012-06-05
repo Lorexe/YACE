@@ -25,6 +25,7 @@ import net.yace.entity.Ycollection;
 import net.yace.entity.Yitem;
 import net.yace.entity.Yitemtype;
 import net.yace.entity.Yuser;
+import net.yace.facade.YitemFacade;
 
 /**
  *
@@ -342,8 +343,8 @@ public class YaceUtils {
     public static int getPrevItemId(Yitem item)
     {
         int x = -1;
-        
-        ArrayList<Yitem> itemList = new ArrayList<Yitem>(item.getCollection().getYitemCollection());
+        YitemFacade itemFac = ServicesLocator.getItemFacade();
+        ArrayList<Yitem> itemList = new ArrayList<Yitem>(itemFac.findAll(item.getCollection()));
         x = itemList.indexOf(item);//indes de l'item courant
         if(x>0)
             x = itemList.get(x-1).getIdYITEM();
@@ -358,8 +359,8 @@ public class YaceUtils {
     public static int getNextItemId(Yitem item)
     {
         int x = -1;
-        
-        ArrayList<Yitem> itemList = new ArrayList<Yitem>(item.getCollection().getYitemCollection());
+        YitemFacade itemFac = ServicesLocator.getItemFacade();
+        ArrayList<Yitem> itemList = new ArrayList<Yitem>(itemFac.findAll(item.getCollection()));
         x = itemList.indexOf(item);//indes de l'item courant
         if(x<itemList.size()-1)
             x = itemList.get(x+1).getIdYITEM();
@@ -457,5 +458,19 @@ public class YaceUtils {
                 canedit = true;
         }
         return canedit;
+    }
+    
+    //vérifie si item peut être supprimé par user
+    public static Boolean canDeleteItem(Yitem item, Yuser yuser)
+    {
+        Boolean candelete = false;
+        if(item != null && yuser != null)
+        {
+            if(yuser.getRank().isAdmin())
+                candelete = true;
+            else if(yuser.getIdYUSER()==item.getCollection().getOwner().getIdYUSER())
+                candelete = true;
+        }
+        return candelete;
     }
 }
