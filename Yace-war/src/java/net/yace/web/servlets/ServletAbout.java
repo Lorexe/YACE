@@ -52,19 +52,22 @@ public class ServletAbout extends HttpServlet {
         
         if(senderName != null && senderMail != null && msgSubject != null && msgContent != null && 
                 !senderName.isEmpty() && !senderMail.isEmpty() && !msgSubject.isEmpty() && !msgContent.isEmpty()) {
-            try {
-                new EmailSender(
-                        EmailSender.MAIL_TO_YACE,
-                        senderMail,
-                        msgSubject,
-                        "Auteur: " + senderName + "\n" + msgContent
-                    );
-                
-                request.setAttribute("messageInfos", "Votre message a été envoyé.");
-            } catch (RuntimeException e) {
-                request.setAttribute("messageError", "Erreur lors de l'envoi du message !<br/>" + e.getMessage());
-            }
+            if(YaceUtils.isValidEmail(senderMail)) {
+                try {
+                    new EmailSender(
+                            EmailSender.MAIL_TO_YACE,
+                            EmailSender.MAIL_TO_YACE,
+                            "[Message from a YaCE! user] " + msgSubject,
+                            "Auteur: " + senderName + " <" + senderMail + ">\n\n" + msgContent
+                        );
 
+                    request.setAttribute("messageInfos", "Votre message a été envoyé.");
+                } catch (RuntimeException e) {
+                    request.setAttribute("messageError", "Erreur lors de l'envoi du message !<br/>" + e.getMessage());
+                }
+            } else {
+                request.setAttribute("messageError", "Votre adresse email n'est pas valide !");
+            }
         } else {
             request.setAttribute("messageError", "Vous devez remplir tous les champs !");
         }
