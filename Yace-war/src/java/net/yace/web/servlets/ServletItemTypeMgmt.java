@@ -44,9 +44,10 @@ public class ServletItemTypeMgmt extends HttpServlet {
             List<String> infoBoxes = new ArrayList<String>();
             List<String> tipBoxes = new ArrayList<String>();
 
-            infoBoxes.add("En cours de rédaction.");
-            tipBoxes.add("En cours de rédaction.");
-
+            infoBoxes.add("Sur cette page, vous pouvez éditer la structure d'un type d'objet pour votre collection");
+            tipBoxes.add("Deux champs sont obligatoires : par défaut <em>Photo</em> et <em>Titre</em>. Ce sont les champs qui serviront lors de l'affichage de l'objet");
+            tipBoxes.add("Vous pouvez néanmoins changer le nom des champs obligatoires");
+            
             asideHelp.put("tip", tipBoxes);
             asideHelp.put("info", infoBoxes);
 
