@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.yace.web.servlets;
 
 import java.io.IOException;
@@ -23,15 +19,7 @@ import net.yace.web.utils.YaceUtils;
 public class ServletAbout extends HttpServlet {
     
     private final static String VUE_ABOUT = "WEB-INF/view/user/about.jsp";
-    private final static String MAIL_TO = "yet.another.collection.engine@gmail.com";
-    
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -54,44 +42,36 @@ public class ServletAbout extends HttpServlet {
         request.getRequestDispatcher(VUE_ABOUT).forward(request, response);
     }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        /*
-         * Faut encore faire tous les C.V.
-         * et afficher une boite d'info/warning ou quoi
-         * en fonction des erreurs à balancer.
-         */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String senderName = request.getParameter("name");
         String senderMail = request.getParameter("email");
         String msgSubject = request.getParameter("subject");
         String msgContent = request.getParameter("msg");
         
-        try {
-            new EmailSender(
-                    MAIL_TO,
-                    senderMail,
-                    msgSubject,
-                    "Auteur: " + senderName + "\n" + msgContent
-                );
-        } catch (RuntimeException e) {
-            // message dans boite warning
+        if(senderName != null && senderMail != null && msgSubject != null && msgContent != null && 
+                !senderName.isEmpty() && !senderMail.isEmpty() && !msgSubject.isEmpty() && !msgContent.isEmpty()) {
+            try {
+                new EmailSender(
+                        EmailSender.MAIL_TO_YACE,
+                        senderMail,
+                        msgSubject,
+                        "Auteur: " + senderName + "\n" + msgContent
+                    );
+                
+                request.setAttribute("messageInfos", "Votre message a été envoyé.");
+            } catch (RuntimeException e) {
+                request.setAttribute("messageError", "Erreur lors de l'envoi du message !<br/>" + e.getMessage());
+            }
+
+        } else {
+            request.setAttribute("messageError", "Vous devez remplir tous les champs !");
         }
         
         doGet(request, response);
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "A propos de Yace et de ses développeurs";

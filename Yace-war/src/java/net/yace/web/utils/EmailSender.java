@@ -9,14 +9,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-/**
- *
- * @author ProjetJava
- */
 public class EmailSender {
+
+    public final static String MAIL_TO_YACE = "yet.another.collection.engine@gmail.com";
+
     public EmailSender(String emailDestinataire, String emailExpediteur, String objetMessage, String contenuMessage) {
-        
-        final String username = "yet.another.collection.engine@gmail.com";
+
+        final String username = EmailSender.MAIL_TO_YACE;
         final String password = "!!y4c3!!";
 
         Properties props = new Properties();
@@ -26,28 +25,29 @@ public class EmailSender {
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props,
-            new javax.mail.Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
+                new javax.mail.Authenticator() {
+
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
-                }
-            });
+                    }
+                });
 
         try {
 
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(emailDestinataire));
-                InternetAddress[] internetAddresses = new InternetAddress[1];
-                internetAddresses[0] = new InternetAddress(emailExpediteur); 
-                message.setRecipients(Message.RecipientType.TO,internetAddresses);
-                message.setSubject(objetMessage);
-                message.setText(contenuMessage);
-                
-                Transport.send(message);
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(emailDestinataire));
+            InternetAddress[] internetAddresses = new InternetAddress[1];
+            internetAddresses[0] = new InternetAddress(emailExpediteur);
+            message.setRecipients(Message.RecipientType.TO, internetAddresses);
+            message.setSubject(objetMessage);
+            message.setText(contenuMessage);
+
+            Transport.send(message);
 
 
         } catch (MessagingException e) {
-                throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 }

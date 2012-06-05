@@ -6,13 +6,20 @@
         </h1>
     </header>
 
-    <section class="content"> <!-- contenu intéressant -->
+    <section class="content">
         <aside id="toggletips"><strong>A I D E</strong></aside>
         
         <h1>Contact</h1>
+        <c:if test="${!empty messageInfos}">
+            <div class="output info">${messageInfos}</div>
+        </c:if>
+        <c:if test="${!empty messageError}">
+            <div class="output warning">${messageError}</div>
+        </c:if>
+        
         <p>Utilisez le formulaire ci-dessous pour nous envoyer des suggestions, questions ou autres commentaires.</p>
         <%-- <form action="mailto:admin@yace.com?subject=Message provenant de YaCE!" method="post" enctype="text/plain"> --%>
-        <form action="#" method="post" enctype="text/plain">
+        <form action="about" method="post">
             <table class="y-table y-table-form">
                 <tr class="odd">
                     <td><b>Votre nom:</b></td>
@@ -32,7 +39,7 @@
                 </tr>
                 <tr class="odd">
                     <td><input class="y-button y-button-blue" type="submit" value="J'envoie le message"/></td>
-                    <td><input class="y-button y-button-white" type="reset" value="Je recommence"></td>
+                    <td><input class="y-button y-button-white" type="reset" value="Je recommence"/></td>
                 </tr>
             </table>
         </form>
@@ -48,6 +55,7 @@
                 <li>J&eacute;r&ocirc;me <em class="CE">PHP</em> Scohy</li>
             </ul>
         </p>
+            
 
     </section>
 
