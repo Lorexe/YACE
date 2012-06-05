@@ -171,6 +171,7 @@ public class ServletItemAddEdit extends HttpServlet {
                     
                     String buttonAdd = request.getParameter("button_add");
                     String buttonEdit = request.getParameter("button_edit");
+                    String buttonDelete = request.getParameter("delete");
                     if (buttonAdd != null) {
                         // Création de l'objet
                         Yitem item = new Yitem();
@@ -223,6 +224,13 @@ public class ServletItemAddEdit extends HttpServlet {
                                 attrValFacade.edit(attrVal);
                             }
                         }
+                    } else if(buttonDelete != null) {
+                        String itemId = request.getParameter("itemId");
+                        
+                        if(itemId != null && !itemId.isEmpty()) {
+                            Yitem item = itemFacade.find(Integer.parseInt(itemId));
+                            itemFacade.remove(item);
+                        }
                     }
 
                     redirect = true;
@@ -231,7 +239,7 @@ public class ServletItemAddEdit extends HttpServlet {
             }
         }
 
-        if (!redirect) // si pas d'ajout ou d'édition, on fait appel à l'affichage normal de la page
+        if (!redirect) // si pas d'ajout ou d'édition ou de suppression, on fait appel à l'affichage normal de la page
         {
             doGet(request, response);
         }
@@ -239,6 +247,6 @@ public class ServletItemAddEdit extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Gestion de l'ajout/edition d'objet à une collection.";
+        return "Gestion de l'ajout/edition/suppression d'objet à une collection.";
     }
 }
