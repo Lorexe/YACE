@@ -25,7 +25,7 @@ INSERT INTO `yuser` (`email`, `password_hash`, `pseudo`, `rank`) VALUES
 
 INSERT INTO `yitemtype` (`name`, `is_public`) VALUES
 ('Film', 1),
-('Musique', 1),
+('Album', 1),
 ('Livre', 1);
 
 --
