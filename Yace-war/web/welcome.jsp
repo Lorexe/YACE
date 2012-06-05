@@ -40,6 +40,7 @@
             <img class="yace-logo" alt="YaCE!" title="${initParam.appName}" src="./theme/default/img/img_trans.gif" />
             <aside>
                 <p>vous souhaite la bienvenue</p>
+                <a href="./" class="y-button y-button-white">Je passe l'intro</a>
             </aside>
         </header>
 

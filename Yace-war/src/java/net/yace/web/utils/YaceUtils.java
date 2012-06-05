@@ -195,6 +195,33 @@ public class YaceUtils {
         request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
     }
     
+    public static void displayItemError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // On défini l'erreur qui s'est produite
+        request.setAttribute("errorMsg",
+                "Nous sommes désolé, mais l'objet que vous recherchez n'existe pas dans notre base de données, ou vous n'avez pas la permission de voir les informations qui y sont liées.<br/>"
+                + "Référez-vous à l'aide contextuelle pour plus d'information.<br/>"
+                + "Vous n'êtes pas satisfait ? <a href='about'>Contactez-nous</a> !");
+
+        // Aide contextuelle
+        Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+
+        List<String> infoBoxes = new ArrayList<String>();
+        List<String> tipBoxes = new ArrayList<String>();
+
+        infoBoxes.add("Vous tentez d'accéder aux informations d'un objet qui est inconnu de nos services ou qui nécessite des droits que vous n'avez pas.");
+        tipBoxes.add("Vérifiez le lien avec lequel vous tentez d'accéder à cette page !");
+        tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous pensez qu'il s'agit d'une erreur de notre part. N'oubliez pas de détailler les actions qui vous ont mené à cette page, merci.");
+
+        asideHelp.put("tip", tipBoxes);
+        asideHelp.put("info", infoBoxes);
+
+        request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+
+        // On nomme et affiche la page
+        request.setAttribute("pageTitle", "Objet inaccessible");
+        request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+    }
+    
     public static void displayCollectionUnreachableError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // On défini l'erreur qui s'est produite
         request.setAttribute("errorMsg",

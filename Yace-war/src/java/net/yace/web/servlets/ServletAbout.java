@@ -34,28 +34,23 @@ public class ServletAbout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        YaceUtils.SessionState state = YaceUtils.getSessionState(request);
-        if (state == YaceUtils.SessionState.noauth) {
-            request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
-        } else {
-            // Aide contextuelle
-            Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+        // Aide contextuelle
+        Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
 
-            List<String> infoBoxes = new ArrayList<String>();
-            List<String> tipBoxes = new ArrayList<String>();
+        List<String> infoBoxes = new ArrayList<String>();
+        List<String> tipBoxes = new ArrayList<String>();
 
-            infoBoxes.add("Sur cette page, vous pouvez découvrir les auteurs de Ya<em class='CE'>ce</em>.");
-            infoBoxes.add("Aussi, un formulaire de contact vous permet de contacter l'administrateur du site.");
-            tipBoxes.add("N'hésitez pas à partager vos impressions ou vos idées d'amélioration !");
+        infoBoxes.add("Sur cette page, vous pouvez découvrir les auteurs de Ya<em class='CE'>ce</em>.");
+        infoBoxes.add("Aussi, un formulaire de contact vous permet de contacter l'administrateur du site.");
+        tipBoxes.add("N'hésitez pas à partager vos impressions ou vos idées d'amélioration !");
 
-            asideHelp.put("tip", tipBoxes);
-            asideHelp.put("info", infoBoxes);
+        asideHelp.put("tip", tipBoxes);
+        asideHelp.put("info", infoBoxes);
 
-            request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+        request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
 
-            request.setAttribute("pageTitle", "&Agrave; propos");
-            request.getRequestDispatcher(VUE_ABOUT).forward(request, response);
-        }
+        request.setAttribute("pageTitle", "&Agrave; propos");
+        request.getRequestDispatcher(VUE_ABOUT).forward(request, response);
     }
 
     /** 

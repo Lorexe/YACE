@@ -37,35 +37,31 @@ public class ServletLogin extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
         if(session==null) {
+            request.getSession(true);
             request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
         } else {
-            Yuser yuser = (Yuser)session.getAttribute("user");
-            if(yuser==null) {
-                //request.setAttribute("error", "Session invalide");
-                request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
-            } else {
-                // Aide contextuelle
-                Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+            // Aide contextuelle
+            Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
 
-                List<String> infoBoxes = new ArrayList<String>();
-                List<String> tipBoxes = new ArrayList<String>();
+            List<String> infoBoxes = new ArrayList<String>();
+            List<String> tipBoxes = new ArrayList<String>();
 
-                infoBoxes.add("Bienvenue sur Ya<em class='CE'>ce</em> ! Cette zone d'aide est à consulter à chaque fois que vous ne savez pas comment utiliser une page.");
-                tipBoxes.add("Commencez pas créer une collection, ajoutez ensuite directement des objets de type prédéfini ou créez vos propres types d'objet.");
-                tipBoxes.add("Pour partager vos collections, vous devez les rendre publiques ! Un lien se trouve dans l'édition de votre profil pour partager vos collections publiques avec vos amis.");
-                tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous avez une suggestion à nous transmettre.");
-                
-                asideHelp.put("tip", tipBoxes);
-                asideHelp.put("info", infoBoxes);
+            infoBoxes.add("Bienvenue sur Ya<em class='CE'>ce</em> ! Cette zone d'aide est à consulter à chaque fois que vous ne savez pas comment utiliser une page.");
+            infoBoxes.add("Ce gestionnaire de collection avancé va vous permettre de gérer toutes les collections possibles et imaginables !");
+            tipBoxes.add("Commencez pas créer une collection, ajoutez ensuite directement des objets de type prédéfini ou créez vos propres types d'objet.");
+            tipBoxes.add("Pour partager vos collections, vous devez les rendre publiques ! Un lien se trouve dans l'édition de votre profil pour partager vos collections publiques avec vos amis.");
+            tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous avez une suggestion à nous transmettre.");
 
-                request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
-                
-                // On nomme et affiche la page
-                request.setAttribute("pageTitle", "Page d'accueil");
-                request.getRequestDispatcher(VUE_HOME).forward(request, response);
-            }
+            asideHelp.put("tip", tipBoxes);
+            asideHelp.put("info", infoBoxes);
+
+            request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+
+            // On nomme et affiche la page
+            request.setAttribute("pageTitle", "Page d'accueil");
+            request.getRequestDispatcher(VUE_HOME).forward(request, response);
         }
     }
 
@@ -115,8 +111,11 @@ public class ServletLogin extends HttpServlet {
                     List<String> infoBoxes = new ArrayList<String>();
                     List<String> tipBoxes = new ArrayList<String>();
 
-                    infoBoxes.add("Bienvenue sur Ya<em class='CE'>ce</em> !");
-                    infoBoxes.add("Vous pouvez gérer vos collections blablabla !");
+                    infoBoxes.add("Bienvenue sur Ya<em class='CE'>ce</em> ! Cette zone d'aide est à consulter à chaque fois que vous ne savez pas comment utiliser une page.");
+                    infoBoxes.add("Ce gestionnaire de collection avancé va vous permettre de gérer toutes les collections possibles et imaginables !");
+                    tipBoxes.add("Commencez pas créer une collection, ajoutez ensuite directement des objets de type prédéfini ou créez vos propres types d'objet.");
+                    tipBoxes.add("Pour partager vos collections, vous devez les rendre publiques ! Un lien se trouve dans l'édition de votre profil pour partager vos collections publiques avec vos amis.");
+                    tipBoxes.add("N'hésitez pas à <a href='about'>nous contacter</a> si vous avez une suggestion à nous transmettre.");
                     
                     asideHelp.put("tip", tipBoxes);
                     asideHelp.put("info", infoBoxes);
@@ -138,5 +137,5 @@ public class ServletLogin extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Connecte un utilisateur";
-    }// </editor-fold>
+    }
 }

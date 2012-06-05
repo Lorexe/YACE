@@ -53,8 +53,7 @@ public class ServletItemDetails extends HttpServlet {
         idItem = request.getParameter("item");
         if(idItem == null || idItem.isEmpty())
         {
-            //rediriger l'user à l'accueil
-            request.getRequestDispatcher(VUE_HOME).forward(request, response);
+            YaceUtils.displayItemError(request, response);
         }
         else
         {
@@ -125,8 +124,7 @@ public class ServletItemDetails extends HttpServlet {
                 }
             }
             //l'user ne peut pas consulter cet item
-            //rediriger l'user à l'accueil
-            request.getRequestDispatcher(VUE_HOME).forward(request, response);
+            YaceUtils.displayItemError(request, response);
         }
         
         

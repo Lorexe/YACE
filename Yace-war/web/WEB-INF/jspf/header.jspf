@@ -33,48 +33,50 @@
     </head>
     <body>
         <header role="menu" class="yace-logo">
-            <c:choose>
-                <c:when test="${!empty user}">
-                    <nav id="menu">
-                        <div id="menubar">
-                            <a href="./"><img class="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" /></a>
-                            <a href="about"><img class="helpicon" alt="A propos" title="A propos de YaCE!" src="./theme/default/img/img_trans.gif" /></a>
-                            <form name="search" action="search" method="get" id="searchbar" onsubmit="return validateSearchForm()" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
-                                <!--<a href=""><img class="searchicon" src="./theme/default/img/img_trans.gif" /></a>-->
-                                <input src="./theme/default/img/img_trans.gif" type="image" value="submit" class="searchicon"> 
-                                <input type="text" name = "searchword" id="keyword" value=""/>
-                                <!-- ce formulaire de recherche fournit toujours les prémiers resultats -->
-                                <input type="hidden" name="firstres" value="0"/>
-                                <!-- recherche dans une collection precise disponible uniquement
-                                    sur la page de consultation d'une collection
-                                -->
-                                <c:choose>
-                                        <c:when test="${not empty collection}">
-                                    <input type="hidden" name="searchcoll" value="${collection.getIdYCOLLECTION()}"/>
-                                        </c:when>
-                                    </c:choose>
-                                <select name="searchdomain">
-                                    <option value="all">Collections publiques</option>
-                                    <option value="mycolls">Mes collections</option>
-                                    <c:choose>
-                                        <c:when test="${not empty collection}">
+            <nav id="menu">
+                <div id="menubar">
+                    <a href="./"><img class="homeicon" alt="Accueil" title="Affiche votre page d'accueil" src="./theme/default/img/img_trans.gif" /></a>
+                    <a href="about"><img class="helpicon" alt="A propos" title="A propos de YaCE!" src="./theme/default/img/img_trans.gif" /></a>
+                    <form name="search" action="search" method="get" id="searchbar" onsubmit="return validateSearchForm()" title="Choisissez de rechercher dans toutes vos collections ou uniquement dans celle que vous parcourez en ce moment">
+                        <!--<a href=""><img class="searchicon" src="./theme/default/img/img_trans.gif" /></a>-->
+                        <input src="./theme/default/img/img_trans.gif" type="image" value="submit" class="searchicon"> 
+                        <input type="text" name = "searchword" id="keyword" value=""/>
+                        <!-- ce formulaire de recherche fournit toujours les prémiers resultats -->
+                        <input type="hidden" name="firstres" value="0"/>
+                        <!-- recherche dans une collection precise disponible uniquement
+                            sur la page de consultation d'une collection
+                        -->
+                        <c:choose>
+                            <c:when test="${not empty collection}">
+                                <input type="hidden" name="searchcoll" value="${collection.getIdYCOLLECTION()}"/>
+                            </c:when>
+                        </c:choose>
+                        <select name="searchdomain">
+                            <option value="all">Collections publiques</option>
+                            <c:if test="${!empty user}">
+                                <option value="mycolls">Mes collections</option>
+                            </c:if>
+                            <c:choose>
+                                <c:when test="${not empty collection}">
                                     <option value="thiscoll" selected="selected">Cette collection</option>
-                                        </c:when>
-                                    </c:choose>
-                                </select>
-                            </form>
-                        </div>
+                                </c:when>
+                            </c:choose>
+                        </select>
+                    </form>
+                </div>
+                <c:choose>
+                    <c:when test="${!empty user}">
                         <div id="accountbar">
                             <span>${user.pseudo}</span>
                             <a href="profile"><img name="profil" class="profileicon" alt="Votre compte" title="Modifiez vos informations personelles" src="./theme/default/img/img_trans.gif" /></a>
                             <a href="logout"><img name="logout" class="exiticon" alt="D&eacute;connexion" title="D&eacute;connexion" src="./theme/default/img/img_trans.gif" /></a>
                         </div>
-                    </nav>
-                </c:when>
-                <c:otherwise>
-                    <p style="height:83px;margin:27px;">Première visite ? <a class="y-button y-button-white" href="./">Je veux en savoir plus !</a></p>
-                </c:otherwise>
-            </c:choose>
+                    </c:when>
+                    <c:otherwise>
+                        <p style="margin-left:15px"><a class="y-button y-button-green" href="logout">Retour &agrave; l'intro !</a></p>
+                    </c:otherwise>
+                </c:choose>
+            </nav>
 
 
         </header>

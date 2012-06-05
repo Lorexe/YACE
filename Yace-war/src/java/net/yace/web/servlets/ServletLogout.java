@@ -30,8 +30,7 @@ public class ServletLogout extends HttpServlet {
         request.getSession().invalidate();
         request.getRequestDispatcher(VUE_PRESENTATION).forward(request, response);
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -65,5 +64,5 @@ public class ServletLogout extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Déconnecte un utilisateur";
-    }// </editor-fold>
+    }
 }
