@@ -2,7 +2,9 @@ package net.yace.web.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -61,6 +63,7 @@ public class ServletItemAddEdit extends HttpServlet {
                 if (itemtype!=null && collection!=null && collection.getOwner().getIdYUSER() == yuser.getIdYUSER()) {
                     
                     // Vérifie si l'autocompletion doit etre prise en compte
+                    boolean autocomplete = false;
                     if(itemtype.isPublic()) {
                         String name;
                         if(itemtype.getName().equalsIgnoreCase("film"))
@@ -72,10 +75,22 @@ public class ServletItemAddEdit extends HttpServlet {
                         else
                             name="";
                         
-                        if(!name.isEmpty())
+                        if(!name.isEmpty()) {
+                            autocomplete = true;
                             request.setAttribute("autocomplete", name);
+                        }
                     }
                     
+                    //ASIDE HELP
+                    Map<String, List<String>> asideHelp = new HashMap<String, List<String>>();
+                    List<String> infoBoxes = new ArrayList<String>();
+                    List<String> tipBoxes = new ArrayList<String>();
+
+                    if(autocomplete) {
+                        tipBoxes.add("Le champ de recherche tout au dessus vous permettra de trouver une série de résultats correspondant.");
+                        tipBoxes.add("Un clic sur un résultat permet de pré-remplir les champs.");
+                    }
+
                     // Récupération des attributes et conversion des noms
                     List<Yattribute> attrs = facAttribute.findAttributesByItem(itemtype);
                     List<String> attrsName = new ArrayList<String>();
@@ -102,6 +117,14 @@ public class ServletItemAddEdit extends HttpServlet {
                             attrVals = facAttrVal.findAllValuesForItem(item);
                             request.setAttribute("itemValues", attrVals);
 
+                            infoBoxes.add("Sur cette page, vous pouvez ajouter un objet à votre collection.");
+                            infoBoxes.add("Il vous suffit de remplir les champs et de valider le formulaire.");
+                            infoBoxes.add("Les deux premiers champs sont obligatoires.");
+                            
+                            asideHelp.put("tip", tipBoxes);
+                            asideHelp.put("info", infoBoxes);
+                            request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+                    
                             request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
                         } else {
                             YaceUtils.displayCollectionUnreachableError(request, response);
@@ -114,6 +137,14 @@ public class ServletItemAddEdit extends HttpServlet {
                         if(max_items<0 || max_items>nb_items) {
                             request.setAttribute("pageTitle", "Ajout d'un objet " + itemtype.getName() + " dans la collection " + collection.getTheme());
                             request.setAttribute("pageHeaderTitle", "Ajout d'un objet <strong>" + itemtype.getName() + "</strong> dans la collection <strong>" + collection.getTheme() + "</strong>");
+                            
+                            infoBoxes.add("Sur cette page, vous pouvez éditer un objet de votre collection.");
+                            infoBoxes.add("L'édition fonctionne de la même manière que l'ajout d'objet : Remplissez les champs et validez.");
+                            
+                            asideHelp.put("tip", tipBoxes);
+                            asideHelp.put("info", infoBoxes);
+                            request.setAttribute("asideHelp", YaceUtils.getAsideHelp(asideHelp));
+                            
                             request.getRequestDispatcher(VUE_ITEM_ADDEDIT).forward(request, response);
                         } else {
                             YaceUtils.displayMaxItemReachError(request, response);
