@@ -68,7 +68,7 @@ public class ServletItemAddEdit extends HttpServlet {
                         String name;
                         if(itemtype.getName().equalsIgnoreCase("film"))
                             name="film";
-                        else if(itemtype.getName().equalsIgnoreCase("musique"))
+                        else if(itemtype.getName().equalsIgnoreCase("album"))
                             name="music";
                         else if(itemtype.getName().equalsIgnoreCase("livre"))
                             name="book";
