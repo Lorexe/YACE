@@ -1,9 +1,12 @@
 var semafilm = 0;
 var basename = "";
 
+var tabmovies = new Array();
+
 //Start all the research
 function getMovies(input_basename)
 {
+    tabmovies = new Array();
     basename = input_basename;
     var name = $("#search_input").val();
     $("#search_result").empty();
@@ -13,36 +16,9 @@ function getMovies(input_basename)
     getTmdb(name);
 }
 
-function addFilmToForm(cover, titre, realisateur, auteur, acteur, resume, duree, note, genre, annee) {
-    if(cover=="undefined") $("#"+basename+"cover").val("");
-    else                   $("#"+basename+"cover").val(cover);
-    if(titre=="undefined") $("#"+basename+"titre").val("");
-    else                   $("#"+basename+"titre").val(titre);
-    if(realisateur=="undefined") $("#"+basename+"realisateur").val("");
-    else                         $("#"+basename+"realisateur").val(realisateur);
-    if(auteur=="undefined") $("#"+basename+"auteur").val("");
-    else                    $("#"+basename+"auteur").val(auteur);
-    if(acteur=="undefined") $("#"+basename+"acteur").val("");
-    else                    $("#"+basename+"acteur").val(acteur);
-    if(resume=="undefined") $("#"+basename+"resume").val("");
-    else                    $("#"+basename+"resume").val(resume);
-    if(duree=="undefined") $("#"+basename+"duree").val("");
-    else                   $("#"+basename+"duree").val(duree);
-    if(note=="undefined") $("#"+basename+"note").val("");
-    else                  $("#"+basename+"note").val(note);
-    if(genre=="undefined") $("#"+basename+"genre").val("");
-    else                   $("#"+basename+"genre").val(genre);
-    if(annee=="undefined") $("#"+basename+"date_de_sortie").val("");
-    else                   $("#"+basename+"date_de_sortie").val(annee);
-}
-
-function escape_string(str) {
-    return (str+'').replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-}
-
-//Adds a film to the list (to be modified)
-function addFilm(film)
-{
+function addFilmToForm(id) {
+    var film = tabmovies[id];
+    
     var writers="";
     var directors="";
     var actors="";
@@ -64,7 +40,59 @@ function addFilm(film)
         genres += film.genres[i].name + ", ";
     if(genres.length > 0) genres = genres.substr(0,genres.length-2);
     
-    $("#search_result").append("<div class='ac_box' onclick=\"addFilmToForm('"+film.poster+"', '"+escape_string(film.title)+"', '"+escape_string(directors)+"', '"+escape_string(writers)+"', '"+escape_string(actors)+"', '"+escape_string(film.plot)+"', '"+escape_string(film.runtime)+"', '"+escape_string(film.rating)+"', '"+escape_string(genres)+"', '"+escape_string(film.released)+"')\">" +
+    if(film.poster=="undefined") $("#"+basename+"cover").val("");
+    else                   $("#"+basename+"cover").val(film.poster);
+    if(film.title=="undefined") $("#"+basename+"titre").val("");
+    else                   $("#"+basename+"titre").val(film.title);
+    if(directors=="undefined") $("#"+basename+"realisateur").val("");
+    else                         $("#"+basename+"realisateur").val(directors);
+    if(writers=="undefined") $("#"+basename+"auteur").val("");
+    else                    $("#"+basename+"auteur").val(writers);
+    if(actors=="undefined") $("#"+basename+"acteur").val("");
+    else                    $("#"+basename+"acteur").val(actors);
+    if(film.plot=="undefined") $("#"+basename+"resume").val("");
+    else                    $("#"+basename+"resume").val(film.plot);
+    if(film.runtime=="undefined") $("#"+basename+"duree").val("");
+    else                   $("#"+basename+"duree").val(film.runtime);
+    if(film.rating=="undefined") $("#"+basename+"note").val("");
+    else                  $("#"+basename+"note").val(film.rating);
+    if(genres=="undefined") $("#"+basename+"genre").val("");
+    else                   $("#"+basename+"genre").val(genres);
+    if(film.released=="undefined") $("#"+basename+"date_de_sortie").val("");
+    else                   $("#"+basename+"date_de_sortie").val(film.released);
+}
+
+function escape_string(str) {
+    return (str+'').replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+//Adds a film to the list (to be modified)
+function addFilm(film)
+{
+    tabmovies.push(film);   
+    
+    var writers="";
+    var directors="";
+    var actors="";
+    var genres="";
+    
+    for (var i = 0; i < film.writers.length; i++)
+        writers += film.writers[i].name + ", ";
+    if(writers.length > 0) writers = writers.substr(0,writers.length-2);
+    
+    for (i = 0; i < film.directors.length; i++)
+        directors += film.directors[i].name + ", ";
+    if(directors.length > 0) directors = directors.substr(0,directors.length-2);
+    
+    for (i = 0; i < film.actors.length; i++)
+        actors += film.actors[i].name + ", ";
+    if(actors.length > 0) actors = actors.substr(0,actors.length-2);
+    
+    for (i = 0; i < film.directors.length; i++)
+        genres += film.genres[i].name + ", ";
+    if(genres.length > 0) genres = genres.substr(0,genres.length-2);
+    
+    $("#search_result").append("<div class='ac_box' onclick=\"addFilmToForm("+tabmovies.indexOf(film)+")\">" +
         "<img height='150' src='" + film.poster + "'/>" +
         "<ul><li>Titre: " + film.title + "</li>" +
         "<li>Auteur: " + writers + "</li>" +
