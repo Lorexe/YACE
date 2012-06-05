@@ -7,7 +7,6 @@
 <section id="main" class="whitebox"> <!-- main panel -->
 
     <header>
-        <input type="image" class="printicon" alt="Imprimer la page" title="Imprimer la page" src="./theme/default/img/img_trans.gif" />
         <h1>${pageHeaderTitle}</h1>
     </header>
 
@@ -19,7 +18,35 @@
             <sql:param value="${idType}"/>
         </sql:query>
         
-        <aside id="search_result"> </aside>
+        <c:if test="${!empty autocomplete}">
+            <aside id="search_result"></aside>
+            
+            <div id="search_form">
+                <input type="text" name="search_input" id="search_input" placeholder="Recherche..." />
+                <c:choose>
+                    <c:when test="${autocomplete=='film'}">
+                        <button type="button" onclick='getMovies("attr_")' class="y-button y-button-white">
+                            <img alt="Rechercher" src="./theme/default/img/img_trans.gif" class="searchicon"/>
+                        </button>
+                    </c:when>
+                    <c:when test="${autocomplete=='music'}">
+                        <button type="button" onclick='getAlbums("attr_")' class="y-button y-button-white">
+                            <img alt="Rechercher" src="./theme/default/img/img_trans.gif" class="searchicon"/>
+                        </button>
+                    </c:when>
+                    <c:when test="${autocomplete=='book'}">
+                        <br/>
+                        <button type="button" onclick='getBooks("attr_", "fr")' class="y-button y-button-white">
+                            <img alt="Rechercher" src="./theme/default/img/img_trans.gif" class="searchicon"/> (Fr)
+                        </button>
+                        <button type="button" onclick='getBooks("attr_", "en")' class="y-button y-button-white">
+                            <img alt="Rechercher" src="./theme/default/img/img_trans.gif" class="searchicon"/> (En)
+                        </button>
+                    </c:when>
+                </c:choose>
+                <span id="searching"></span>
+            </div>
+        </c:if>
             
         <form method="post" action="itemmgmt">
             <input type="hidden" name="coll" value="${idColl}"/>
@@ -28,13 +55,6 @@
                 <input type="hidden" name="edit" value="${edit}"/>
             </c:if>
             <table class="y-table y-table-form y-table-center">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
                 <tfoot>
                     <tr>
                         <td colspan="3">
@@ -66,26 +86,6 @@
                 </tbody>
             </table>
         </form>
-           
-        <c:if test="${!empty autocomplete}">
-            <div id="search_form">
-                Recherche <input type="text" name="search_input" id="search_input" />
-                <c:choose>
-                    <c:when test="${autocomplete=='film'}">
-                        <button type="button" onclick='getMovies("attr_")' class="y-button y-button-white">Rechercher</button>
-                    </c:when>
-                    <c:when test="${autocomplete=='music'}">
-                        <button type="button" onclick='getAlbums("attr_")' class="y-button y-button-white">Rechercher</button>
-                    </c:when>
-                    <c:when test="${autocomplete=='book'}">
-                        <br/>
-                        <button type="button" onclick='getBooks("attr_", "fr")' class="y-button y-button-white">Rechercher en Francais</button>
-                        <button type="button" onclick='getBooks("attr_", "en")' class="y-button y-button-white">Rechercher en Anglais</button>
-                    </c:when>
-                </c:choose>
-                <span id="searching">&nbsp;</span>
-            </div>
-        </c:if>
     </section>
 </section>
 <c:if test="${!empty autocomplete}">

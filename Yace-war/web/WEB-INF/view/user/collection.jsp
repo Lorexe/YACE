@@ -7,7 +7,6 @@
 <section id="main" class="whitebox"> <!-- main panel -->
 
     <header>
-        <input type="image" class="printicon" alt="Imprimer la page" title="Imprimer la page" src="./theme/default/img/img_trans.gif" />
         <h1>
             Consultation de <strong>${collection.getTheme()}</strong>
         </h1>
@@ -16,25 +15,25 @@
     <section class="content"> <!-- contenu intÃ©ressant -->
         <aside id="toggletips"><strong>A I D E</strong></aside>
         
-        <c:if test="${!empty user && user eq collection.owner}">
-            <a class="y-button y-button-green" href="itemtypemgmt?coll=${collection.getIdYCOLLECTION()}">J'ajoute un type d'objet</a>
-            <br/><br/>
-        </c:if>
-            
         <c:if test="${empty user || user != collection.owner}">
             <p>Cette collection appartient à <strong>${collection.owner.pseudo}</strong></p>
         </c:if>
-        
-        <%-- Ajout d'objet de typeitem public --%>
-        <c:if test="${!empty user && user eq collection.owner && !empty itemtypesPublic && itemtypesPublic!=null}">
+            
+        <c:if test="${!empty user && user eq collection.owner}">
             <form id="form_itemtype_public" action="itemmgmt" method="get">
-                <input type="hidden" name="coll" value="${collection.getIdYCOLLECTION()}"/>
-                <select name="type">
-                    <c:forEach var="type" items="${itemtypesPublic}" varStatus="counter">
-                        <option value="${type.getIdYITEMTYPE()}">${type.getName()}</option>
-                    </c:forEach>
-                </select>
-                <input type="submit" class="y-button y-button-white" value="Ajouter un objet"/>
+                <c:if test="${!empty itemtypesPublic && itemtypesPublic!=null}">
+                    <%-- Ajout d'objet de typeitem public --%>
+                    <input type="hidden" name="coll" value="${collection.getIdYCOLLECTION()}"/>
+                    <span class="y-button y-button-white">
+                        <a onclick="$('form#form_itemtype_public').submit()">J'ajoute un </a>
+                        <select name="type">
+                            <c:forEach var="type" items="${itemtypesPublic}" varStatus="counter">
+                                <option value="${type.getIdYITEMTYPE()}">${type.getName()}</option>
+                            </c:forEach>
+                        </select>
+                    </span>
+                </c:if>
+                <a class="y-button y-button-white" href="itemtypemgmt?coll=${collection.getIdYCOLLECTION()}">J'ajoute un type d'objet personnalis&eacute;</a>
             </form>
             <br/><br/>
         </c:if>
