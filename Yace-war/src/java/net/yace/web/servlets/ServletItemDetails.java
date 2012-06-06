@@ -60,7 +60,7 @@ public class ServletItemDetails extends HttpServlet {
                         
                         request.setAttribute("clr", clrword);
                         for (Yattributevalue av : valList) {
-                            if (!av.getAttribute().getType().equals("Image") || !av.getAttribute().getType().equals("URL")) {
+                            if (!av.getAttribute().getType().equals("Image") && !av.getAttribute().getType().equals("URL")) {
                                 String lowInput = av.getValStr().toUpperCase();
                                 Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
                                 lowInput = pattern.matcher(Normalizer.normalize(lowInput, Normalizer.Form.NFD)).replaceAll("");
