@@ -112,10 +112,10 @@
                     --%>
                     <c:choose>
                         <c:when test="${fn:length(item.yattributevalueCollection) < 6}">
-                            <c:set var="maxloop" value="${fn:length(item.yattributevalueCollection)}"/>
+                            <c:set var="maxloop" value="${fn:length(item.yattributevalueCollection)-1}"/>
                         </c:when>
                         <c:otherwise>
-                            <c:set var="maxloop" value="${5}"/>
+                            <c:set var="maxloop" value="${4}"/>
                         </c:otherwise>
                     </c:choose>
                     <c:forEach var="i" begin="0" end="${maxloop}" step="1" varStatus ="attrcount">

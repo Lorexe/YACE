@@ -14,7 +14,7 @@
                 
             <p class="search-header">
                 <a href="see?idCollection=${curItem.collection.idYCOLLECTION}"><label><strong> Collection : ${curItem.collection.theme}</strong></label></a><br/><br/>
-                <a href="typedetails?type=${curItem.type.idYITEMTYPE}"><label ><strong>Type d'objet  : <b>${curItem.type.name}</b></strong></label></a><br/><br/>
+                <label ><strong>Type d'objet  : <b>${curItem.type.name}</b></strong></label><br/><br/>
                 <label ><b>Propri&eacute;taire  : &nbsp; ${curItem.collection.owner.pseudo}</b></label><br/><br/>
                 <c:choose>
                     <c:when test="${prevIt ne -1}">
