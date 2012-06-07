@@ -17,7 +17,7 @@
                 SELECT * FROM yuser WHERE yuser.idYUSER = ?
                 <sql:param value="${param.u}"/>
             </sql:query>
-    <form name="seecollection" method="GET" action="view">
+    <form name="seecollection" method="GET" action="see">
             <h1>Choisissez parmi les collections publiques de <strong>${dbuser.rows[0].pseudo}</strong></h1>
         </c:otherwise>
     </c:choose>
